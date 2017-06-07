@@ -1,0 +1,32 @@
+<?php
+return [
+/* 七牛相关配置 */
+    'qiniuCallback' => '',
+    'qiniuUrl' => 'http://img.dev.glela.cn/',
+    'qiniuAccesskey' => 'M_pLWG6o0o8I7X_6FnULzfeDadz8nV-Wzmqxrd_h',
+    'qiniuSecretkey' => 'UGi4gjj42JsByM9sUx-22aXgTjNWabQXRND02X0_',
+    'qiniuBucket' => 'yugou-dev',
+
+    /* 高德地图相关配置 */
+    'amapUrl' => 'http://restapi.amap.com/v3',
+    'amapKey' => '233036acce90d28765fd62f24c06af7b',
+
+    /* 贡云相关配置 */
+    'bizBaseUrl' => 'http://api.test.jioao.cn/gy_api/',
+    'bizAppKey' => 'test888',
+    'bizSecret' => '111111',
+    //获取商品列表
+    'bizGoodsList' => 'apiGoods/getGoodsListByAppSecretId',
+    //展示商品列表
+    'bizLookGoodsList' => 'apiGoods/getGoodsListByGoodsIdList',
+
+    /* 欲购相关配置 */
+    //API基础URL
+    'apiBaseUrl' => 'http://api.test.app.glela.cn/',
+    //API退款接口
+    'apiRefundCash' => 'yg_ygapp/refund/refundCash',
+    //API发货接口
+    'apiDeliverGoods' => 'yg_ygapp/order/updateOrderInfoStatusByOrderSnAndStatus',
+    //API拒绝售后接口
+    'apiBaStoreRefusedAfterSales' => 'yg_ygapp/afterSales/ygBaStoreRefusedAfterSales',
+];

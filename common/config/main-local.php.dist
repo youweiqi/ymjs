@@ -1,0 +1,49 @@
+<?php
+
+return [
+    'components' => [
+        'db' => [
+            'class' => 'yii\db\Connection',
+            'dsn' => 'mysql:host=localhost;dbname=yg_system',
+            'username' => 'root',
+            'password' => 'abc123',
+            'charset' => 'utf8',
+        ],
+        'db_goods' => [
+            'class' => 'yii\db\Connection',
+            'dsn' => 'mysql:host=localhost;dbname=yg_goods',
+            'username' => 'root',
+            'password' => 'abc123',
+            'charset' => 'utf8',
+        ],
+        'db_order' => [
+            'class' => 'yii\db\Connection',
+            'dsn' => 'mysql:host=localhost;dbname=yg_order',
+            'username' => 'root',
+            'password' => 'abc123',
+            'charset' => 'utf8',
+        ],
+        'db_user' => [
+            'class' => 'yii\db\Connection',
+            'dsn' => 'mysql:host=localhost;dbname=yg_user',
+            'username' => 'root',
+            'password' => 'abc123',
+            'charset' => 'utf8',
+        ],
+        'db_ba_user' => [
+            'class' => 'yii\db\Connection',
+            'dsn' => 'mysql:host=localhost;dbname=yg_ba_user',
+            'username' => 'root',
+            'password' => 'abc123',
+            'charset' => 'utf8',
+        ],
+        'mailer' => [
+            'class' => 'yii\swiftmailer\Mailer',
+            'viewPath' => '@common/mail',
+            // send all mails to a file by default. You have to set
+            // 'useFileTransport' to false and configure a transport
+            // for the mailer to send real emails.
+            'useFileTransport' => true,
+        ],
+    ],
+];

@@ -1,0 +1,153 @@
+/***** LEFTPANEL PROFILE *****/
+.page-sidebar-menu-closed .sidebar-toggler-wrapper .leftpanel-profile{
+    display: none;
+}
+
+.leftpanel-profile {
+    padding: 15px;
+    background-color: #3b4354;
+}
+.leftpanel-profile .media-object {
+    width: 48px;
+    padding: 3px;
+    border: 2px solid #657390;
+}
+.leftpanel-profile .media-left {
+    padding-right: 15px;
+}
+.leftpanel-profile .media-heading {
+    margin: 7px 0 2px;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+    letter-spacing: 1px;
+    font-size: 14px;
+}
+.leftpanel-profile .media-heading > a {
+    color: rgba(255, 255, 255, 0.5);
+}
+.leftpanel-profile .media-heading > a:hover,
+.leftpanel-profile .media-heading > a:focus {
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.7);
+}
+.leftpanel-profile .media-body {
+    color: rgba(255, 255, 255, 0.5);
+}
+.leftpanel-userinfo {
+    background-color: #464f63;
+    padding-top: 10px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    border-bottom-right-radius: 2px;
+    border-bottom-left-radius: 2px;
+}
+.leftpanel-userinfo .sidebar-title {
+    margin-top: 0;
+}
+.leftpanel-userinfo address {
+    color: rgba(255, 255, 255, 0.9);
+    padding: 0 15px;
+    margin-bottom: 20px;
+}
+.leftpanel-userinfo .list-group-item {
+    border-left: 0;
+    border-right: 0;
+    border-color: #4c566c;
+    background-color: transparent;
+    color: rgba(255, 255, 255, 0.9);
+}
+.leftpanel-userinfo .list-group-item:first-child {
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+}
+.leftpanel-userinfo .list-group-item:last-child {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.leftpanel-userinfo .list-group-item label {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.4);
+}
+.leftpanel-userinfo .list-group-item:before,
+.leftpanel-userinfo .list-group-item:after {
+    content: " ";
+    display: table;
+}
+.leftpanel-userinfo .list-group-item:after {
+    clear: both;
+}
+.leftpanel-userinfo .list-group-item:before,
+.leftpanel-userinfo .list-group-item:after {
+    content: " ";
+    display: table;
+}
+.leftpanel-userinfo .list-group-item:after {
+    clear: both;
+}
+.leftpanel-userinfo .list-group-item .social-icons a {
+    color: rgba(255, 255, 255, 0.7);
+    margin-left: 5px;
+    font-size: 14px;
+    line-height: 0;
+}
+.leftpanel-userinfo .list-group-item .social-icons a > i {
+    line-height: 0;
+}
+.leftpanel-userinfo .list-group-item .social-icons a:hover,
+.leftpanel-userinfo .list-group-item .social-icons a:focus {
+    color: #fff;
+}
+.breadcrumb-metronic {
+    padding: 0;
+    background-color: transparent;
+    margin-bottom: 20px;
+}
+.breadcrumb-metronic > li {
+    font-size: 12px;
+}
+.breadcrumb-metronic > li > a {
+    color: #545b68;
+}
+.breadcrumb-metronic > li > a:hover,
+.breadcrumb-metronic > li > a:focus {
+    color: #3d424c;
+}
+.breadcrumb-metronic > li + li:before {
+    content: '\f105';
+    font-family: 'FontAwesome';
+    color: #818da7;
+    margin-right: 5px;
+}
+.breadcrumb-metronic > li i {
+    font-size: 14px;
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 1px;
+}
+.breadcrumb-metronic > li.active {
+    color: #464f63;
+    font-weight: 500;
+}
+.breadcrumb-metronic > li.active{
+    font-size: 14px;
+    color: #888;
+}
+/**搜索框相关**/
+.hidden-search{
+    display: none;
+}
+.show-search{
+
+}
+
+.change_img_btn{position: absolute;top:0;right: 0;z-index: 1;display: block;padding: 8px 12px;background-color: #fff;border: 1px solid #e1e1e8;border-radius: 0 4px 0 4px;}
+
+.del_img{position: absolute;z-index: 3;top: -12px;right: -12px;width: 24px;height: 24px;font-size: 24px;line-height: 24px;color: #fff;text-align: center;cursor: pointer;background: rgba(153,153,153,0.75);border-radius: 20px;}
+
+.image-preview{width:100%;height:250px;display: block;padding: 4px;background-color: #d8dce3;border: 1px solid #dddddd;border-radius: 2px;}
+
+.image-upload{display: block;position: absolute;top: 0;right: 0;z-index: 2;width: 37px;height: 35px;cursor: pointer;background: none;opacity: 0;}
+
+

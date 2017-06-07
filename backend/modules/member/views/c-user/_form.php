@@ -1,6 +1,7 @@
 <?php
 
 use backend\libraries\MemberLib;
+use common\helpers\ArrayHelper;
 use kartik\widgets\DateTimePicker;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -34,7 +35,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'user_name')->textInput(['readonly' => 'readonly']) ?>
 
-    <?= $form->field($model, 'role_id')->radioList(MemberLib::getMemberRole($model->role_id),
+    <?= $form->field($model, 'role_id')->radioList(ArrayHelper::map(MemberLib::getMemberRole(),'id','role_name'),
         [
             'prompt' => '请选择角色',
         ]) ?>

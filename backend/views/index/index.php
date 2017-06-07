@@ -1,7 +1,7 @@
 <?php
 /* ===========================以下为本页配置信息================================= */
 /* 页面基本属性 */
-$this->title = '欲购';
+$this->title = '安艺宁';
 $this->params['title_sub'] = '';
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 

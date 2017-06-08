@@ -102,7 +102,7 @@ class SerialController extends Controller
             if($model->save(false)){
                 if(!empty($serial_brand_model->brand_id)){
                     $serial_brand_model->serial_id = $model->id;
-                    $serial_brand_model->save();
+                    $serial_brand_model->save(false);
                 }
                 return $this->redirect(['index']);
             }
@@ -168,16 +168,16 @@ class SerialController extends Controller
                 if(!empty($serial_brand)) {
                     if(!empty($post['SerialBrand']['brand_id'])) {
                         $serial_brand->brand_id = $post['SerialBrand']['brand_id'];
-                        $serial_brand->save();
+                        $serial_brand->save(false);
 
                     }else{
                         $serial_brand_model::deleteAll(['serial_id' => $id]);
                     }
                 }else{
                     if(!empty($post['SerialBrand']['brand_id'])){
-                        $serial_brand_model->save();
+                        $serial_brand_model->save(false);
                     }else{
-                        $model->save();
+                        $model->save(false);
                     }
                 }
                 return $this->redirect(['index', 'id' => $model->id]);

@@ -2,6 +2,7 @@
 
 namespace backend\modules\goods\controllers;
 
+use backend\libraries\ApiGoodsLib;
 use backend\libraries\GoodsCommissionLib;
 use backend\modules\goods\models\form\GoodsCommissionForm;
 use backend\modules\goods\models\form\SetBrandForm;
@@ -266,6 +267,12 @@ class GoodsApiController extends Controller
         $model->load(Yii::$app->request->post());
         Yii::$app->response->format = Response::FORMAT_JSON;
         return ActiveForm::validate($model);
+    }
+
+    public function actionGetGoodDetailHtml()
+    {
+        $good_id = Yii::$app->request->post('good_id');
+        echo ApiGoodsLib::getGoodDetailHtml($good_id);
     }
 
 

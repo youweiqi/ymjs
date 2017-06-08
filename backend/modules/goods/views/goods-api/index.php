@@ -50,6 +50,9 @@ $this->params['breadcrumbs'][] = $this->title;
             }
             return [];
         },
+        'afterRow' => function ($model, $key, $index, $grid){
+            return '<tr id="id'.$key.'" data-key="'.$key.'" data-index="'.$index.'" style="display:none"><td colspan="14" id = tdid'.$key.'></td></tr>';
+        },
         'filterSelector' => "select[name='".$dataProvider->getPagination()->pageSizeParam."'],input[name='".$dataProvider->getPagination()->pageParam."']",
         'pager' => [
             'class' => LinkPager::className(),
@@ -60,6 +63,16 @@ $this->params['breadcrumbs'][] = $this->title;
             "style"=>"overflow:auto"
         ],
         'columns' => [
+            [
+                'header'=>'查看',
+                'class' => 'yii\grid\ActionColumn',
+                'headerOptions' => ['width' => '65'],
+                'template' => '{open}',
+                'buttons' => [
+                    'open' => function ($url, $model, $key) {
+                        return Html::a('<span data-id="'.$model->id. '" class="open-row glyphicon glyphicon-collapse-up"></span>', 'javascript:;'); },
+                ],
+            ],
             [
                 'class' => 'yii\grid\CheckboxColumn',
                 'name' => 'id',
@@ -222,6 +235,35 @@ $batch_update_modal_js = <<<JS
 
 JS;
 $this->registerJs($batch_update_modal_js,3);
+?>
+<?php
+$request_get_good_detail_url = Url::to(['/goods/goods-api/get-good-detail-html']);
+$open_row_js = <<<JS
+    $(".open-row").on("click",function(){ 
+        _this = $(this);
+        good_id = _this.data("id");
+        _this.toggleClass("glyphicon-collapse-up glyphicon-expand");
+        is = _this.hasClass("glyphicon-collapse-up");
+        if(is){
+            $("#id"+good_id).hide();
+        }else{
+           $.ajax({
+                type: "post",
+                dataType: "text",
+                data: {
+                    "good_id": good_id
+                },
+                url: '{$request_get_good_detail_url}',
+                success: function (data) {
+                   $("#tdid"+good_id).html(data);
+                }
+            });
+            $("#id"+good_id).show();
+
+        }
+    }); 
+JS;
+$this->registerJs($open_row_js,3);
 ?>
 
 

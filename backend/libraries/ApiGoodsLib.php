@@ -113,4 +113,39 @@ class ApiGoodsLib
         return $model->id;
     }
 
+    public static function getGoodDetailHtml ($good_id)
+    {
+        $order_details = Product::find()
+            ->where('goods_id=:oid',[':oid'=>$good_id])
+            ->asArray()
+            ->all();
+        $order_detail_html = '<div class="division">
+                                <h4>商品详情</h4>
+                                <table class="table table-bordered" width="100%" cellspacing="0" cellpadding="0" border="0">
+                                    <thead>
+                                        <tr>
+                                            <th>货品ID</th>
+                                            <th>商品图</th>
+                                            <th>货号</th>
+                                            <th>条形码</th>
+                                            <th>规格</th>
+                                            
+                                        </tr>
+                                    </thead><tbody>';
+        foreach ($order_details as $order_detail){
+            $order_detail_html .= '<tr>';
+            $order_detail_html .= '<td>'.$order_detail['id'].'</td>';
+            $order_detail_html .= '<td>'.'</td>';
+            $order_detail_html .= '<td>'.$order_detail['product_bn'].'</td>';
+            $order_detail_html .= '<td>'.$order_detail['bar_code'].'</td>';
+            $order_detail_html .= '<td>'.$order_detail['spec_name'] .'</td>';
+            $order_detail_html .= '</tr>';
+            ;
+        }
+        $order_detail_html .= '</tbody></table>
+                            </div>';
+        return $order_detail_html;
+    }
+
+
 }

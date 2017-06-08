@@ -26,9 +26,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'class' => 'btn btn-success  gridview',
             'id' => 'data-batch-update',
         ]); ?>
-        <?= Html::a('批量设置信息', '#', [
+        <?= Html::a('批量设置分类', '#', [
             'class' => 'btn btn-success  gridview',
             'id' => 'set-category',
+        ]); ?>
+        <?= Html::a('批量设置品牌', '#', [
+            'class' => 'btn btn-success  gridview',
+            'id' => 'set-brand',
         ]); ?>
         <?= Html::a('批量设置分佣', '#', [
             'class' => 'btn btn-success  gridview',
@@ -38,6 +42,14 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'rowOptions' => function($model, $key, $index, $grid) {
+            if($model->brand_id=='0'||$model->category_parent_id=='0'||$model->category_id=='0'){
+                return ['style' => 'background:#DADADA'];
+            }else if($model->online_time>date('Y-m-d H:i:s',time())||$model->offline_time<date('Y-m-d H:i:s',time())){
+                return ['style' => 'background:#A2A2A2'];
+            }
+            return [];
+        },
         'filterSelector' => "select[name='".$dataProvider->getPagination()->pageSizeParam."'],input[name='".$dataProvider->getPagination()->pageParam."']",
         'pager' => [
             'class' => LinkPager::className(),
@@ -132,9 +144,17 @@ Modal::begin([
     ],
 ]);
 Modal::end();
+Modal::begin([
+    'id'=>'set-brand-modal',
+    'options' => [
+        'tabindex' => false
+    ],
+]);
+Modal::end();
 $request_batch_update_url = Url::toRoute('up-down-goods');
 $request_commission_url = Url::to(['/goods/goods-api/update-goods-commission']);
 $request_set_category_url = Url::toRoute('set-category');
+$request_set_brand_url = Url::toRoute('set-brand');
 
 $batch_update_modal_js = <<<JS
   
@@ -177,6 +197,21 @@ $batch_update_modal_js = <<<JS
               $.post('{$request_set_category_url}', { ids: keys },
                     function (data) {
                         $('#set-category-modal').find('.modal-body').html(data);
+                    }
+                );
+            
+        }else{
+            alert('请先选择需要操作的数据');
+        }
+      });
+      $('#set-brand').bind('click', function () {
+       var keys = $("#grid").yiiGridView("getSelectedRows");
+       if(keys.length>0){
+            $('#set-brand-modal').modal('toggle')
+            $('#set-brand-modal').find('.modal-header').html('<h4 class="modal-title">批量设置品牌</h4>');
+              $.post('{$request_set_brand_url}', { ids: keys },
+                    function (data) {
+                        $('#set-brand-modal').find('.modal-body').html(data);
                     }
                 );
             

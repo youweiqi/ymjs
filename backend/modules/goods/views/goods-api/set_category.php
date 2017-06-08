@@ -32,12 +32,7 @@ use yii\helpers\Url;
 
 <?= $form->field($model, 'ids')->label(false)->hiddenInput() ?>
 
-        <?= $form->field($model, 'brand_id')->label('品牌')->dropDownList(ArrayHelper::map(BrandLib::getBrand(),'id','name_cn'),
-            [
-                'prompt' => '请选择品牌',
-            ]) ?>
-
-<?= $form->field($model, 'category_parent_id')->label('父分类名称')->dropDownList(ArrayHelper::map(CategoryLib::getParentCategories(),'id','name'),
+        <?= $form->field($model, 'category_parent_id')->label('父分类名称')->dropDownList(ArrayHelper::map(CategoryLib::getParentCategories(),'id','name'),
     [
         'prompt' => '请选择父分类',
     ]) ?>

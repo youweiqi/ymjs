@@ -4,6 +4,7 @@ namespace backend\modules\goods\controllers;
 
 use backend\libraries\GoodsCommissionLib;
 use backend\modules\goods\models\form\GoodsCommissionForm;
+use backend\modules\goods\models\form\SetBrandForm;
 use backend\modules\goods\models\form\SetCategoryForm;
 use backend\modules\goods\models\form\UpDownGoodsForm;
 use kartik\widgets\ActiveForm;
@@ -205,6 +206,13 @@ class GoodsApiController extends Controller
         return ActiveForm::validate($model);
     }
 
+    public function actionSetCategoryValidateForm()
+    {
+        $model = new SetCategoryForm();
+        $model->load(Yii::$app->request->post());
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        return ActiveForm::validate($model);
+    }
     public function actionSetCategory()
     {
         $model=new SetCategoryForm();
@@ -215,7 +223,7 @@ class GoodsApiController extends Controller
             $ids= unserialize($model->ids);
             $transaction = Yii::$app->db->beginTransaction();
             try {
-                $res = Goods::updateAll(['category_parent_id' =>$model->category_parent_id,'category_id'=>$model->category_id,'brand_id'=>$model->brand_id], ['id' => $ids]);
+                $res = Goods::updateAll(['category_parent_id' =>$model->category_parent_id,'category_id'=>$model->category_id], ['id' => $ids]);
                 if (!$res) {
                     throw new \Exception('操作设置商品分类的步骤失败！');
                 }
@@ -228,10 +236,33 @@ class GoodsApiController extends Controller
         return $this->renderAjax('set_category', ['model' => $model]);
 
     }
-
-    public function actionSetCategoryValidateForm()
+    public function actionSetBrand()
     {
-        $model = new SetCategoryForm();
+        $model=new SetBrandForm();
+        $post = Yii::$app->request->post();
+        if (isset($post['ids'])) {
+            $model->ids = serialize($post['ids']);
+        } elseif ($model->load($post)) {
+            $ids= unserialize($model->ids);
+            $transaction = Yii::$app->db->beginTransaction();
+            try {
+                $res = Goods::updateAll(['brand_id'=>$model->brand_id], ['id' => $ids]);
+                if ($res=='0') {
+                    throw new \Exception('操作设置商品品牌的步骤失败！');
+                }
+                $transaction->commit();
+            } catch (\Exception $e) {
+                $transaction->rollBack();
+            }
+            return $this->redirect(Yii::$app->request->getReferrer());
+        }
+        return $this->renderAjax('set_brand', ['model' => $model]);
+
+    }
+
+    public function actionSetBrandValidateForm()
+    {
+        $model = new SetBrandForm();
         $model->load(Yii::$app->request->post());
         Yii::$app->response->format = Response::FORMAT_JSON;
         return ActiveForm::validate($model);

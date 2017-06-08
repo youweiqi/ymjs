@@ -10,12 +10,10 @@ use yii\base\Model;
 /**
  * RedeemCodeForm
  */
-class SetCategoryForm extends Model
+class SetBrandForm extends Model
 {
     public $ids;
-    public $category_parent_id;
-    public $category_id;
-
+    public $brand_id;
 
 
 
@@ -23,8 +21,7 @@ class SetCategoryForm extends Model
     {
         return [
              'ids'=>'IDS',
-            'category_parent_id' => '二级分类',
-            'category_id' => '三级分类',
+            'brand_id' => '品牌',
 
         ];
     }
@@ -35,8 +32,8 @@ class SetCategoryForm extends Model
     public function rules()
     {
         return [
-            [['category_parent_id','category_id'], 'required'],
-            [['category_parent_id','category_id'], 'integer'],
+            [['brand_id'], 'required'],
+            [['brand_id'], 'integer'],
             ['ids','safe']
         ];
     }

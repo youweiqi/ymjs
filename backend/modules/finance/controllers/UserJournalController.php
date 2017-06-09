@@ -153,47 +153,40 @@ class UserJournalController extends Controller
                         throw new \Exception('操作更新提款成功的步骤失败！');
                     }
                 } elseif ($model->status == 5) {
+                    $user_ids=UserJournal::find()->select('user_id,money')->where(['and',['in','id',$ids],'status =3'])->asArray()->all();
+                    $user_arr=[];
+                    foreach ($user_ids as $user_id)
+                    {
+                        $user_arr[$user_id['user_id']]['user_id'] = $user_id['user_id'];
+                        if(isset($user_arr[$user_id['user_id']]['money'])){
+                            $user_arr[$user_id['user_id']]['money'] += $user_id['money'];
+                        }else{
+                            $user_arr[$user_id['user_id']]['money'] = $user_id['money'];
+                        }
+                    }
+
+                    $key=array_keys($user_arr);
+                    //去查询现在当前各个会员的money
+                    $members = CUser::find()->where(['in','id',$key])->all();
+                    foreach ($members as $member)
+                    {
+                        $member->money += $user_arr[$member->id]['money'];
+                        if(!$member->save(false))
+                        {
+                            throw new \Exception('更新用户金额失败！');
+                        }
+                    }
+
+                    $memberJournal = MemberJournalLib::createAction($ids);
+                    $ret = Yii::$app->db->createCommand()->batchInsert(UserJournal::tableName(), ['money', 'user_id', 'status', 'type', 'promotion_detail_id', 'comment'], $memberJournal)->execute();
+                    if (!$ret) {
+                        throw new \Exception('操作生成新的流水失败！');
+                    }
                     $re = UserJournal::updateAll(['status' => 5], ['status' => 3, 'id' => $ids]);
-                    if ($re=='0') {
+                    if ($re=== false) {
                         throw new \Exception('操作更新拒绝提款的步骤失败！');
                     }
-                    $memberJournal = MemberJournalLib::createAction($ids);
-                    $ret = Yii::$app->db->createCommand()->batchInsert(UserJournal::tableName(), ['money', 'user_id', 'status', 'type', 'promotion_detail_id', 'bank_id','comment'], $memberJournal)->execute();
-                    if ($ret=='0') {
-                        throw new \Exception('操作生成新的流水失败！');
-                    }else{
-                        $user_ids=UserJournal::find()->select('user_id,money')->where(['in','id',$ids])->asArray()->all();
 
-                        $user_arr=[];
-                        //相同会员的提款申请做合并相加处理
-                        foreach ($user_ids as  $user_id)
-                        {
-                            $user_arr[$user_id['user_id']]['user_id']=$user_id['user_id'];
-                            if(isset($user_arr[$user_id['user_id']]['money'])){
-                                $user_arr[$user_id['user_id']]['money'] += $user_id['money'];
-                            }else{
-                                $user_arr[$user_id['user_id']]['money'] = $user_id['money'];
-                            }
-                        }
-
-                        $key=array_keys($user_arr);
-                        //去查询现在对应会员的money
-
-                        $moneys=CUser::find()->select('id,money')->where(['in','id',$key])->asArray()->all();
-
-                        $money_arr=[];
-
-                        foreach ($moneys as $money)
-                        {
-                            $money_arr[$money['money']]['id']=$money['id'];
-                            $money_arr[$money['money']]['money'] = $money['money']+ $user_arr[$user_id['user_id']]['money'];
-                        }
-                    }
-                    $tep= CUser::updateAll(['money'=>$money_arr[$money['money']]['money']],['id'=>$key]);
-
-                    if(!$tep){
-                        throw new \Exception('退款失败！');
-                    }
                 }
                 $transaction->commit();
             } catch (\Exception $e) {

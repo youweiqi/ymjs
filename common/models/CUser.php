@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use app\models\UserCommission;
 use Yii;
 use yii\helpers\ArrayHelper;
 
@@ -36,6 +37,9 @@ use yii\helpers\ArrayHelper;
  * @property int $remain_sales_quota 升级剩余所需销售额度
  * @property string $remark 备注
  * @property int $total_cost_score 累计消费积分
+ * @property int $parent_user_id 累计消费积分
+
+ *
  */
 class CUser extends \yii\db\ActiveRecord
 {
@@ -61,7 +65,7 @@ class CUser extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['role_id', 'old_role_id', 'lock_status', 'is_black', 'money', 'empiric_value', 'total_cost', 'total_sale', 'fans_count', 'remain_sales_quota', 'total_cost_score'], 'integer'],
+            [['parent_user_id','role_id', 'old_role_id', 'lock_status', 'is_black', 'money', 'empiric_value', 'total_cost', 'total_sale', 'fans_count', 'remain_sales_quota', 'total_cost_score'], 'integer'],
             [['synopsis'], 'string'],
             [['talent_effect_time', 'talent_failure_time', 'last_login_time', 'create_time', 'update_time'], 'safe'],
             [['user_name'], 'string', 'max' => 11],
@@ -106,6 +110,7 @@ class CUser extends \yii\db\ActiveRecord
             'remain_sales_quota' => 'Remain Sales Quota',
             'remark' => 'Remark',
             'total_cost_score' => 'Total Cost Score',
+            'parent_user_id' => '上级分销商'
         ];
     }
 
@@ -138,5 +143,9 @@ class CUser extends \yii\db\ActiveRecord
     {
         $result = self::find()->where(['in','id',$ids])->asArray()->all();
         return empty($result)?[]:ArrayHelper::index($result,'id');
+    }
+
+    public function getUser_commission(){
+        return $this->hasOne(UserCommission::className(),['user_id'=>'id']);
     }
 }

@@ -35,10 +35,14 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'user_name')->textInput(['readonly' => 'readonly']) ?>
 
-    <?= $form->field($model, 'role_id')->radioList(ArrayHelper::map(MemberLib::getMemberRole(),'id','role_name'),
-        [
-            'prompt' => '请选择角色',
-        ]) ?>
+    <?= $form->field($model, 'role_id')->dropDownList([''=>'请选择','1'=>'普通用户','2'=>'小分销商','3'=>'大分销商']) ?>
+
+    <?php
+    if($model->role_id == '3'){
+        echo  $form->field($model->user_commission, 'commission')->textInput() ;
+        echo  $form->field($model->user_commission, 'indirect_commission')->textInput() ;
+    }
+    ?>
 
     <div id="role">
 

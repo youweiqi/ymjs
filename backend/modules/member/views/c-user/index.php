@@ -1,5 +1,6 @@
 <?php
 
+use backend\libraries\MemberLib;
 use common\models\CUser;
 use common\widgets\link_pager\LinkPager;
 use yii\helpers\Html;
@@ -59,6 +60,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => '角色',
                 'value' => 'c_role.role_name',
 
+            ],
+            [
+                'attribute' => 'parent_user_id',
+                'value' => function ($model) {
+                    return MemberLib::getMember($model->parent_user_id);
+                }
             ],
             'create_time',
             'talent_effect_time',

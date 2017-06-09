@@ -46,7 +46,7 @@ class ApiGoodsLib
             $productModel = new Product();
             $productModel->setAttributes($productData);
 
-            if(!$productModel->save())
+            if(!$productModel->save(false))
             {
                 throw new ApiException(json_encode($productModel->getErrors()));
             }
@@ -109,7 +109,7 @@ class ApiGoodsLib
         ];
         $model = new Goods();
         $model->setAttributes($goodsData);
-
+        $model->save(false);
         return $model->id;
     }
 

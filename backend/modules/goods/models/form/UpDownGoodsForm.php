@@ -51,9 +51,10 @@ class UpDownGoodsForm extends Model
                $ids[] = $id['id'];
             }
         }
-       $c = implode(',',$ids);
-
-        $this->addError($attribute,'商品Id为'.$c.'的品牌或者分类未设置');
+        $c = implode(',', $ids);
+        if(!empty($c)){
+            $this->addError($attribute, '商品Id为' . $c . '的品牌或者分类未设置');
+        }
 
     }
 

@@ -157,11 +157,11 @@ class UserJournalController extends Controller
                     $user_arr=[];
                     foreach ($user_ids as $user_id)
                     {
-                        $user_arr[$user_id['user_id']]['user_id'] = $user_id['user_id'];
-                        if(isset($user_arr[$user_id['user_id']]['money'])){
-                            $user_arr[$user_id['user_id']]['money'] += $user_id['money'];
+                        if(isset($user_arr[$user_id['user_id']])){
+                            $user_arr[$user_id['user_id']] += $user_id['money'];
+
                         }else{
-                            $user_arr[$user_id['user_id']]['money'] = $user_id['money'];
+                            $user_arr[$user_id['user_id']] = $user_id['money'];
                         }
                     }
 
@@ -170,7 +170,7 @@ class UserJournalController extends Controller
                     $members = CUser::find()->where(['in','id',$key])->all();
                     foreach ($members as $member)
                     {
-                        $member->money += $user_arr[$member->id]['money'];
+                        $member->money += $user_arr[$member->id];
                         if(!$member->save(false))
                         {
                             throw new \Exception('更新用户金额失败！');

@@ -67,6 +67,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     return MemberLib::getMember($model->parent_user_id);
                 }
             ],
+            [
+                'attribute' => 'root_user_id',
+                'value' => function ($model) {
+                    return MemberLib::getMember($model->root_user_id);
+                }
+            ],
             'create_time',
             'talent_effect_time',
             'talent_failure_time',

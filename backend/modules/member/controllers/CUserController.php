@@ -2,6 +2,7 @@
 
 namespace backend\modules\member\controllers;
 
+use app\models\UserCommission;
 use kartik\widgets\ActiveForm;
 use Yii;
 use common\models\CUser;
@@ -85,8 +86,16 @@ class CUserController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $commission = new UserCommission();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            if($model->role_id==3){
+                $commission->load(Yii::$app->request->post());
+                $commission->user_id = $id;
+                $commission->save();
+            }else{
+               $commission::deleteAll(['user_id' =>$id]);
+            }
             return $this->redirect(Yii::$app->request->getReferrer());
         } else {
             return $this->renderAjax('update', [

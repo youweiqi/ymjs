@@ -65,7 +65,7 @@ class CUser extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['parent_user_id','role_id', 'old_role_id', 'lock_status', 'is_black', 'money', 'empiric_value', 'total_cost', 'total_sale', 'fans_count', 'remain_sales_quota', 'total_cost_score'], 'integer'],
+            [['parent_user_id','root_user_id','role_id', 'old_role_id', 'lock_status', 'is_black', 'money', 'empiric_value', 'total_cost', 'total_sale', 'fans_count', 'remain_sales_quota', 'total_cost_score'], 'integer'],
             [['synopsis'], 'string'],
             [['talent_effect_time', 'talent_failure_time', 'last_login_time', 'create_time', 'update_time'], 'safe'],
             [['user_name'], 'string', 'max' => 11],
@@ -110,7 +110,8 @@ class CUser extends \yii\db\ActiveRecord
             'remain_sales_quota' => 'Remain Sales Quota',
             'remark' => 'Remark',
             'total_cost_score' => 'Total Cost Score',
-            'parent_user_id' => '上级分销商'
+            'parent_user_id' => '上级分销商',
+            'root_user_id' => '总分销商'
         ];
     }
 
@@ -146,6 +147,11 @@ class CUser extends \yii\db\ActiveRecord
     }
 
     public function getUser_commission(){
-        return $this->hasOne(UserCommission::className(),['user_id'=>'id']);
+        $model = $this->hasOne(UserCommission::className(),['user_id'=>'id']);
+        if($model->one()) {
+            return $model;
+        }else{
+            return (new UserCommission());
+        }
     }
 }

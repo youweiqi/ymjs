@@ -35,42 +35,111 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'user_name')->textInput(['readonly' => 'readonly']) ?>
 
-    <?= $form->field($model, 'role_id')->dropDownList([''=>'请选择','1'=>'普通用户','2'=>'小分销商','3'=>'大分销商']) ?>
+    <?= $form->field($model, 'role_id')->radioList(['1'=>'普通用户','2'=>'小分销商','3'=>'大分销商']) ?>
+
 
     <?php
-    if($model->role_id == '3'){
-        echo  $form->field($model->user_commission, 'commission')->textInput() ;
-        echo  $form->field($model->user_commission, 'indirect_commission')->textInput() ;
+    switch ($model->role_id)
+    {
+        case 1:
+            echo '<div id="role" style="display: none;">';
+            echo $form->field($model, 'talent_effect_time')->widget(DateTimePicker::classname(), [
+                'options' => ['placeholder' => ''],
+                'removeButton' => false,
+                'pluginOptions' => [
+                    'type' => DateTimePicker::TYPE_COMPONENT_APPEND,
+                    'autoclose' => true,
+                    'startDate' => date('Y-m'),
+                    'minView' => 1,
+                    'format' => 'yyyy-mm-dd hh:00:00'
+                ]
+            ]);
+            echo $form->field($model, 'talent_failure_time')->widget(DateTimePicker::classname(), [
+                'options' => ['placeholder' => ''],
+                'removeButton' => false,
+                'pluginOptions' => [
+                    'type' => DateTimePicker::TYPE_COMPONENT_APPEND,
+                    'autoclose' => true,
+                    'startDate' => date('Y-m'),
+                    'minView' => 1,
+                    'format' => 'yyyy-mm-dd hh:00:00'
+                ]
+            ]);
+            echo '</div>';
+            echo '<div id="commission" style="display: none">';
+            echo $form->field($model->user_commission, 'commission')->textInput() ;
+            echo $form->field($model->user_commission, 'indirect_commission')->textInput() ;
+            echo '</div>';
+            break;
+        case 2:
+        {
+            echo '<div id="role" style="display: block;">';
+            echo $form->field($model, 'talent_effect_time')->widget(DateTimePicker::classname(), [
+                'options' => ['placeholder' => ''],
+                'removeButton' => false,
+                'pluginOptions' => [
+                    'type' => DateTimePicker::TYPE_COMPONENT_APPEND,
+                    'autoclose' => true,
+                    'startDate' => date('Y-m'),
+                    'minView' => 1,
+                    'format' => 'yyyy-mm-dd hh:00:00'
+                ]
+            ]);
+            echo $form->field($model, 'talent_failure_time')->widget(DateTimePicker::classname(), [
+                'options' => ['placeholder' => ''],
+                'removeButton' => false,
+                'pluginOptions' => [
+                    'type' => DateTimePicker::TYPE_COMPONENT_APPEND,
+                    'autoclose' => true,
+                    'startDate' => date('Y-m'),
+                    'minView' => 1,
+                    'format' => 'yyyy-mm-dd hh:00:00'
+                ]
+            ]);
+            echo '</div>';
+            echo '<div id="commission" style="display: none;">';
+            echo $form->field($model->user_commission, 'commission')->textInput() ;
+            echo $form->field($model->user_commission, 'indirect_commission')->textInput() ;
+            echo '</div>';
+            break;
+        }
+        case 3:{
+            echo '<div id="role" style="display: block;">';
+            echo $form->field($model, 'talent_effect_time')->widget(DateTimePicker::classname(), [
+                'options' => ['placeholder' => ''],
+                'removeButton' => false,
+                'pluginOptions' => [
+                    'type' => DateTimePicker::TYPE_COMPONENT_APPEND,
+                    'autoclose' => true,
+                    'startDate' => date('Y-m'),
+                    'minView' => 1,
+                    'format' => 'yyyy-mm-dd hh:00:00'
+                ]
+            ]);
+            echo $form->field($model, 'talent_failure_time')->widget(DateTimePicker::classname(), [
+                'options' => ['placeholder' => ''],
+                'removeButton' => false,
+                'pluginOptions' => [
+                    'type' => DateTimePicker::TYPE_COMPONENT_APPEND,
+                    'autoclose' => true,
+                    'startDate' => date('Y-m'),
+                    'minView' => 1,
+                    'format' => 'yyyy-mm-dd hh:00:00'
+                ]
+            ]);
+            echo '</div>';
+
+            echo '<div id="commission" style="display: block">';
+            echo $form->field($model->user_commission, 'commission')->textInput() ;
+            echo $form->field($model->user_commission, 'indirect_commission')->textInput() ;
+            echo '</div>';
+            break;
+
+        }
     }
-    ?>
+        ?>
 
-    <div id="role">
 
-    <?= $form->field($model, 'talent_effect_time')->widget(DateTimePicker::classname(), [
-        'options' => ['placeholder' => ''],
-        'removeButton' => false,
-        'pluginOptions' => [
-            'type' => DateTimePicker::TYPE_COMPONENT_APPEND,
-            'autoclose' => true,
-            'startDate' => date('Y-m'),
-            'minView' => 1,
-            'format' => 'yyyy-mm-dd hh:00:00'
-        ]
-    ]); ?>
-
-    <?= $form->field($model, 'talent_failure_time')->widget(DateTimePicker::classname(), [
-        'options' => ['placeholder' => ''],
-        'removeButton' => false,
-        'pluginOptions' => [
-            'type' => DateTimePicker::TYPE_COMPONENT_APPEND,
-            'autoclose' => true,
-            'startDate' => date('Y-m'),
-            'minView' => 1,
-            'format' => 'yyyy-mm-dd hh:00:00'
-        ]
-    ]); ?>
-
-</div>
 
     <?= $form->field($model, 'lock_status')->radioList(['0'=>'未锁定','1'=>'已锁定']) ?>
 
@@ -86,19 +155,35 @@ use yii\widgets\ActiveForm;
 
 
 <?php
-$this->registerJs('
-   
-    $("#cuser-role_id").click(function(){
-        var role_id =$(this).find("input[type=\'radio\']:checked").val();
+$js = <<<JS
+$('body').on('click',"#cuser-role_id",function(){
+        var role_id =$(this).find("input[type='radio']:checked").val();
         reChangeOpenFlashExpress1(role_id);
-    })
+});
     function reChangeOpenFlashExpress1(role_id){
-        if(role_id==1){
+        switch (role_id){
+            case '1':{
+                        console.log(role_id);
                 $("#role").hide();
-                 }else{
+                $("#commission").hide();
+                break;
+            }case '2':{
+                        console.log(role_id);
+
                 $("#role").show();
+                $("#commission").hide();
+                break;
+            }case '3':{
+                        console.log(role_id);
+
+                $("#role").show();
+                $("#commission").show();
+                break;
             }
+        }
+        
     }
-    
-');
+JS;
+
+$this->registerJs($js);
 ?>

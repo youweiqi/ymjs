@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace common\models;
 
 use Yii;
 
@@ -36,7 +36,13 @@ class UserCommission extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+
             [['user_id', 'commission', 'indirect_commission'], 'integer'],
+            [['commission','indirect_commission'],'default','value'=>'50'],
+//            [['commission','indirect_commission'],'match','pattern'=>'^(0|100|\d{1,2})$','message'=>'分佣比例设置总和不能超过100'],
+            ['indirect_commission','total']
+
+
         ];
     }
 
@@ -51,5 +57,12 @@ class UserCommission extends \yii\db\ActiveRecord
             'commission' => '分佣',
             'indirect_commission' => '间接分佣',
         ];
+    }
+
+    public function total($attribute, $params)
+    {
+        if(($this->$attribute+$this->commission)> 100){
+            $this->addError('usercommission-indirect_commission','分佣比例设置总和不能超过100');
+        }
     }
 }

@@ -2,21 +2,19 @@
 
 namespace backend\modules\member\controllers;
 
-use common\models\Commision;
-use common\models\UserCommission;
-use kartik\widgets\ActiveForm;
 use Yii;
-use common\models\CUser;
-use backend\modules\member\models\search\CUserSearch;
+use common\models\UserCommission;
+use backend\modules\member\models\search\UserCommissionSearch;
+use yii\bootstrap\ActiveForm;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Response;
 
 /**
- * CUserController implements the CRUD actions for CUser model.
+ * UserCommissionController implements the CRUD actions for UserCommission model.
  */
-class CUserController extends Controller
+class UserCommissionController extends Controller
 {
     /**
      * @inheritdoc
@@ -34,12 +32,12 @@ class CUserController extends Controller
     }
 
     /**
-     * Lists all CUser models.
+     * Lists all UserCommission models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new CUserSearch();
+        $searchModel = new UserCommissionSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -49,7 +47,7 @@ class CUserController extends Controller
     }
 
     /**
-     * Displays a single CUser model.
+     * Displays a single UserCommission model.
      * @param integer $id
      * @return mixed
      */
@@ -61,25 +59,25 @@ class CUserController extends Controller
     }
 
     /**
-     * Creates a new CUser model.
+     * Creates a new UserCommission model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new CUser();
+        $model = new UserCommission();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            return $this->renderAjax('create', [
+            return $this->render('create', [
                 'model' => $model,
             ]);
         }
     }
 
     /**
-     * Updates an existing CUser model.
+     * Updates an existing UserCommission model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -88,34 +86,17 @@ class CUserController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post())) {
-            if($model->role_id == 3){
-                $model->parent_user_id = '0';
-                $model->root_user_id = '0';
-                $commision = $model->getUser_commission();
-                if(isset($commision->id)){
-                    $commision->load(Yii::$app->request->post());
-                    $commision->save();
-                }else{
-                    $commision->user_id = $id;
-                    $commision->load(Yii::$app->request->post());
-                    $commision->save();
-                }
-            }else{
-                UserCommission::deleteAll(['user_id'=>$id]);
-            }
-            $model->save();
-            return $this->redirect(Yii::$app->request->getReferrer());
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            return $this->renderAjax('update', [
+            return $this->render('update', [
                 'model' => $model,
             ]);
         }
-
     }
 
     /**
-     * Deletes an existing CUser model.
+     * Deletes an existing UserCommission model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -128,15 +109,15 @@ class CUserController extends Controller
     }
 
     /**
-     * Finds the CUser model based on its primary key value.
+     * Finds the UserCommission model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return CUser the loaded model
+     * @return UserCommission the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = CUser::findOne($id)) !== null) {
+        if (($model = UserCommission::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
@@ -145,21 +126,9 @@ class CUserController extends Controller
 
     public function actionValidateForm($id = null)
     {
-        $model = $id === null ? new CUser() : CUser::findOne($id);
+        $model = $id === null ? new UserCommission() : UserCommission::findOne($id);
         $model->load(Yii::$app->request->post());
-        $model->validate();
-        $u_errors = $model->getErrors();
-
-        $c = new UserCommission();
-        $c->load(Yii::$app->request->post());
-        $c->validate();
-        $c_errors = $c->getErrors();
-        $errors = array_merge($u_errors,$c_errors);
         Yii::$app->response->format = Response::FORMAT_JSON;
-//        return ActiveForm::validate($model);
-        return $errors;
-
+        return ActiveForm::validate($model);
     }
-
-
 }

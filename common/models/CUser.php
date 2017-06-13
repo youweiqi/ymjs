@@ -2,7 +2,7 @@
 
 namespace common\models;
 
-use app\models\UserCommission;
+use common\models\UserCommission;
 use Yii;
 use yii\helpers\ArrayHelper;
 
@@ -65,6 +65,7 @@ class CUser extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            ['talent_effect_time','required'],
             [['parent_user_id','root_user_id','role_id', 'old_role_id', 'lock_status', 'is_black', 'money', 'empiric_value', 'total_cost', 'total_sale', 'fans_count', 'remain_sales_quota', 'total_cost_score'], 'integer'],
             [['synopsis'], 'string'],
             [['talent_effect_time', 'talent_failure_time', 'last_login_time', 'create_time', 'update_time'], 'safe'],
@@ -147,8 +148,8 @@ class CUser extends \yii\db\ActiveRecord
     }
 
     public function getUser_commission(){
-        $model = $this->hasOne(UserCommission::className(),['user_id'=>'id']);
-        if($model->one()) {
+        $model = $this->hasOne(UserCommission::className(),['user_id'=>'id'])->one();
+        if($model) {
             return $model;
         }else{
             return (new UserCommission());

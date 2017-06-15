@@ -67,7 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'goods_code',
             'label_name',
             [
-                'label' => '商品分佣比例(%)',
+                'label' => '商品分佣(%)',
                 'value' =>'goods_commission.commission',
             ],
 

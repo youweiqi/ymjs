@@ -8,10 +8,12 @@ use backend\modules\goods\models\form\GoodsCommissionForm;
 use backend\modules\goods\models\form\SetBrandForm;
 use backend\modules\goods\models\form\SetCategoryForm;
 use backend\modules\goods\models\form\UpDownGoodsForm;
+use common\models\GoodsCommission;
 use kartik\widgets\ActiveForm;
 use Yii;
 use common\models\Goods;
 use backend\modules\goods\models\search\GoodsApiSearch;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -184,20 +186,42 @@ class GoodsApiController extends Controller
             $model->ids = serialize($post['ids']);
         } elseif ($model->load($post)) {
             $ids = unserialize($model->ids);
+            $good_ids = GoodsCommission::find()->select('good_id')->asArray()->all();
+            $good_id = ArrayHelper::getColumn($good_ids,'good_id');
+            $goods_some = array_intersect($ids,$good_id);
+            $goods_diff = array_diff($ids,$good_id);
+
             $transaction = Yii::$app->db->beginTransaction();
             try {
-                $res = Goods::updateAll(['score_rate' =>$model->score_rate,'talent_limit'=>$model->talent_limit], ['id' => $ids]);
-                if (!$res) {
-                    throw new \Exception('操作更新上下架时间的步骤失败！');
+                $res = GoodsCommission::updateAll(['commission' =>$model->commission], ['good_id' => $goods_some]);
+
+                $goods = [];
+                foreach ($goods_diff as $v){
+                    $good = [];
+                    $good['good_id'] = $v;
+                    $good['commission'] = $model->commission;
+                    $good['role_id'] = 0;
+                    $good['indirect_commission'] = 0;
+                    $goods[] = $good;
+
+                }
+                $res1 = Yii::$app->db->createCommand()->batchInsert(GoodsCommission::tableName(), ['good_id', 'commission', 'role_id', 'indirect_commission'], $goods)->execute();
+
+
+                if ($res===false && $res1 === false) {
+                    throw new \Exception('操作更新分佣的步骤失败！');
                 }
                 $transaction->commit();
+                Yii::$app->session->setFlash('success','批量设置商品分佣成功');
             } catch (\Exception $e) {
+                Yii::$app->session->setFlash('error','批量设置商品分佣失败');
                 $transaction->rollBack();
             }
             return $this->redirect(Yii::$app->request->getReferrer());
         }
         return $this->renderAjax('goods_commission_form', ['model' => $model]);
     }
+
 
     public function actionGoodsCommissionValidateForm()
     {

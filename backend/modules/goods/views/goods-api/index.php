@@ -85,18 +85,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'api_goods_id',
             'name',
             [
-                'attribute'=>'score_rate',
-                'class'=>'kartik\grid\EditableColumn',
-                'editableOptions'=>[
-                    'asPopover' => false,
-                ],
-            ],
-            [
-                'attribute'=>'talent_limit',
-                'class'=>'kartik\grid\EditableColumn',
-                'editableOptions'=>[
-                    'asPopover' => false,
-                ],
+                'label' => '商品分佣(%)',
+                'value' =>'goods_commission.commission',
             ],
 
             [

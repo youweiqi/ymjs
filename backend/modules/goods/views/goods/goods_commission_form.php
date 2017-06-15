@@ -28,9 +28,7 @@ use yii\widgets\ActiveForm;
     ]); ?>
     <?= $form->field($model, 'ids')->label(false)->hiddenInput() ?>
 
-    <?= $form->field($model, 'score_rate')->textInput() ?>
-
-    <?= $form->field($model, 'talent_limit')->textInput() ?>
+    <?= $form->field($model, 'commission')->textInput() ?>
 
     <hr>
     <div class="form-group" style="text-align:center">

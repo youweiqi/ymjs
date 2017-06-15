@@ -165,6 +165,10 @@ class Goods extends \yii\db\ActiveRecord
     {
         return $this->hasMany(GoodsNavigate::className(),['good_id'=>'id']);
     }
+    public function getGoods_commission()
+    {
+        return $this->hasOne(GoodsCommission::className(),['good_id'=>'id']);
+    }
     /**
      * 通过商品ID获取商品编号
      * @param  integer $id

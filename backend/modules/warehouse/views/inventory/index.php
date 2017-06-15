@@ -77,6 +77,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'headerOptions' => ['width' => '75'],
             ],
             'product.product_bn',
+            'product.spec_name',
             'goods.name',
             [
                 'label' =>'店铺',

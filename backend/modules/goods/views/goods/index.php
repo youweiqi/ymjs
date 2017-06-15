@@ -67,19 +67,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'goods_code',
             'label_name',
             [
-                'attribute'=>'score_rate',
-                'class'=>'kartik\grid\EditableColumn',
-                'editableOptions'=>[
-                'asPopover' => false,
-                     ],
+                'label' => '商品分佣比例(%)',
+                'value' =>'goods_commission.commission',
             ],
-            [
-                'attribute'=>'talent_limit',
-                'class'=>'kartik\grid\EditableColumn',
-                'editableOptions'=>[
-                    'asPopover' => false,
-                ],
-            ],
+
             [
                 'attribute' => 'category_parent_id',
                 'label' => '2级分类',

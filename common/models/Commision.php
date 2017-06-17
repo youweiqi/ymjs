@@ -63,14 +63,46 @@ class Commision extends \yii\db\ActiveRecord
             'order_info_id' => '子订单号id',
             'order_object_id' => '父订单id',
             'user_id' => '分佣人',
-            'type' => '分佣类型  0消费积分...(级别),1001店员,1101店长',
+            'type' => '分佣级别',
             'comment' => '备注',
             'fee' => '分佣金额',
             'result_time' => '分佣处理时间',
-            'result' => '0.未处理1.已处理',
+            'result' => '结果',
             'create_time' => '创建时间',
             'update_time' => '修改时间',
-            'status' => '0禁用1使用',
+            'status' => '状态',
         ];
     }
+    public function getOrder_info(){
+        return $this->hasOne(OrderInfo::className(),['id'=>'order_info_id']);
+    }
+
+    public function getOrder_object(){
+        return $this->hasOne(OrderObject::className(),['id'=>'order_object_id']);
+    }
+
+    public function getC_user(){
+        return $this->hasOne(CUser::className(),['id'=>'user_id']);
+    }
+    public function getC_role(){
+        return $this->hasOne(CRole::className(),['level'=>'type']);
+    }
+    public static function dropDown($column, $value = null){
+        $dropDownList = [
+            'status'=> [
+                '0'=>'禁用',
+                '1'=>'使用',
+            ],
+            'result'=>[
+                '0'=>'未处理',
+                '1'=>'已处理'
+            ]
+        ];
+        if ($value !== null){
+            return array_key_exists($column, $dropDownList) ? $dropDownList[$column][$value] : false;
+        }else{
+            return array_key_exists($column, $dropDownList) ? $dropDownList[$column] : false;
+        }
+    }
+
 }

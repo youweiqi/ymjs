@@ -43,7 +43,6 @@ use yii\widgets\ActiveForm;
                 'templateSelection' => new JsExpression('function (res) { return res.text; }'),
             ],
         ]); ?>
-
         <?=  $form->field($model, 'store_id')->label('门店名称')->widget(Select2::classname(), [
             'options' => ['placeholder' => '请输入门店名称...'],
             'data' => isset($store_name_data)?$store_name_data:[],
@@ -60,7 +59,6 @@ use yii\widgets\ActiveForm;
                 'templateSelection' => new JsExpression('function (res) { return res.text; }'),
             ],
         ]); ?>
-
         <?= $form->field($model, 'inventory_num')->textInput() ?>
 
         <?= $form->field($model, 'sale_price')->textInput() ?>

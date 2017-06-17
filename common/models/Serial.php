@@ -28,6 +28,8 @@ use Yii;
  * @property integer $type
  * @property string $create_time
  * @property integer $status
+ * @property integer $jump_style
+ * @property integer $jump_to
  */
 class Serial extends \yii\db\ActiveRecord
 {
@@ -53,8 +55,8 @@ class Serial extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['online_time', 'offline_time'], 'required'],
-            [['online_time', 'offline_time', 'create_time'], 'safe'],
+            [['online_time', 'offline_time','jump_style'], 'required'],
+            [['online_time', 'offline_time', 'create_time','jump_to'], 'safe'],
             [['like_count', 'see_count', 'share_count', 'comment_count', 'category_id', 'is_recommend', 'is_display', 'cover_imgwidth', 'cover_imgheight', 'type', 'status'], 'integer'],
             [['title', 'label_name', 'cover_imgpath', 'freerate', 'wx_big_imgpath', 'wx_small_imgpath'], 'string', 'max' => 255],
         ];
@@ -87,6 +89,8 @@ class Serial extends \yii\db\ActiveRecord
             'type' => '所属类型 ',
             'create_time' => '创建时间',
             'status' => '状态',
+            'jump_style'=>'期类型',
+            'jump_to' => '期活动内容'
         ];
     }
 

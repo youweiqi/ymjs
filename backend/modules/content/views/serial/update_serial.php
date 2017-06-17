@@ -22,6 +22,11 @@ use kartik\datetime\DateTimePicker;
         ]
     ]); ?>
 
+
+    <?= $form->field($model, 'jump_style')->textInput(['readonly' => 'readonly'])?>
+
+    <?= $form->field($model, 'jump_to')->textInput(['readonly' => 'readonly']) ?>
+
     <?= $form->field($model, 'online_time')->widget(DateTimePicker::classname(), [
         'options' => ['placeholder' => ''],
         'removeButton' => false,

@@ -73,7 +73,7 @@ use yii\widgets\ActiveForm;
             break;
         case 2:
         {
-            echo '<div id="role" style="display: block;">';
+            echo '<div id="role" style="display: none;">';
             echo $form->field($model, 'talent_effect_time')->widget(DateTimePicker::classname(), [
                 'options' => ['placeholder' => ''],
                 'removeButton' => false,
@@ -104,7 +104,7 @@ use yii\widgets\ActiveForm;
             break;
         }
         case 3:{
-            echo '<div id="role" style="display: block;">';
+            echo '<div id="role" style="display: none;">';
             echo $form->field($model, 'talent_effect_time')->widget(DateTimePicker::classname(), [
                 'options' => ['placeholder' => ''],
                 'removeButton' => false,
@@ -163,20 +163,16 @@ $('body').on('click',"#cuser-role_id",function(){
     function reChangeOpenFlashExpress1(role_id){
         switch (role_id){
             case '1':{
-                        console.log(role_id);
+                        
                 $("#role").hide();
                 $("#commission").hide();
                 break;
             }case '2':{
-                        console.log(role_id);
-
-                $("#role").show();
+                 $("#role").hide();
                 $("#commission").hide();
                 break;
             }case '3':{
-                        console.log(role_id);
-
-                $("#role").show();
+                 $("#role").hide();
                 $("#commission").show();
                 break;
             }

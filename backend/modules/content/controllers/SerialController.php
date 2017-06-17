@@ -100,11 +100,17 @@ class SerialController extends Controller
                 $model->wx_small_imgpath = $wx_small_imgpath_ret['key'];
             }
             if($model->save(false)){
+                    $a = 1;
+                if($model->jump_style == '4' && empty($model->jump_to)){
+                    $id = $model->attributes['id'];
+                    $model->jump_to = $id ;
+                    $model->save(false);
+                }
                 if(!empty($serial_brand_model->brand_id)){
                     $serial_brand_model->serial_id = $model->id;
                     $serial_brand_model->save(false);
                 }
-                return $this->redirect(['index']);
+                return $this->redirect(Yii::$app->request->getReferrer());
             }
         }
         $model->is_recommend= '0';
@@ -263,6 +269,20 @@ class SerialController extends Controller
             ->all();
 
         $out['results'] = $data?$data:[];
+        return $out;
+    }
+
+    public function actionSearchGood($name=null)
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $out = ['results' => ['id' => '', 'text' => '']];
+        $data = Serial::find()
+            ->select('id as id, title as text')
+            ->andFilterWhere(['like', 'title', $name])
+            ->limit(20)
+            ->asArray()
+            ->all();
+        $out['results'] = array_values($data);
         return $out;
     }
 }

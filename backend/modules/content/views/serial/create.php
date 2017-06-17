@@ -39,6 +39,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <?= $form->field($model, 'label_name')->textInput(['maxlength' => true])->hint('<span style="color: #ff0000;">*</span>') ?>
 
+        <?= $form->field($model, 'jump_style')->dropDownList(['1'=>'无','2'=>'商品','3'=>'URL','4'=>'期'])->hint('<span style="color: #ff0000;">*</span>') ?>
+
+        <?= $form->field($model, 'jump_to')->textInput(['maxlength' => true,'placeholder'=>'请根据类型填写商品ID、资讯ID或链接']) ?>
+
+
         <?= $form->field($model, 'cover_imgpath')->label('封面图')->fileInput()->hint('<span style="color: #ff0000;">*</span>') ?>
 
         <div class='form-group'>

@@ -101,7 +101,13 @@ class InventoryController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $store = Store::findOne($model->store_id);
+
+        if($model->store_id == '0'){
+            $store = new Store(['id' => 0,'store_name' => '贡云商城']);
+        }else{
+            $store = Store::findOne($model->store_id);
+        }
+
         $product = Product::findOne($model->product_id);
         $store_name_data = [$store->id=>$store->store_name];
         $product_bn_data = [$product->id=>$product->product_bn];

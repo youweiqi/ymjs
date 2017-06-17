@@ -74,9 +74,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             'create_time',
-            'talent_effect_time',
-            'talent_failure_time',
-
             [
                 'attribute' => 'lock_status',
                 'value' => function ($model) {

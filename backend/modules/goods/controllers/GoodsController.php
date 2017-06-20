@@ -62,25 +62,17 @@ class GoodsController extends BaseController
     public function actionIndex()
     {
         $searchModel = new GoodsSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        if (Yii::$app->request->post('hasEditable')) {
-            $id = Yii::$app->request->post('editableKey');
-            $model = Goods::findOne(['id' => $id]);
-            $posted=current($_POST['Goods']);
-            $post =['Goods' =>$posted];
-            $output='';
-            if ($model->load($post)){
-                $model->save();
-                isset($post['score_rate']) && $output = $model->score_rate;
-            }
-            $out = Json::encode(['output'=>$output, 'message'=>'']);
-            return $out;
+        if (Yii::$app->request->get('sub') === 'export') {
+            $params = Yii::$app->request->get('GoodsSearch');
+            parent::setQueueTask(5, $params);
+            return $this->redirect(['/content/queue-tasks/index']);
+        } else {
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
         }
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
     }
 
     /**

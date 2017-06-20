@@ -106,7 +106,7 @@ class CUserController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             if($model->role_id == 3){
                 $model->parent_user_id = '0';
-                $model->root_user_id = '0';
+                $model->root_user_id = $id;
                 $commision = $model->getUser_commission();
                 if(isset($commision->id)){
                     $commision->load(Yii::$app->request->post());

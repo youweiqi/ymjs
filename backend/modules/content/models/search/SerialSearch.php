@@ -47,6 +47,7 @@ class SerialSearch extends Serial
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort'=> ['defaultOrder' => ['offline_time'=>SORT_DESC,'id'=>SORT_DESC]]
         ]);
 
         $this->load($params);

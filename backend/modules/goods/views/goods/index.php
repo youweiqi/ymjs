@@ -57,7 +57,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'header'=>'查看',
                 'class' => 'yii\grid\ActionColumn',
-                'headerOptions' => ['width' => '65'],
+                'headerOptions' => ['style' => 'min-width:50px'],
                 'template' => '{open}',
                 'buttons' => [
                     'open' => function ($url, $model, $key) {
@@ -67,7 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'header'=>'操作',
                 'class' => 'yii\grid\ActionColumn',
-                'headerOptions' => ['width' => '100'],
+                'headerOptions' => ['style' => 'min-width:60px'],
                 'template' => '{update}{commission}{view-log}',
                 'buttons' => [
                     'update' => function ($url, $model, $key) {
@@ -97,17 +97,22 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ],
             [
+                'headerOptions' => ['style' => 'min-width:60px'],
                 'attribute' => 'id',
-                'headerOptions' => ['width' => '75'],
             ],
-            'goods_code',
+            [
+                'attribute' => 'goods_code',
+                'headerOptions' => ['style' => 'min-width:10px'],
+            ],
             'label_name',
             [
+                'headerOptions' => ['style' => 'min-width:102px'],
                 'label' => '商品分佣(%)',
                 'value' =>'goods_commission.commission',
             ],
 
             [
+                'headerOptions' => ['style' => 'min-width:107px'],
                 'attribute' => 'category_parent_id',
                 'label' => '2级分类',
                 'value' => function ($model) {
@@ -122,19 +127,26 @@ $this->params['breadcrumbs'][] = $this->title;
                     return GoodsLib::getGoodsImg($model->id,'60px');
                 }
             ],
-            'name',
             [
+                'attribute' => 'name',
+                'headerOptions' => ['style' => 'min-width:50px'],
+            ]
+            ,
+            [
+                'headerOptions' => ['style' => 'min-width:107px'],
                 'label'=>'品牌中文名',
                 'attribute' => 'brand_id',
                 'value' => 'brand.name_cn',
             ],
             [
+                'headerOptions' => ['style' => 'min-width:100px'],
                 'label'=>'品牌英文名',
                 'attribute' => 'brand_id',
                 'value' => 'brand.name_en',
             ],
 
             [
+                'headerOptions' => ['style' => 'min-width:80px'],
                 'attribute' => 'channel',
                 'label' => '来源渠道',
                 'value' => function ($model) {

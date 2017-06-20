@@ -71,7 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'template' => '{update}{commission}{view-log}',
                 'buttons' => [
                     'update' => function ($url, $model, $key) {
-                        return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', Url::to(['update-goods','id'=>$key]));
+                        return Html::a('<span class="glyphicon glyphicon-pencil"></span>', Url::to(['update-goods','id'=>$key]));
                     },
                     'commission' => function ($url, $model, $key) {
                         return Html::a('<span class="glyphicon glyphicon-yen"></span>', '#',

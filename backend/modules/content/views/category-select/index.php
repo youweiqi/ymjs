@@ -53,7 +53,6 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'name',
             'category_id',
-            'ico_path',
             [
                 'attribute' => 'ico_path',
                 'label' => '分类展示图片',

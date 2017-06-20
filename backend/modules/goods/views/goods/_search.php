@@ -79,6 +79,7 @@ use yii\widgets\ActiveForm;
     <div class="" style="margin-top:20px;margin-left:18px">
         <?= Html::submitButton('搜索', ['class' => 'btn btn-primary btn-sm','']) ?>
         <?= Html::resetButton('重置', ['class' => 'btn btn-default btn-sm']) ?>
+        <?= Html::submitButton('导出', ['class' => 'btn btn-primary btn-sm','value'=>'export', 'name' => 'sub']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

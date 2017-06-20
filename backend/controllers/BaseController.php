@@ -2,6 +2,7 @@
 namespace backend\controllers;
 
 use common\models\OperationLog;
+use common\models\QueueTasks;
 use Yii;
 use common\core\Controller;
 use backend\models\Config;
@@ -356,5 +357,44 @@ class BaseController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+
+
+    /**
+     * 将导出任务保存到队列.
+     * @param integer $taskType
+     * @param array $params
+     */
+    protected function setQueueTask($taskType,$params)
+    {
+        $params['export_type'] = $taskType;
+        $task = new QueueTasks();
+        $task->operater = Yii::$app->user->getId();
+        $task->create_time= date("Y-m-d H:i:s");
+        $task->task_type = $taskType;
+        $task->task_status = 0;
+        $task->task_content= json_encode($params);
+        $transaction = Yii::$app->db->beginTransaction();
+        try
+        {
+            $r = $task->save(false);
+            if($r === false)
+            {
+                throw new \Exception('insert db fail');
+            }
+            //加入队列
+            $payload = [
+                "task_id" => $task->task_id,
+                "task_content" => $params,
+            ];
+            Yii::$app->amqp->product("wuyou_exchange","export_{$taskType}_queue_wuyou","export_{$taskType}_routing_key_wuyou", json_encode($payload));
+            $transaction->commit();
+            Yii::$app->session->setFlash('success','创建新任务成功，任务id：'.$task->task_id);
+        }catch (\Exception $e) {
+            //获取抛出的错误
+            $transaction->rollBack();
+            Yii::$app->session->setFlash('error', '创建任务失败 请联系管理员:'.$e->getMessage());
+        }
+    }
+
 
 }

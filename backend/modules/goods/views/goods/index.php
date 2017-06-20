@@ -40,6 +40,12 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'export'=>false,
         'dataProvider' => $dataProvider,
+        'rowOptions' => function($model, $key, $index, $grid) {
+            if($model->online_time>date('Y-m-d H:i:s',time())||$model->offline_time<date('Y-m-d H:i:s',time())){
+                return ['style' => 'background:#A2A2A2'];
+            }
+            return [];
+        },
         'filterSelector' => "select[name='".$dataProvider->getPagination()->pageSizeParam."'],input[name='".$dataProvider->getPagination()->pageParam."']",
         'pager' => [
             'class' => LinkPager::className(),
@@ -117,6 +123,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => '2级分类',
                 'value' => function ($model) {
                     return CategoryLib::getCategoryName($model->category_parent_id);
+                }
+            ],
+            [
+                'attribute' => 'category_id',
+                'label' => '3级分类',
+                'value' => function ($model) {
+                    return CategoryLib::getCategoryName($model->category_id);
                 }
             ],
             [

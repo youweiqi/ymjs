@@ -2,6 +2,9 @@
 
 namespace backend\modules\goods\controllers;
 
+
+
+use backend\controllers\BaseController;
 use backend\libraries\ApiGoodsLib;
 use backend\libraries\GoodsCommissionLib;
 use backend\modules\goods\models\form\GoodsCommissionForm;
@@ -23,7 +26,7 @@ use yii\web\Response;
 /**
  * GoodsApiController implements the CRUD actions for Goods model.
  */
-class GoodsApiController extends Controller
+class GoodsApiController extends BaseController
 {
     public $enableCsrfValidation = false;
     /**
@@ -48,25 +51,18 @@ class GoodsApiController extends Controller
     public function actionIndex()
     {
         $searchModel = new GoodsApiSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        if (Yii::$app->request->post('hasEditable')) {
-            $id = Yii::$app->request->post('editableKey');
-            $model = Goods::findOne(['id' => $id]);
-            $posted=current($_POST['Goods']);
-            $post =['Goods' =>$posted];
-            $output='';
-            if ($model->load($post)){
-                $model->save();
-                isset($post['score_rate']) && $output = $model->score_rate;
-            }
-            $out = Json::encode(['output'=>$output, 'message'=>'']);
-            return $out;
-        }
+        if (Yii::$app->request->get('sub') === 'export') {
+            $params = Yii::$app->request->get('GoodsApiSearch');
+            parent::setQueueTask(4, $params);
+            return $this->redirect(['/content/queue-tasks/index']);
+        } else {
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }
     }
 
     /**

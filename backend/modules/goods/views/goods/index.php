@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('新增商品', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('新增商品', ['create-goods'], ['class' => 'btn btn-success']) ?>
 
         <?= Html::a('批量上下架', '#', [
             'class' => 'btn btn-success  gridview',
@@ -70,17 +70,20 @@ $this->params['breadcrumbs'][] = $this->title;
                 'headerOptions' => ['width' => '100'],
                 'template' => '{update}{commission}{view-log}',
                 'buttons' => [
-                'commission' => function ($url, $model, $key) {
-                    return Html::a('<span class="glyphicon glyphicon-yen"></span>', '#',
-                            [
-                                'title' => '商品分佣',
-                                'aria-label' => '商品分佣',
-                                'data-toggle' => 'modal',
-                                'data-target' => '#good-commission-modal',
-                                'class' => 'data-good-commission',
-                                'data-id' => $key,
-                            ]);
-                },
+                    'update' => function ($url, $model, $key) {
+                        return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', Url::to(['update-goods','id'=>$key]));
+                    },
+                    'commission' => function ($url, $model, $key) {
+                        return Html::a('<span class="glyphicon glyphicon-yen"></span>', '#',
+                                [
+                                    'title' => '商品分佣',
+                                    'aria-label' => '商品分佣',
+                                    'data-toggle' => 'modal',
+                                    'data-target' => '#good-commission-modal',
+                                    'class' => 'data-good-commission',
+                                    'data-id' => $key,
+                                ]);
+                    },
                     'view-log' => function ($url, $model, $key) {
                         return Html::a('<span class="glyphicon glyphicon-list-alt"></span>', '#', [
                             'title' => '查看操作日志',

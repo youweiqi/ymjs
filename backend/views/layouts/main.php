@@ -187,6 +187,8 @@ $this->beginPage();
     $create_modal_title = isset($this->params['create_modal_title'])?$this->params['create_modal_title']:'';
     $update_modal_title = isset($this->params['update_modal_title'])?$this->params['update_modal_title']:'';
     $view_modal_title = isset($this->params['view_modal_title'])?$this->params['view_modal_title']:'';
+    $view_log_modal_title = isset($this->params['view_log_modal_title'])?$this->params['view_log_modal_title']:'';
+    $log_type = isset($this->params['log_type'])?$this->params['log_type']:'';
     Modal::begin([
         'id'=>'create-modal',
         'header'=>'<h4 class="modal-title">'.$create_modal_title.'</h4>',
@@ -220,9 +222,20 @@ $this->beginPage();
         ],
     ]);
     Modal::end();
+    Modal::begin([
+        'id'=>'view-log-modal',
+        'footer'=>'<div class="form-group" style="text-align:center"><button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button></div>',
+        'options' => [
+            'tabindex' => false,
+            'data-backdrop' => 'static',
+            'data-keyboard' => false
+        ],
+    ]);
+    Modal::end();
     $request_create_url = Url::toRoute('create');
     $request_update_url = Url::toRoute('update');
     $request_view_url = Url::toRoute('view');
+    $request_view_log_url = Url::toRoute('view-log');
     $modal_height = isset($this->params['modal_height'])?$this->params['modal_height']:'550px';
     $modal_js = <<<JS
     $('#data-create').on('click', function () {
@@ -252,6 +265,17 @@ $this->beginPage();
         $.get('{$request_view_url}', { id: $(this).closest('tr').data('key') },
             function (data) {
                 $('#view-modal').find('.modal-body').html(data);
+            }
+        );
+    });
+$('.data-view-log').on('click', function () {
+   
+        $('.modal-body').html('');
+        $('#view-log-modal').find('.modal-body').css('height','{$modal_height}');
+        $('#view-log-modal').find('.modal-body').css('overflow-y','auto');
+        $.get('{$request_view_log_url}', { id: $(this).closest('tr').data('key'),type: '{$log_type}'},
+            function (data) {
+                $('#view-log-modal').find('.modal-body').html(data);
             }
         );
     });

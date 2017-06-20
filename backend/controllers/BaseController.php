@@ -1,6 +1,7 @@
 <?php
 namespace backend\controllers;
 
+use common\models\OperationLog;
 use Yii;
 use common\core\Controller;
 use backend\models\Config;
@@ -251,6 +252,109 @@ class BaseController extends Controller
         echo json_encode($data);
         //Yii::$app->end();
         exit;
+    }
+
+    /**
+     * 记录业务操作日志.
+     * @param  integer $objId    ID
+     * @param  integer $objName    标识
+     * @param  integer $operateType    操作类型
+     * @param  string $description    描述
+     */
+    protected function writeLog($objId,$objName,$operateType,$description)
+    {
+        $operatorName = Yii::$app->user->identity->username;
+        $ip = ip2long(Yii::$app->request->userIP);
+        $route = Url::to();
+        $operatorId = Yii::$app->user->id;
+        $module = Yii::$app->controller->module->id;
+        $createdAt = time();
+        $data = [
+            'obj_id' => $objId,
+            'obj_name' => $objName,
+            'module' => $module,
+            'operate_type' => $operateType,
+            'route' => $route,
+            'operator_id' => $operatorId,
+            'operator_name' => $operatorName,
+            'created_at' => $createdAt,
+            'description' => $description,
+            'ip' => $ip,
+        ];
+        Yii::$app->logger->saveLog(new OperationLog(),$data);
+    }
+    /**
+     * 批量记录业务操作日志.
+     * @param  array $objIdArr    ID数组
+     * @param  array $objNameArr    标识数组
+     * @param  integer $operateType    操作类型
+     * @param  string $description    描述
+     */
+    protected function batchWriteLog($objIdArr,$objNameArr,$operateType,$description)
+    {
+        $operatorName = Yii::$app->user->identity->username;
+        $ip = ip2long(Yii::$app->request->userIP);
+        $route = Url::to();
+        $operatorId = Yii::$app->user->id;
+        $module = Yii::$app->controller->module->id;
+        $createdAt = time();
+        foreach ($objIdArr as $objId)
+        {
+            $data = [
+                'obj_id' => $objId,
+                'obj_name' => isset($objNameArr[$objId])?isset($objNameArr[$objId]):'',
+                'module' => $module,
+                'operate_type' => $operateType,
+                'route' => $route,
+                'operator_id' => $operatorId,
+                'operator_name' => $operatorName,
+                'created_at' => $createdAt,
+                'description' => $description,
+                'ip' => $ip,
+            ];
+            $dataArr[] = $data;
+            unset($data);
+        }
+        if(!empty($dataArr) && is_array($dataArr)){
+            Yii::$app->db->createCommand()
+                ->batchInsert(OperationLog::tableName(),
+                    [
+                        'obj_id',
+                        'obj_name',
+                        'module',
+                        'operate_type',
+                        'route',
+                        'operator_id',
+                        'operator_name',
+                        'created_at',
+                        'description',
+                        'ip',
+                    ],$dataArr)
+                ->execute();
+        }
+    }
+
+    /**
+     * 查看日志.
+     * @param  integer $id    ID
+     * @param  string $type    日志类型
+     * @return mixed
+     */
+    public function actionViewLog($id,$type)
+    {
+        $query = OperationLog::find()
+            ->where(['obj_id'=>$id,'operate_type'=>$type])
+            ->orderBy(['created_at'=>SORT_DESC]);
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 1000,
+            ],
+            'sort' => false
+        ]);
+        return $this->renderAjax('//site/view_log', [
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
 }

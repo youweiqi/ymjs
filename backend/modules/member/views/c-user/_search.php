@@ -24,13 +24,14 @@ use yii\widgets\ActiveForm;
             ]
 
     ]); ?>
-    <div class="" style="margin-top:5px">
+    <div class="" style="margin-top:15px">
         <?= $form->field($model, 'id')->input('text',['class'=>'form-control input-sm']) ?>
 
         <?= $form->field($model, 'user_name')->input('text',['class'=>'form-control input-sm']) ?>
 
+        <?= $form->field($model, 'parent_user_name')->label('上级分销商')->input('text',['class'=>'form-control input-sm']) ?>
 
-
+        <?= $form->field($model, 'root_user_name')->label('总分销商')->input('text',['class'=>'form-control input-sm']) ?>
 
         <?= $form->field($model, 'begin_time')->label('开始时间')->widget(DateTimePicker::classname(), [
             'options' => ['placeholder' => '','class'=>'form-control input-sm'],

@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
@@ -10,64 +11,28 @@ use yii\widgets\ActiveForm;
 
 <div class="goods-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+        'id' => 'inventory_form',
+        'enableAjaxValidation' => true,
+        'validationUrl' => Url::toRoute(['goods-commission-validate-form','id'=>$model->isNewRecord?null:$model->id]),
+        'options' => [
+            'class'=>'form-horizontal',
+            'style'=> 'padding:15px 15px;border:1px solid #D8DCE3;x;'
+        ],
+        'fieldConfig' => [
+            'template' => "<div class='col-sm-3 text-right'>{label}:</div><div class='col-sm-5'>{input}</div><div>{hint}</div><div class='col-sm-4 col-sm-offset-0'>{error}</div>",
+        ]
+    ]); ?>
 
-    <?= $form->field($model, 'goods_code')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'id')->textInput(['readonly'=>'readonly']) ?>
 
-    <?= $form->field($model, 'brand_id')->textInput() ?>
+    <?= $form->field($model->goods_commission, 'commission')->label('分佣')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'spec_desc')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'service_desc')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'label_name')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'suggested_price')->textInput() ?>
-
-    <?= $form->field($model, 'lowest_price')->textInput() ?>
-
-    <?= $form->field($model, 'unit')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'remark')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'category_parent_id')->textInput() ?>
-
-    <?= $form->field($model, 'category_id')->textInput() ?>
-
-    <?= $form->field($model, 'online_time')->textInput() ?>
-
-    <?= $form->field($model, 'offline_time')->textInput() ?>
-
-    <?= $form->field($model, 'talent_limit')->textInput() ?>
-
-    <?= $form->field($model, 'threshold')->textInput() ?>
-
-    <?= $form->field($model, 'ascription')->textInput() ?>
-
-    <?= $form->field($model, 'talent_display')->textInput() ?>
-
-    <?= $form->field($model, 'discount')->textInput() ?>
-
-    <?= $form->field($model, 'operate_costing')->textInput() ?>
-
-    <?= $form->field($model, 'score_rate')->textInput() ?>
-
-    <?= $form->field($model, 'self_support')->textInput() ?>
-
-    <?= $form->field($model, 'create_time')->textInput() ?>
-
-    <?= $form->field($model, 'wx_small_imgpath')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'channel')->textInput() ?>
-
-    <?= $form->field($model, 'api_goods_id')->textInput() ?>
-
-    <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+    <hr>
+    <div class="form-group" style="text-align:center">
+        <?= Html::submitButton('保存', ['class' => 'btn btn-success']) ?>
+        <?= Html::button('关闭', ['class' => 'btn btn-primary','data-dismiss'=>'modal']) ?>
     </div>
-
     <?php ActiveForm::end(); ?>
 
 </div>

@@ -14,6 +14,9 @@ class CUserSearch extends CUser
 {
     public $begin_time;
     public $end_time;
+    public $user_name;
+    public $root_user_name;
+    public $parent_user_name;
     /**
      * @inheritdoc
      */
@@ -22,6 +25,7 @@ class CUserSearch extends CUser
         return [
             [['id', 'role_id', 'old_role_id', 'lock_status', 'is_black', 'money', 'empiric_value', 'total_cost', 'total_sale', 'fans_count', 'remain_sales_quota', 'total_cost_score'], 'integer'],
             [['begin_time','end_time','user_name', 'password', 'background_image', 'nick_name', 'picture', 'synopsis', 'talent_effect_time', 'talent_failure_time', 'recommend_from', 'member_recommend', 'talent_teacher', 'last_login_time', 'create_time', 'update_time', 'remark'], 'safe'],
+            [['user_name','root_user_name','parent_user_name'],'trim']
         ];
     }
 
@@ -53,7 +57,31 @@ class CUserSearch extends CUser
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+        if(isset($params['CUserSearch'])) {
+            $param['root_user_name'] = $params['CUserSearch']['root_user_name'];
+            if (!empty($param['root_user_name'])) {
+                $model1 = self::findOne(['user_name' => $param['root_user_name']]);
+                if (is_object($model1)) {
+                    $user_id = $model1->id;
+                    $query->andFilterWhere(['=', 'root_user_id', $user_id]);
+                } else {
+                    $query->andWhere(['=', 'root_user_id', null]);
+                }
 
+            }
+
+            $param['parent_user_name'] = $params['CUserSearch']['parent_user_name'];
+            if (!empty($param['parent_user_name'])) {
+                $model2 = self::findOne(['user_name' => $param['parent_user_name']]);
+                if (is_object($model2)) {
+                    $user_id = $model2->id;
+                    $query->andFilterWhere(['=', 'parent_user_id', $user_id]);
+                } else {
+                    $query->andWhere(['=', 'parent_user_id', null]);
+                }
+
+            }
+        }
         $this->load($params);
 
         if (!$this->validate()) {
@@ -83,9 +111,8 @@ class CUserSearch extends CUser
             'total_cost_score' => $this->total_cost_score,
         ]);
 
-        $query->andFilterWhere(['like', 'user_name', $this->user_name])
-            ->andFilterWhere(['between','c_user.create_time',$this->begin_time,$this->end_time])
-            ->andFilterWhere(['like', 'nick_name', $this->nick_name]);
+        $query->andFilterWhere(['like', 'c_user.user_name', $this->user_name])
+            ->andFilterWhere(['between','c_user.create_time',$this->begin_time,$this->end_time]);
 
 
         return $dataProvider;

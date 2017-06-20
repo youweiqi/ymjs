@@ -88,6 +88,21 @@ class CUserController extends Controller
     {
         $model = $this->findModel($id);
 
+        //返回他的上游和总端分销商
+       $parent_user_id = $model->parent_user_id;
+        $root_user_id = $model->root_user_id;
+        if($parent_user_id != '0'){
+           $model1 = CUser::findOne($parent_user_id);
+            $parent_user_name =[$model1->id => $model1->user_name];
+        }else{
+            $parent_user_name = ['无'];
+        }
+        if($root_user_id != '0'){
+            $model1 = CUser::findOne($root_user_id);
+            $root_user_name =[$model1->id => $model1->user_name];
+        }else{
+            $root_user_name = ['无'];
+        }
         if ($model->load(Yii::$app->request->post())) {
             if($model->role_id == 3){
                 $model->parent_user_id = '0';
@@ -109,6 +124,8 @@ class CUserController extends Controller
         } else {
             return $this->renderAjax('update', [
                 'model' => $model,
+                'root_user_name' =>$root_user_name,
+                'parent_user_name' =>$parent_user_name
             ]);
         }
 
@@ -159,6 +176,20 @@ class CUserController extends Controller
 //        return ActiveForm::validate($model);
         return $errors;
 
+    }
+
+    public function actionSearchUser ($name=null)
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $out = ['results' => ['id' => '', 'text' => '']];
+        $data = CUser::find()
+            ->select('id as id, name as text')
+            ->andFilterWhere(['like', 'c_user.user_name', $name])
+            ->limit(10)
+            ->asArray()
+            ->all();
+        $out['results'] = array_values($data);
+        return $out;
     }
 
 

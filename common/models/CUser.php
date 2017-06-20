@@ -92,7 +92,7 @@ class CUser extends \yii\db\ActiveRecord
             'background_image' => 'Background Image',
             'nick_name' => '昵称',
             'picture' => 'Picture',
-            'lock_status' => '锁定状态',
+            'lock_status' => '冻结用户登陆',
             'is_black' => 'Is Black',
             'money' => '欧币',
             'synopsis' => 'Synopsis',
@@ -155,4 +155,5 @@ class CUser extends \yii\db\ActiveRecord
             return (new UserCommission());
         }
     }
+
 }

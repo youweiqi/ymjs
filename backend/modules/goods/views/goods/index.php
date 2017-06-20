@@ -55,11 +55,44 @@ $this->params['breadcrumbs'][] = $this->title;
                 'name' => 'id',
             ],
             [
+                'header'=>'查看',
+                'class' => 'yii\grid\ActionColumn',
+                'headerOptions' => ['width' => '65'],
+                'template' => '{open}',
+                'buttons' => [
+                    'open' => function ($url, $model, $key) {
+                        return Html::a('<span data-id="'.$model->id. '" class="open-row glyphicon glyphicon-collapse-up"></span>', 'javascript:;'); },
+                ],
+            ],
+            [
                 'header'=>'操作',
                 'class' => 'yii\grid\ActionColumn',
                 'headerOptions' => ['width' => '100'],
-                'template' => '{update}',
+                'template' => '{update}{commission}{view-log}',
+                'buttons' => [
+                'commission' => function ($url, $model, $key) {
+                    return Html::a('<span class="glyphicon glyphicon-yen"></span>', '#',
+                            [
+                                'title' => '商品分佣',
+                                'aria-label' => '商品分佣',
+                                'data-toggle' => 'modal',
+                                'data-target' => '#good-commission-modal',
+                                'class' => 'data-good-commission',
+                                'data-id' => $key,
+                            ]);
+                },
+                    'view-log' => function ($url, $model, $key) {
+                        return Html::a('<span class="glyphicon glyphicon-list-alt"></span>', '#', [
+                            'title' => '查看操作日志',
+                            'aria-label' => '查看操作日志',
+                            'data-toggle' => 'modal',
+                            'data-target' => '#view-log-modal',
+                            'class' => 'data-view-log',
+                            'data-id' => $key,
+                        ]);
+                    },
             ],
+        ],
             [
                 'attribute' => 'id',
                 'headerOptions' => ['width' => '75'],
@@ -113,6 +146,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
 </div>
 <?php
+$this->params['view_log_modal_title'] = '查看商品分佣操作日志';
+$this->params['log_type'] = 'goods_commission';
+?>
+<?php
 Modal::begin([
     'id'=>'up-down-modal',
     'options' => [
@@ -134,7 +171,7 @@ $modal_js = <<<JS
        var keys = $("#grid").yiiGridView("getSelectedRows");
        if(keys.length>0){
            $('#commission-modal').modal('toggle')
-            $('#commission-modal').find('.modal-header').html('<h4 class="modal-title">批量设置分佣</h4>');
+            $('#commission-modal').find('.modal-header').html('<h4 class="modal-title">设置分佣</h4>');
               $.post('{$request_commission_url}', { ids: keys },
                     function (data) {
                         $('#commission-modal').find('.modal-body').html(data);
@@ -157,9 +194,28 @@ Modal::begin([
     ],
 ]);
 Modal::end();
+Modal::begin([
+    'id'=>'good-commission-modal',
+    'options' => [
+        'tabindex' => false
+    ],
+]);
+Modal::end();
 $request_batch_update_url = Url::toRoute(['goods/up-down-goods']);
-
+$request_commission1_url = Url::toRoute(['/goods/goods/update-good-commission']);
 $batch_update_modal_js = <<<JS
+
+ $('.data-good-commission').on('click', function () {
+        $('#good-commission-modal').find('.modal-header').html('<h4 class="modal-title">商品分佣</h4>');
+        $('#good-commission-modal').find('.modal-body').html('');
+        $('#good-commission-modal').find('.modal-body').css('height','350px');
+        $('#good-commission-modal').find('.modal-body').css('overflow-y','auto');
+        $.get('{$request_commission1_url}',{ goods_id: $(this).closest('tr').data('key') },
+            function (data) {
+                $('#good-commission-modal').find('.modal-body').html(data);
+            }
+        );
+    });
   
     $('#data-batch-update').bind('click', function () {
        var keys = $("#grid").yiiGridView("getSelectedRows");

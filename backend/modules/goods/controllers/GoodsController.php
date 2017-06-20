@@ -2,6 +2,7 @@
 
 namespace backend\modules\goods\controllers;
 
+use backend\controllers\BaseController;
 use backend\libraries\GoodsLib;
 use backend\libraries\GoodsServiceLib;
 use backend\modules\goods\models\form\GoodsCommissionForm;
@@ -36,7 +37,7 @@ use yii\widgets\ActiveForm;
 /**
  * GoodsController implements the CRUD actions for Goods model.
  */
-class GoodsController extends Controller
+class GoodsController extends BaseController
 {
     public $enableCsrfValidation = false;
     /**
@@ -230,6 +231,36 @@ class GoodsController extends Controller
         return ActiveForm::validate($model);
     }
 
+    public function actionUpdateGoodCommission($goods_id)
+    {
+        $model = $this->findModel($goods_id);
+        $commision =  $model->getGoods_commission();
+        if($post = Yii::$app->request->post()){
+
+        if(isset($commision->id)){
+            $commision->load(Yii::$app->request->post());
+            $commision->save();
+            $description = '更新商品分佣';
+            $this->writeLog($model->id,$commision->commission,'goods_commission',$description);
+
+        }else{
+            $commision->good_id = $goods_id;
+            $commision->load(Yii::$app->request->post());
+            $commision->save();
+            $description = '新增商品分佣';
+            $this->writeLog($model->id,$commision->commission,'goods_commission',$description);
+
+        }
+            $model->save(false);
+            return $this->redirect(Yii::$app->request->getReferrer());
+        }else{
+            return $this->renderAjax('_form', [
+            'model' => $model,
+            'goods_id' => $goods_id,
+            ]);
+            }
+    }
+
 
     public function actionUpdateGoodsCommission()
     {
@@ -265,6 +296,8 @@ class GoodsController extends Controller
                     throw new \Exception('操作更新分佣的步骤失败！');
                 }
                 $transaction->commit();
+                $description = '批量设置分佣';
+                $this->batchWriteLog($ids,[],'goods_commission',$description);
                 Yii::$app->session->setFlash('success','批量设置商品分佣成功');
             } catch (\Exception $e) {
                 Yii::$app->session->setFlash('error','批量设置商品分佣失败');
@@ -296,4 +329,13 @@ class GoodsController extends Controller
         Yii::$app->response->format = Response::FORMAT_JSON;
         return ActiveForm::validate($model);
     }
+
+    public function actionGoodCommissionValidateForm($id = null)
+    {
+        $model = $id === null ? new GoodsCommission() : GoodsCommission::findOne(['good_id'=>$id]);
+        $model->load(Yii::$app->request->post());
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        return ActiveForm::validate($model);
+    }
+
 }

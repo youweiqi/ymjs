@@ -105,7 +105,7 @@ class Goods extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
+            'id' => '商品ID',
             'goods_code' => '商品编码',
             'brand_name' => '品牌',
             'name' => '商品名称',
@@ -167,8 +167,15 @@ class Goods extends \yii\db\ActiveRecord
     }
     public function getGoods_commission()
     {
-        return $this->hasOne(GoodsCommission::className(),['good_id'=>'id']);
+        $model = $this->hasOne(GoodsCommission::className(),['good_id'=>'id'])->one();
+        if($model) {
+            return $model;
+        }else{
+            return (new GoodsCommission());
+        }
     }
+
+
     /**
      * 通过商品ID获取商品编号
      * @param  integer $id
@@ -200,4 +207,6 @@ class Goods extends \yii\db\ActiveRecord
         }
         return $product_code->goods_code;
     }
+
+
 }

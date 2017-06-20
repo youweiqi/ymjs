@@ -3,8 +3,10 @@
 use backend\libraries\MemberLib;
 use common\helpers\ArrayHelper;
 use kartik\widgets\DateTimePicker;
+use kartik\widgets\Select2;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\web\JsExpression;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
@@ -35,9 +37,41 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'user_name')->textInput(['readonly' => 'readonly']) ?>
 
-    <?= $form->field($model, 'role_id')->radioList(['1'=>'普通用户','2'=>'小分销商','3'=>'大分销商']) ?>
-
-
+    <?= $form->field($model, 'parent_user_id')->widget(Select2::classname(), [
+        'data' => isset($parent_user_name)?$parent_user_name:[],
+        'disabled' => true,
+        'pluginOptions' => [
+            'allowClear' => true,
+            'ajax' => [
+                'url' => Url::to(['/member/c-user/search-user']),
+                'dataType' => 'json',
+                'data' => new JsExpression('function(params) { return {name:params.term}; }')
+            ],
+            'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
+            'templateResult' => new JsExpression('function(res) { return res.text; }'),
+            'templateSelection' => new JsExpression('function (res) { return res.text; }'),
+        ],
+    ]); ?>
+    <?= $form->field($model, 'root_user_id')->widget(Select2::classname(), [
+        'data' => isset($root_user_name)?$root_user_name:[],
+        'disabled' => true,
+        'pluginOptions' => [
+            'allowClear' => true,
+            'ajax' => [
+                'url' => Url::to(['/member/c-user/search-user']),
+                'dataType' => 'json',
+                'data' => new JsExpression('function(params) { return {name:params.term}; }')
+            ],
+            'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
+            'templateResult' => new JsExpression('function(res) { return res.text; }'),
+            'templateSelection' => new JsExpression('function (res) { return res.text; }'),
+        ],
+    ]); ?>
+    <?php
+    if($model->role_id != 3){
+        echo $form->field($model, 'role_id')->radioList(['1'=>'普通用户','2'=>'小分销商','3'=>'大分销商']);
+    }
+    ?>
     <?php
     switch ($model->role_id)
     {
@@ -141,7 +175,7 @@ use yii\widgets\ActiveForm;
 
 
 
-    <?= $form->field($model, 'lock_status')->radioList(['0'=>'未锁定','1'=>'已锁定']) ?>
+    <?= $form->field($model, 'lock_status')->radioList(['0'=>'冻结','1'=>'激活']) ?>
 
     <hr>
     <div class="form-group" style="text-align:center">

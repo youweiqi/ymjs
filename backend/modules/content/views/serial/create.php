@@ -36,9 +36,6 @@ $this->params['breadcrumbs'][] = $this->title;
         <div style="width:100%;height:30px;background-color:#D8DCE3;line-height:30px;color:#696C75;padding-left:20px;margin-bottom:10px;">基本信息</div>
 
         <?= $form->field($model, 'title')->textInput(['maxlength' => true])->hint('<span style="color: #ff0000;">*</span>') ?>
-
-        <?= $form->field($model, 'label_name')->textInput(['maxlength' => true])->hint('<span style="color: #ff0000;">*</span>') ?>
-
         <?= $form->field($model, 'jump_style')->dropDownList(['1'=>'无','2'=>'商品','3'=>'URL','4'=>'期'])->hint('<span style="color: #ff0000;">*</span>') ?>
 
         <?= $form->field($model, 'jump_to')->textInput(['maxlength' => true,'placeholder'=>'请根据类型填写商品ID、资讯ID或链接']) ?>

@@ -38,6 +38,8 @@ class GoodsCommission extends \yii\db\ActiveRecord
     {
         return [
             [['good_id', 'role_id', 'commission', 'indirect_commission'], 'integer'],
+            ['commission', 'compare', 'compareValue' => 100, 'operator' => '<='],
+            ['commission', 'compare', 'compareValue' => 0, 'operator' => '>=']
         ];
     }
 

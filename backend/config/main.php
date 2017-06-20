@@ -52,6 +52,9 @@ return [
         'tgtools' => [
             'class' => 'backend\modules\tgtools\Module'
         ],
+        'log' => [
+            'class' => 'backend\modules\log\Module',
+        ],
         
     ],
 //    'on beforeRequest' => function($event) {
@@ -111,7 +114,9 @@ return [
                 ],
             ],
         ],
-
+        'logger' => [
+            'class' => 'common\components\Log',
+        ],
         'errorHandler' => [
             //'errorAction' => 'public/404',
         ],

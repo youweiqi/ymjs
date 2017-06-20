@@ -90,13 +90,13 @@ use kartik\datetime\DateTimePicker;
             'templateSelection' => new JsExpression('function (res) { return res.text; }'),
         ],
     ]); ?>
-    <?= $form->field($model, 'wx_small_imgpath',
+    <?= $form->field($model, 'wx_big_imgpath',
         [
             'template' => "<div class='col-md-2 text-right'>{label} :</div>
                              <div class='col-md-2'>{input}</div>
-                             <div class='col-md-1'>". Html::img($model->wx_small_imgpath,['width' => '30px','height'=>'30px','class'=>'serial-wx_small_imgpath_preview'])."</div>
+                             <div class='col-md-1'>". Html::img($model->wx_big_imgpath,['width' => '30px','height'=>'30px','class'=>'serial-wx_big_imgpath_preview'])."</div>
                              <div class='col-md-1 text-left'>{hint}</div>"
-        ])->hint('<label for="serial-wx_small_imgpath" class="control-label" style="color: red">(200*200)</label>')->fileInput()
+        ])->hint('<label for="serial-wx_big_imgpath" class="control-label" style="color: red">(200*200)</label>')->fileInput()->label('背景图')
     ?>
     <?= $form->field($model, 'type')->dropDownList(['1'=>'普通期'],['prompt' => '请选择资讯分类','disabled'=>'disabled']) ?>
 

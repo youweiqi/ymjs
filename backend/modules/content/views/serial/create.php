@@ -36,6 +36,9 @@ $this->params['breadcrumbs'][] = $this->title;
         <div style="width:100%;height:30px;background-color:#D8DCE3;line-height:30px;color:#696C75;padding-left:20px;margin-bottom:10px;">基本信息</div>
 
         <?= $form->field($model, 'title')->textInput(['maxlength' => true])->hint('<span style="color: #ff0000;">*</span>') ?>
+
+        <?= $form->field($model, 'label_name')->textInput(['maxlength' => true])->hint('<span style="color: #ff0000;">*</span>') ?>
+
         <?= $form->field($model, 'jump_style')->dropDownList(['1'=>'无','2'=>'商品','3'=>'URL','4'=>'期'])->hint('<span style="color: #ff0000;">*</span>') ?>
 
         <?= $form->field($model, 'jump_to')->textInput(['maxlength' => true,'placeholder'=>'请根据类型填写商品ID、资讯ID或链接']) ?>
@@ -51,11 +54,11 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
 
 
-        <?= $form->field($model, 'wx_small_imgpath')->label('微信小图')->fileInput() ?>
+        <?= $form->field($model, 'wx_big_imgpath')->label('背景图')->fileInput() ?>
 
         <div class='form-group'>
             <div class='col-sm-6 col-sm-offset-3'>
-                <?php echo Common::getImagePreview($model->wx_small_imgpath,'serial-wx_small_imgpath_preview',['width'=>'125px','height'=>'125px']) ?>
+                <?php echo Common::getImagePreview($model->wx_big_imgpath,'serial-wx_big_imgpath_preview',['width'=>'125px','height'=>'125px']) ?>
             </div>
             <div class='col-sm-3'></div>
         </div>
@@ -138,7 +141,7 @@ $this->registerJs('
         }
     })
     
-    $("#serial-wx_small_imgpath").change(function() {
+    $("#serial-wx_big_imgpath").change(function() {
         if( !this.value.match( /.jpg|.gif|.png|.bmp/i ) ){
             alert("图片格式无效！");
             this.value="";
@@ -146,7 +149,7 @@ $this->registerJs('
         }
         var objUrl = getObjectURL(this.files[0])
         if (objUrl) {
-            $(".serial-wx_small_imgpath_preview").attr("src", objUrl);
+            $(".serial-wx_big_imgpath_preview").attr("src", objUrl);
         }
     })
    ',3);

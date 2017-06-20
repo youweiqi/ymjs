@@ -95,32 +95,7 @@ use yii\widgets\ActiveForm;
         ],
     ]); ?>
 
-    <?= $form->field($model, 'open_flash_express')->radioList(['0'=>'否','1'=>'是'],['class'=>'form-inline']) ?>
 
-    <div id="distance">
-
-        <?= $form->field($model, 'distance')->textInput() ?>
-
-    <?= $form->field($model, 'flash_express_begin_time')->widget(TimePicker::classname(), [
-            'name' => 'flash_express_begin_time',
-            'pluginOptions' => [
-                'showSeconds' => true,
-                'showMeridian' => false,
-                'minuteStep' => 1,
-                'secondStep' => 5,
-                ]
-            ]); ?>
-        <?= $form->field($model, 'flash_express_end_time')->widget(TimePicker::classname(), [
-            'name' => 'flash_express_end_time',
-            'pluginOptions' => [
-                'showSeconds' => true,
-                'showMeridian' => false,
-                'minuteStep' => 1,
-                'secondStep' => 5,
-            ]
-        ]); ?>
-
-    </div>
 
     <?= $form->field($model, 'open_install')->radioList(['0'=>'否','1'=>'是'],['class'=>'form-inline']) ?>
 

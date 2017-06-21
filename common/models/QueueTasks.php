@@ -62,7 +62,9 @@ class QueueTasks extends \yii\db\ActiveRecord
         $dropDownList = [
             'task_type'=>[
                 '1'=>'订单导出',
-                '2'=>'财务退款订单导出'
+                '2'=>'财务退款订单导出',
+                '4'=> '供应链商品导出',
+                '5'=>'商品导出'
             ],
             'task_status'=>[
                 '0'=>'未开始',

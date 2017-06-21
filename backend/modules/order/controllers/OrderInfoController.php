@@ -3,6 +3,7 @@
 namespace backend\modules\order\controllers;
 
 
+use backend\controllers\BaseController;
 use backend\modules\order\models\form\DeliveryForm;
 use backend\modules\order\models\search\OrderDetailSearch;
 use backend\modules\order\models\search\OrderExport;
@@ -22,7 +23,7 @@ use yii\widgets\ActiveForm;
 /**
  * OrderInfoController implements the CRUD actions for OrderInfo model.
  */
-class OrderInfoController extends Controller
+class OrderInfoController extends BaseController
 {
     /**
      * @inheritdoc
@@ -45,26 +46,13 @@ class OrderInfoController extends Controller
      */
     public function actionIndex()
     {
+
         $searchModel = new OrderInfoSearch();
         if(Yii::$app->request->get('sub') === 'export'){
-            $task = new QueueTasks();
-            $task->operater = Yii::$app->user->getId();
-            $task->create_time= date("Y-m-d H:i:s");
-            $task->task_type = 1;
-            $task->task_content= json_encode(Yii::$app->request->get('OrderInfoSearch'));
-            $task->save(false);
-            //加入队列
-            $payload = [
-                "task_id" => $task->task_id,
-                "task_content" => Yii::$app->request->get('OrderInfoSearch'),
-            ];
-            //入队成功
-            if(Yii::$app->amqp->product("yugou_exchange","export_queue","export_routing_key", json_encode($payload)))
-            {
-                $task->task_status = 1;
-                $task->save(false);
-            }
+            $params = Yii::$app->request->get('OrderInfoSearch');
+            parent::setQueueTask(1,$params);
             return $this->redirect(['/content/queue-tasks/index']);
+
         }else {
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
             return $this->render('index', [

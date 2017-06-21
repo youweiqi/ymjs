@@ -128,7 +128,7 @@ class OrderDetailSearch extends OrderDetail
     {
         $query = OrderDetail::find()
             ->joinWith(['order_info','order_object','c_user'])
-            ->orderBy('order_detail.id desc');
+            ->orderBy(['order_detail.id'=>SORT_ASC]);
 
         // add conditions that should always apply here
 
@@ -194,7 +194,7 @@ class OrderDetailSearch extends OrderDetail
             '当前售价','商品价格(没有任何优惠的价格)','当前结算价','总结算成本价', '订单状态',
             '是否开票', '发票类型', '发票抬头','配送方式', '快递公司',
             '快递单号','订单创建时间', '订单更新时间','订单备注'
-         ];
+        ];
         $callback = function($pageNum,$limit)use ($query){
             echo $pageNum%10 == 0 ? $pageNum."\n": $pageNum."\t";
             $pageData = [];
@@ -254,7 +254,7 @@ class OrderDetailSearch extends OrderDetail
         $this->load($params);
         $query = OrderDetail::find()
             ->joinWith('order_info')
-            ->orderBy('order_detail.id desc');
+            ->orderBy(['order_detail.id'=>SORT_ASC]);
         if($this->order_user_name) //如果有会员条件
         {
             $uid = CUserSearch::getUidByUserName($this->order_user_name);

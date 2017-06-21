@@ -90,7 +90,8 @@ class OrderInfo extends \yii\db\ActiveRecord
         '1'=>'微信支付',
         '2'=>'支付宝支付',
         '3'=>'公众号支付',
-        '4'=>'景豆支付'
+        '4'=>'景豆支付',
+        '5'=>'蚂蚁钱包'
     ];
     const STORE_TYPE = [
         '1'=>'直营店',

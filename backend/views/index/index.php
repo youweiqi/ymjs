@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 <div class="site-index">
     <div class="center">
-        <p><img alt="" src="/statics/images/first.png"></p>
+        <p><img alt="" style="width: 100%;height: 100%" src="/statics/images/first.png"></p>
     </div>
 </div>
 

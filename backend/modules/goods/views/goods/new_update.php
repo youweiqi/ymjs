@@ -32,7 +32,7 @@ GoodsNewAsset::register($this);
             <div class="body-head">
                 <span class="body-title">编辑商品基本信息</span>
             </div>
-        <?= $form->field($data['model'],'goods_code')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($data['model'],'goods_code')->label('商品编码(总货号)')->textInput(['maxlength' => true]) ?>
 
         <?=  $form->field($data['model'],'brand_id')->label('品牌')->widget(Select2::classname(), [
             'options' => ['placeholder' => '请输入品牌名称...'],

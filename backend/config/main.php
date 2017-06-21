@@ -12,6 +12,16 @@ return [
     /* 控制器默认命名空间 */
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
+    'container' => [
+        'definitions' => [
+            yii\grid\GridView::class => [
+                'tableOptions' => [
+                    'style' => 'display:block;overflow:auto;',
+                    'class' => 'table table-striped table-bordered'
+                ],
+            ],
+        ],
+    ],
     /**
      * 模块
      */

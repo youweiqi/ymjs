@@ -207,6 +207,7 @@ $request_complain_refuse_url = Url::toRoute('refuse');
 $request_complain_refuse_send_back_url = Url::toRoute('refuse-send-back');
 
 $modal_js = <<<JS
+      $("[data-toggle='popover']").popover();
 $(".open-row").on("click",function(){ 
         _this = $(this);
         aftersale_id = _this.data("id");

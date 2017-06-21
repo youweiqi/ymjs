@@ -79,9 +79,12 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'id',
-                'headerOptions' => ['style' => 'min-width:20px'],
+                'headerOptions' => ['style' => 'min-width:60px'],
             ],
-            'goods_code',
+            [
+                'attribute' => 'goods_code',
+                'headerOptions' => ['style' => 'min-width:170px'],
+            ],
             [
                 'attribute' => 'api_goods_id',
                 'headerOptions' => ['style' => 'min-width:107px'],

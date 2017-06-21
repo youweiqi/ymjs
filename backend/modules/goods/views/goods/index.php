@@ -110,7 +110,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'goods_code',
                 'headerOptions' => ['style' => 'min-width:10px'],
             ],
-            'label_name',
             [
                 'headerOptions' => ['style' => 'min-width:102px'],
                 'label' => '商品分佣(%)',

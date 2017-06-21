@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'header'=>'查看',
                 'class' => 'yii\grid\ActionColumn',
-                'headerOptions' => ['width' => '15'],
+                'headerOptions' => ['style' => 'min-width:50px'],
                 'template' => '{open}',
                 'buttons' => [
                     'open' => function ($url, $model, $key) {
@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             [
                 'header'=>'操作',
-                'headerOptions' => ['width' => '75'],
+                'headerOptions' => ['style' => 'min-width:50px'],
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{view} {agree} {refuse} {agree-send-back} {refuse-send-back}',
                 'buttons' => [
@@ -118,48 +118,90 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
 
             [
+                'headerOptions' => ['style' => 'min-width:20px'],
                 'attribute' => 'id',
-                'headerOptions' => ['width' => '75'],
             ],
-            'create_time',
-            'update_time',
-
+            [
+                'attribute' => 'create_time',
+                'headerOptions' => ['style' => 'min-width:100px']
+            ],
+            [
+                'attribute' => 'update_time',
+                'headerOptions' => ['style' => 'min-width:100px']
+            ],
             [
                 'attribute'=>'store.store_name',
                 'label'=>'店铺',
-                 'headerOptions' => ['width' => '150'],
+                'headerOptions' => ['style' => 'min-width:100px']
             ],
             [
+                'headerOptions' => ['style' => 'min-width:100px'],
                 'attribute'=>'order_object.order_sn',
                 'label'=>'父订单号'
             ],
-            'after_sn',
-            'order_info_sn',
-            'c_user.user_name',
             [
+                'headerOptions' => ['style' => 'min-width:100px'],
+                'attribute'=>'after_sn'
+            ],
+            [
+                'headerOptions' => ['style' => 'min-width:100px'],
+                'attribute'=>'order_info_sn'
+            ],
+            [
+                'headerOptions' => ['style' => 'min-width:100px'],
+                'attribute'=>'c_user.user_name'
+            ],
+            [
+                'headerOptions' => ['style' => 'min-width:100px'],
                 'attribute'=>'pay_type',
                 'value'=>function($model){
                     return AfterSales::dropDown('pay_type',$model->pay_type);
                 },
             ],
             [
+                'headerOptions' => ['style' => 'min-width:100px'],
                 'attribute'=>'is_refund',
                 'value'=>function($model){
                     return AfterSales::dropDown('is_refund',$model->is_refund);
                 },
             ],
-            'product_bn',
-            'quantity',
             [
+                'headerOptions' => ['style' => 'min-width:100px'],
+                'attribute'=>'product_bn',
+            ],
+            [
+                'headerOptions' => ['style' => 'min-width:100px'],
+                'attribute'=>'quantity',
+            ],
+            [
+                'headerOptions' => ['style' => 'min-width:100px'],
                 'attribute'=>'refund_money',
                 'value'=>function($model){
                     return $model->refund_money/100;
                 },
             ],
-            'user_refund_reason',
-            'user_first_reason',
-
             [
+                'headerOptions' => ['style' => 'min-width:120px'],
+                'attribute'=>'user_refund_reason',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    $all = $model->user_refund_reason;
+                    $short = mb_substr($all, 0, 7,'utf-8');
+                    return '<span data-trigger="hover" data-container="body" data-toggle="popover" data-placement="top" data-content="'.$all.'">'.$short.'</span>';
+                }
+            ],
+            [
+                'headerOptions' => ['style' => 'min-width:150px'],
+                'attribute'=>'user_first_reason',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    $all = $model->user_first_reason;
+                    $short = mb_substr($all, 0, 7,'utf-8');
+                    return '<span data-trigger="hover" data-container="body" data-toggle="popover" data-placement="top" data-content="'.$all.'">'.$short.'</span>';
+                }
+            ],
+            [
+                'headerOptions' => ['style' => 'min-width:50px'],
                 'attribute'=>'status',
                 'value'=>function($model){
                     return AfterSales::dropDown('status',$model->status);
@@ -217,6 +259,7 @@ $request_aftersale_refuse_url = Url::toRoute('refuse');
 $request_aftersale_agree_url = Url::toRoute('agree');
 $request_aftersale_refuse_send_back_url = Url::toRoute('refuse-send-back');
 $modal_js = <<<JS
+      $("[data-toggle='popover']").popover();
 $(".open-row").on("click",function(){ 
         _this = $(this);
         aftersale_id = _this.data("id");

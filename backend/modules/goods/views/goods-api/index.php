@@ -66,7 +66,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'header'=>'查看',
                 'class' => 'yii\grid\ActionColumn',
-                'headerOptions' => ['width' => '65'],
+                'headerOptions' => ['style' => 'min-width:50px'],
                 'template' => '{open}',
                 'buttons' => [
                     'open' => function ($url, $model, $key) {
@@ -79,47 +79,70 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'id',
-                'headerOptions' => ['width' => '75'],
+                'headerOptions' => ['style' => 'min-width:20px'],
             ],
             'goods_code',
-            'api_goods_id',
-            'name',
             [
+                'attribute' => 'api_goods_id',
+                'headerOptions' => ['style' => 'min-width:107px'],
+            ],
+            [
+                'attribute' => 'name',
+                'headerOptions' => ['style' => 'min-width:90px'],
+                'format' => 'raw',
+                'value' => function ($model) {
+                    $all = $model->name;
+                    $short = mb_substr($all, 0, 10,'utf-8');
+                    return '<span data-trigger="hover" data-container="body" data-toggle="popover" data-placement="top" data-content="'.$all.'">'.$short.'</span>';
+                }
+            ],
+            [
+                'headerOptions' => ['style' => 'min-width:100px'],
                 'label' => '商品分佣(%)',
                 'value' =>'goods_commission.commission',
             ],
-
             [
+                'headerOptions' => ['style' => 'min-width:70px'],
                 'attribute' => 'category_parent_id',
                 'value' => function ($model) {
                     return Category::getCategoryNameById($model->category_parent_id);
                 }
             ],
             [
+                'headerOptions' => ['style' => 'min-width:50px'],
                 'attribute' => 'category_id',
                 'value' => function ($model) {
                     return Category::getCategoryNameById($model->category_id);
                 }
             ],
             [
+                'headerOptions' => ['style' => 'min-width:90px'],
                 'label'=>'品牌中文名',
                 'attribute' => 'brand_id',
                 'value' => 'brand.name_cn',
             ],
             [
+                'headerOptions' => ['style' => 'min-width:90px'],
                 'label'=>'品牌英文名',
                 'attribute' => 'brand_id',
                 'value' => 'brand.name_en',
             ],
             [
+                'headerOptions' => ['style' => 'min-width:100px'],
                 'attribute' => 'channel',
                 'label' => '来源渠道',
                 'value' => function ($model) {
                     return Goods::dropDown('channel',$model->channel);
                 }
             ],
-            'online_time',
-            'offline_time',
+            [
+                'attribute' => 'online_time',
+                'headerOptions' => ['style' => 'min-width:100px']
+            ],
+            [
+                'attribute' => 'offline_time',
+                'headerOptions' => ['style' => 'min-width:100px']
+            ],
 
         ],
     ]); ?>
@@ -160,6 +183,7 @@ $request_set_category_url = Url::toRoute('set-category');
 $request_set_brand_url = Url::toRoute('set-brand');
 
 $batch_update_modal_js = <<<JS
+      $("[data-toggle='popover']").popover();
   
     $('#data-batch-update').bind('click', function () {
        var keys = $("#grid").yiiGridView("getSelectedRows");

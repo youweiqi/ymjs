@@ -52,12 +52,22 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'id',
-                'headerOptions' => ['width' => '75'],
+                'headerOptions' => ['style' => 'min-width:20px'],
             ],
-            'first_char',
-            'name_cn',
-            'name_en',
             [
+                'attribute' => 'first_char',
+                'headerOptions' => ['style' => 'min-width:90px'],
+            ],
+            [
+                'attribute' => 'name_cn',
+                'headerOptions' => ['style' => 'min-width:60px'],
+            ],
+            [
+                'attribute' => 'name_en',
+                'headerOptions' => ['style' => 'min-width:60px'],
+            ],
+            [
+                'headerOptions' => ['style' => 'min-width:90px'],
                 'attribute' => 'logo_path',
                 'label' => 'LOGO图片',
                 'format' => 'html',
@@ -75,8 +85,8 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
 
             [
+                'headerOptions' => ['style' => 'min-width:50px'],
                 'attribute'=>'status',
-                'headerOptions' => ['width' => '75'],
                 'value'=>function($model){
                     return Brand::dropDown('status',$model->status);
                 },
@@ -84,13 +94,14 @@ $this->params['breadcrumbs'][] = $this->title;
 
             [
                 'attribute' =>'descriptions',
-                'headerOptions' => ['width' => '800'],
+                'headerOptions' => ['style' => 'min-width:200px'],
+                'format' => 'raw',
+                'value' => function ($model) {
+                    $all = $model->descriptions;
+                    $short = mb_substr($all, 0, 38,'utf-8');
+                    return '<span data-trigger="hover" data-container="body" data-toggle="popover" data-placement="top" data-content="'.$all.'">'.$short.'</span>';
+                }
             ]
-
-
-
-
-
         ],
     ]); ?>
     <?php Pjax::end(); ?>
@@ -98,5 +109,10 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php
 $this->params['create_modal_title'] = '新增品牌';
 $this->params['update_modal_title'] = '更新品牌';
+$js = <<<JS
+      $("[data-toggle='popover']").popover();
+JS;
+
+$this->registerJs($js);
 ?>
 

@@ -12,6 +12,16 @@ return [
     /* 控制器默认命名空间 */
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
+    'container' => [
+        'definitions' => [
+            yii\grid\GridView::class => [
+                'tableOptions' => [
+                    'style' => 'display:block;overflow:auto;',
+                    'class' => 'table table-striped table-bordered'
+                ],
+            ],
+        ],
+    ],
     /**
      * 模块
      */
@@ -51,9 +61,6 @@ return [
         ],
         'tgtools' => [
             'class' => 'backend\modules\tgtools\Module'
-        ],
-        'log' => [
-            'class' => 'backend\modules\log\Module',
         ],
         
     ],
@@ -114,9 +121,7 @@ return [
                 ],
             ],
         ],
-        'logger' => [
-            'class' => 'common\components\Log',
-        ],
+
         'errorHandler' => [
             //'errorAction' => 'public/404',
         ],

@@ -386,7 +386,7 @@ class BaseController extends Controller
                 "task_id" => $task->task_id,
                 "task_content" => $params,
             ];
-            Yii::$app->amqp->product("wuyou_exchange","export_{$taskType}_queue_wuyou","export_{$taskType}_routing_key_wuyou", json_encode($payload));
+            Yii::$app->amqp->product("ayn_exchange","export_{$taskType}_queue_ayn","export_{$taskType}_routing_key_ayn", json_encode($payload));
             $transaction->commit();
             Yii::$app->session->setFlash('success','创建新任务成功，任务id：'.$task->task_id);
         }catch (\Exception $e) {

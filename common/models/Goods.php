@@ -167,12 +167,17 @@ class Goods extends \yii\db\ActiveRecord
     }
     public function getGoods_commission()
     {
+        return $this->hasOne(GoodsCommission::className(),['good_id'=>'id']);
+    }
+    public function getCommission()
+    {
         $model = $this->hasOne(GoodsCommission::className(),['good_id'=>'id'])->one();
         if($model) {
             return $model;
         }else{
             return (new GoodsCommission());
         }
+
     }
 
 
@@ -207,6 +212,9 @@ class Goods extends \yii\db\ActiveRecord
         }
         return $product_code->goods_code;
     }
-
+    public function getCategory()
+    {
+        return $this->hasMany(Category::className(),['id'=>'id']);
+    }
 
 }

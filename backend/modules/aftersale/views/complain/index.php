@@ -18,6 +18,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
     <?= GridView::widget([
+        'tableOptions' => [
+            'style' => 'display:block;overflow:auto;',
+            'class' => 'table table-striped table-bordered'
+        ],
         'dataProvider' => $dataProvider,
         'filterSelector' => "select[name='".$dataProvider->getPagination()->pageSizeParam."'],input[name='".$dataProvider->getPagination()->pageParam."']",
         'pager' => [

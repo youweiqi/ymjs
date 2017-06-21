@@ -126,6 +126,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             [
+                'headerOptions' => ['style' => 'min-width:107px'],
                 'attribute' => 'category_id',
                 'label' => '3级分类',
                 'value' => function ($model) {
@@ -133,6 +134,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             [
+                'headerOptions' => ['style' => 'min-width:107px'],
                 'attribute' => 'goods_img',
                 'label' => '商品图片',
                 'format' => 'html',
@@ -166,9 +168,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     return Goods::dropDown('channel',$model->channel);
                 }
             ],
-            'online_time',
-            'offline_time',
-
+            [
+                'attribute' => 'online_time',
+                'headerOptions' => ['style' => 'min-width:100px']
+            ],
+            [
+                'attribute' => 'offline_time',
+                'headerOptions' => ['style' => 'min-width:100px']
+            ],
         ],
     ]); ?>
 

@@ -139,4 +139,30 @@ class SpecificationDetailController extends Controller
         }
         echo json_encode($specification_details);
     }
+    public function actionAddSpecDetail()
+    {
+        $value = trim(Yii::$app->request->post('value'));
+        $spec_id = trim(Yii::$app->request->post('id'));
+
+        if($value && $spec_id)
+        {
+            $hasOne = SpecificationDetail::find()
+                ->select('id,detail_name')
+                ->where(['detail_name' => $value,'specification_id' => $spec_id])
+                ->one();
+            if($hasOne)
+            {
+                exit(json_encode(['id' => $hasOne->id, 'value'=> $hasOne->detail_name]));
+            }
+            $spec = new SpecificationDetail();
+            $spec->detail_name = $value;
+            $spec->specification_id = $spec_id;
+            $spec->order_no = 1;
+            if($spec->save(false))
+            {
+                exit(json_encode(['id' => $spec->id, 'value'=> $spec->detail_name]));
+            }
+        }
+        exit(json_encode([]));
+    }
 }

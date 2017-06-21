@@ -121,13 +121,50 @@ class SpecificationController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
-    public function actionGetSpecification($name=null)
+//    public function actionGetSpecification($name=null)
+//    {
+//        $specifications = Specification::find()
+//            ->select('id,name')
+//            ->andFilterWhere(['like','name',$name])
+//            ->asArray()
+//            ->all();
+//        echo json_encode($specifications);
+//    }
+    public function actionGetSpecification($name=null,$brand_id)
     {
         $specifications = Specification::find()
             ->select('id,name')
             ->andFilterWhere(['like','name',$name])
+            ->andWhere(['=','brand_id',$brand_id])
             ->asArray()
             ->all();
         echo json_encode($specifications);
+    }
+    public function actionAddSpecification()
+    {
+        $name = trim(Yii::$app->request->post('name'));
+        $brand_id = trim(Yii::$app->request->post('brand_id'));
+
+        if($name)
+        {
+            $hasOne = Specification::find()
+                ->select('id,name')
+                ->where(['name' => $name,'brand_id'=>$brand_id])
+                ->one();
+            if($hasOne)
+            {
+                exit(json_encode(['id' => $hasOne->id, 'name'=> $hasOne->name]));
+            }
+            $spec = new Specification();
+            $spec->name = $name;
+            $spec->order_no = 1;
+            $spec->brand_id = $brand_id;
+            if($spec->save())
+            {
+                exit(json_encode(['id' => $spec->id, 'name'=> $spec->name]));
+            }
+        }
+        exit(json_encode([]));
+
     }
 }

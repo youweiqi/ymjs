@@ -183,8 +183,8 @@ class GoodsController extends BaseController
         $post = Yii::$app->request->post();
         $goodsModel = new Goods(['scenario' => 'new_create']);
         if ($goodsModel->load($post)) {
-            $goodsModel->service_desc = implode(',', $goodsModel->service_ids);
-            unset($goodsModel->service_ids);
+//            $goodsModel->service_desc = implode(',', $goodsModel->service_ids);
+//            unset($goodsModel->service_ids);
             $goodsModel->suggested_price = intval(strval($goodsModel->suggested_price * 100));
             $connection = Yii::$app->db;
             $transaction = $connection->beginTransaction();
@@ -271,8 +271,8 @@ class GoodsController extends BaseController
         $post = Yii::$app->request->post();
         $goodsModel = Goods::findOne($id);
         if ($goodsModel->load($post)) {
-            $goodsModel->service_desc = implode(',', $goodsModel->service_ids);
-            unset($goodsModel->service_ids);
+//            $goodsModel->service_desc = implode(',', $goodsModel->service_ids);
+//            unset($goodsModel->service_ids);
             $goodsModel->suggested_price = intval(strval($goodsModel->suggested_price * 100));
             $connection = Yii::$app->db;
             $transaction = $connection->beginTransaction();

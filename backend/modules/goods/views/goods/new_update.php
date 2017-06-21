@@ -52,7 +52,7 @@ GoodsNewAsset::register($this);
 
         <?= $form->field($data['model'], 'name')->textInput(['maxlength' => true]) ?>
 
-        <?= $form->field($data['model'], 'label_name')->textInput(['maxlength' => true]) ?>
+            <?php //echo $form->field($model, 'label_name')->textInput(['maxlength' => true]); ?>
 
         <?= $form->field($data['model'], 'suggested_price')->textInput() ?>
 
@@ -70,21 +70,23 @@ GoodsNewAsset::register($this);
 
         <?= $form->field($data['model'], 'channel')->dropDownList(['1'=>'电商','3'=>'海淘']) ?>
 
-        <?=  $form->field($data['model'], 'service_ids')->label('服务项目')->widget(Select2::classname(), [
-            'options' => ['placeholder' => '请输入项目名称...','multiple' => true],
-            'data' => $data['goods_services'],
-            'pluginOptions' => [
-                'allowClear' => true,
-                'ajax' => [
-                    'url' => Url::to(['/goods/goods-service/search-goods-service']),
-                    'dataType' => 'json',
-                    'data' => new JsExpression('function(params) { return {service_name:params.term}; }')
-                ],
-                'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
-                'templateResult' => new JsExpression('function(res) { return res.text; }'),
-                'templateSelection' => new JsExpression('function (res) { return res.text; }'),
-            ],
-        ]); ?>
+        <?php
+//        echo $form->field($data['model'], 'service_ids')->label('服务项目')->widget(Select2::classname(), [
+//            'options' => ['placeholder' => '请输入项目名称...','multiple' => true],
+//            'data' => $data['goods_services'],
+//            'pluginOptions' => [
+//                'allowClear' => true,
+//                'ajax' => [
+//                    'url' => Url::to(['/goods/goods-service/search-goods-service']),
+//                    'dataType' => 'json',
+//                    'data' => new JsExpression('function(params) { return {service_name:params.term}; }')
+//                ],
+//                'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
+//                'templateResult' => new JsExpression('function(res) { return res.text; }'),
+//                'templateSelection' => new JsExpression('function (res) { return res.text; }'),
+//            ],
+//        ]);
+        ?>
         <div class="form-group">
             <div class="col-xs-3"></div>
             <div class="col-xs-9">

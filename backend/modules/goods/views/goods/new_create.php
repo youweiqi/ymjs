@@ -35,7 +35,7 @@ GoodsNewAsset::register($this);
             <div class="body-head">
                 <span class="body-title">编辑商品基本信息</span>
             </div>
-        <?= $form->field($model,'goods_code')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model,'goods_code')->label('商品编码')->textInput(['maxlength' => true]) ?>
 
         <?=  $form->field($model,'brand_id')->label('品牌')->widget(Select2::classname(), [
             'options' => ['placeholder' => '请输入品牌名称...'],
@@ -55,7 +55,7 @@ GoodsNewAsset::register($this);
 
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-        <?= $form->field($model, 'label_name')->textInput(['maxlength' => true]) ?>
+        <?php //echo $form->field($model, 'label_name')->textInput(['maxlength' => true]); ?>
 
         <?= $form->field($model, 'suggested_price')->textInput() ?>
 
@@ -73,21 +73,23 @@ GoodsNewAsset::register($this);
 
         <?= $form->field($model, 'channel')->dropDownList(['1'=>'电商','3'=>'海淘']) ?>
 
-        <?=  $form->field($model, 'service_ids')->label('服务项目')->widget(Select2::classname(), [
-            'options' => ['placeholder' => '请输入项目名称...','multiple' => true],
-            'data' => isset($store_brand_data)?$store_brand_data:[],
-            'pluginOptions' => [
-                'allowClear' => true,
-                'ajax' => [
-                    'url' => Url::to(['/goods/goods-service/search-goods-service']),
-                    'dataType' => 'json',
-                    'data' => new JsExpression('function(params) { return {service_name:params.term}; }')
-                ],
-                'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
-                'templateResult' => new JsExpression('function(res) { return res.text; }'),
-                'templateSelection' => new JsExpression('function (res) { return res.text; }'),
-            ],
-        ]); ?>
+        <?php
+//        echo $form->field($model, 'service_ids')->label('服务项目')->widget(Select2::classname(), [
+//            'options' => ['placeholder' => '请输入项目名称...','multiple' => true],
+//            'data' => isset($store_brand_data)?$store_brand_data:[],
+//            'pluginOptions' => [
+//                'allowClear' => true,
+//                'ajax' => [
+//                    'url' => Url::to(['/goods/goods-service/search-goods-service']),
+//                    'dataType' => 'json',
+//                    'data' => new JsExpression('function(params) { return {service_name:params.term}; }')
+//                ],
+//                'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
+//                'templateResult' => new JsExpression('function(res) { return res.text; }'),
+//                'templateSelection' => new JsExpression('function (res) { return res.text; }'),
+//            ],
+//        ]);
+        ?>
         <div class="form-group">
             <div class="col-xs-3"></div>
             <div class="col-xs-9">

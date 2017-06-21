@@ -538,7 +538,7 @@ class GoodsController extends BaseController
             $specValues = array_map(function($a) {return $a['value'];},$specInfo);
             $tbody .= '<tr>' .$tr .
                 '<input name="product['.$i.'][firstSpecInfo]" value="'.$firstSpecId.'" type="hidden">' .
-                '<input name="product['.$i.'][specInfo]" value="'.implode(',',$specValueIds).'|'.implode(',',$specValues).'" type="hidden">' .
+                '<input name="product['.$i.'][specInfo]" value="'.implode(',',$specValueIds).'|'.implode(' ',$specValues).'" type="hidden">' .
                 '<td class="product_bn_td"> <input maxlength="20" value="'.$ps[implode(',',$specValueIds)]['product_bn'].'" name="product['.$i.'][product_bn]" class="tbody-form-control _product_bn form-control"  style="max-width:180px;"></td>' .
                 '<td class="bar_code_td"> <input maxlength="20" value="'.$ps[implode(',',$specValueIds)]['bar_code'].'" name="product['.$i.'][bar_code]" class="tbody-form-control form-control"  style="max-width:180px;"></td>' .
                 '<td class="status_td"> <select name="product['.$i.'][status]"> <option'.($ps[implode(',',$specValueIds)]['status'] == 0?'selected="selected"':'').' value="0">禁用</option> <option '.($ps[implode(',',$specValueIds)]['status'] == 1?'selected="selected"':'').'value="1" selected="selected">启用</option></select></td>' .

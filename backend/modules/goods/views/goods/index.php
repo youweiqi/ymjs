@@ -40,6 +40,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'export'=>false,
         'dataProvider' => $dataProvider,
+        'afterRow' => function ($model, $key, $index, $grid){
+            return '<tr id="id'.$key.'" data-key="'.$key.'" data-index="'.$index.'" style="display:none"><td colspan="14" id = tdid'.$key.'></td></tr>';
+        },
         'rowOptions' => function($model, $key, $index, $grid) {
             if($model->online_time>date('Y-m-d H:i:s',time())||$model->offline_time<date('Y-m-d H:i:s',time())){
                 return ['style' => 'background:#A2A2A2'];
@@ -273,4 +276,35 @@ $this->registerJs($batch_update_modal_js,3);
 $this->params['create_modal_title'] = '新增商品';
 $this->params['update_modal_title'] = '更新商品';
 ?>
+
+<?php
+$request_get_good_detail_url = Url::to(['/goods/goods/get-good-detail-html']);
+$open_row_js = <<<JS
+    $(".open-row").on("click",function(){ 
+        _this = $(this);
+        good_id = _this.data("id");
+        _this.toggleClass("glyphicon-collapse-up glyphicon-expand");
+        is = _this.hasClass("glyphicon-collapse-up");
+        if(is){
+            $("#id"+good_id).hide();
+        }else{
+           $.ajax({
+                type: "post",
+                dataType: "text",
+                data: {
+                    "good_id": good_id
+                },
+                url: '{$request_get_good_detail_url}',
+                success: function (data) {
+                   $("#tdid"+good_id).html(data);
+                }
+            });
+            $("#id"+good_id).show();
+
+        }
+    }); 
+JS;
+$this->registerJs($open_row_js,3);
+?>
+
 

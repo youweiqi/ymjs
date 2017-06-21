@@ -7,6 +7,7 @@ use common\models\Brand;
 use common\models\Goods;
 use common\models\Inventory;
 use common\models\Product;
+use yii\helpers\Html;
 
 class ApiGoodsLib
 {
@@ -135,7 +136,7 @@ class ApiGoodsLib
         foreach ($order_details as $order_detail){
             $order_detail_html .= '<tr>';
             $order_detail_html .= '<td>'.$order_detail['id'].'</td>';
-            $order_detail_html .= '<td>'.'</td>';
+            $order_detail_html .= '<td>'. Html::img($order_detail['image_path'],['width' => '60px','height'=>'60px']).'</td>';
             $order_detail_html .= '<td>'.$order_detail['product_bn'].'</td>';
             $order_detail_html .= '<td>'.$order_detail['bar_code'].'</td>';
             $order_detail_html .= '<td>'.$order_detail['spec_name'] .'</td>';

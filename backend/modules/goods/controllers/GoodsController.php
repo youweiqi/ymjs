@@ -3,6 +3,7 @@
 namespace backend\modules\goods\controllers;
 
 use backend\controllers\BaseController;
+use backend\libraries\ApiGoodsLib;
 use backend\libraries\GoodsLib;
 use backend\libraries\GoodsServiceLib;
 use backend\modules\goods\models\form\GoodsCommissionForm;
@@ -836,6 +837,12 @@ class GoodsController extends BaseController
         }else{
             return ['status' => 'fail','errors' => $uploadImgForm->getErrors()];
         }
+    }
+
+    public function actionGetGoodDetailHtml()
+    {
+        $good_id = Yii::$app->request->post('good_id');
+        echo ApiGoodsLib::getGoodDetailHtml($good_id);
     }
 
 }

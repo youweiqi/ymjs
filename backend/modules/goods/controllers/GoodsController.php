@@ -33,6 +33,8 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Response;
 use yii\widgets\ActiveForm;
+use backend\modules\goods\models\form\UploadImgForm;
+use yii\web\UploadedFile;
 
 /**
  * GoodsController implements the CRUD actions for Goods model.
@@ -816,6 +818,24 @@ class GoodsController extends BaseController
         $model->load(Yii::$app->request->post());
         Yii::$app->response->format = Response::FORMAT_JSON;
         return ActiveForm::validate($model);
+    }
+    public function actionUpload()
+    {
+        $uploadImgForm = new UploadImgForm();
+        if ($uploadImgForm->load($_FILES)) {
+            $uploadImgForm->img = UploadedFile::getInstance($uploadImgForm, 'img');
+        }
+        if($uploadImgForm->validate())
+        {
+            $imgUrl =   $uploadImgForm->save();
+        }
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        if(isset($imgUrl) && $imgUrl){
+            $imageInfo = getimagesize($_FILES['UploadImgForm']["tmp_name"]['img']);
+            return ['status'=>'succ','imgUrl'=>$imgUrl,'width' => $imageInfo[0],'height' => $imageInfo[1]];
+        }else{
+            return ['status' => 'fail','errors' => $uploadImgForm->getErrors()];
+        }
     }
 
 }

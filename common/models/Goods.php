@@ -37,6 +37,8 @@ use Yii;
  */
 class Goods extends \yii\db\ActiveRecord
 {
+    const SCENARIO_NEW_CREATE = 'new_create';
+    const SCENARIO_NEW_UPDATE = 'new_update';
     const SCENARIO_CREATE = 'create';
     const SCENARIO_UPDATE = 'update';
     const SCENARIO_ONE = 'one';
@@ -75,6 +77,9 @@ class Goods extends \yii\db\ActiveRecord
                 'category_id', 'ascription','service_desc','service_ids','classify_id','spec_id'],
             self::SCENARIO_UPDATE => ['goods_code','brand_id','name', 'label_name','suggested_price', 'category_parent_id',
                 'category_id', 'ascription','service_desc','service_ids','self_support'],
+            self::SCENARIO_NEW_CREATE => ['label_name','goods_code','brand_id','name','suggested_price', 'category_parent_id', 'category_id', 'ascription','service_desc','service_ids','channel','spec_desc'],
+            self::SCENARIO_NEW_UPDATE=> ['label_name','goods_code','brand_id','name','suggested_price', 'category_parent_id', 'category_id', 'ascription','service_desc','service_ids','channel','spec_desc'],
+
         ];
         return array_merge(parent::scenarios(),$scenarios);
     }

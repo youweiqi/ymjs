@@ -29,12 +29,6 @@ Excel::widget([
                 'value' => 'goods.name'
             ],
             [
-                'attribute' => 'goods_sale',
-                'value' => function ($model) {
-                    return $model->goods->suggested_price/100;
-                }
-            ],
-            [
                 'attribute' => 'sale_price',
                 'value' => function ($model) {
                     return $model->sale_price/100;

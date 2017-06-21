@@ -222,7 +222,7 @@ class InventoryLib
             'store_name' =>'店铺名称',
             'goods_name' =>'商品名称',
             'inventory_num' => '库存',
-            'goods_sale' => '商品吊牌价(元)',
+            //'goods_sale' => '商品吊牌价(元)',
             'sale_price' => '实际销售价(元)',
         ];
         $format = [
@@ -233,7 +233,7 @@ class InventoryLib
             'sale_price' => 'money',
             'goods_sale' => 'money',
             'spec_name' => 'string',
-            'goods_name' => 'string'
+            //'goods_name' => 'string'
         ];
         $required = [
             'id',
@@ -243,7 +243,7 @@ class InventoryLib
             'store_name',
             'inventory_num',
             'sale_price',
-            'goods_sale',
+            //'goods_sale',
 
 
         ];

@@ -190,6 +190,9 @@ class OrderInfoController extends Controller
                 $params = $data;
                 $content = Common::requestServer(YG_BASE_URL . YG_DELIVER_GOODS, $params);
                 $result = json_decode($content, true);
+                if($result['code'] != '10000'){
+                    Yii::$app->session->setFlash('error', $result);
+                }
             }else{
                 $order_info->order_sn =$model->order_sn;
                 $order_info->express_name =$model->express_name;
@@ -197,6 +200,7 @@ class OrderInfoController extends Controller
                 $order_info->save(false);
 
             }
+
             return $this->redirect(Yii::$app->request->getReferrer());
         }
         $model->order_id = $order_info->id;

@@ -207,6 +207,9 @@ class Goods extends \yii\db\ActiveRecord
         }
         return $product_code->goods_code;
     }
-
+    public function getCategory()
+    {
+        return $this->hasMany(Category::className(),['id'=>'id']);
+    }
 
 }

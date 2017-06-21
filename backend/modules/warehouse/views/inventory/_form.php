@@ -45,7 +45,6 @@ use yii\widgets\ActiveForm;
     <?=  $form->field($model, 'store_id')->label('门店名称')->widget(Select2::classname(), [
         'options' => ['placeholder' => '请输入门店名称...'],
         'data' => isset($store_name_data)?$store_name_data:[],
-        'disabled' => true,
         'pluginOptions' => [
             'allowClear' => true,
             'ajax' => [

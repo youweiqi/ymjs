@@ -3,8 +3,10 @@
 namespace backend\modules\warehouse\controllers;
 
 
+use backend\libraries\InventoryLib;
 use backend\modules\warehouse\models\form\AddInventoryForm;
 use backend\modules\warehouse\models\form\FreightTemplateForm;
+use backend\modules\warehouse\models\form\ImportInventoryForm;
 use common\models\Goods;
 use common\models\Product;
 use common\models\Store;
@@ -13,10 +15,13 @@ use kartik\widgets\ActiveForm;
 use Yii;
 use common\models\Inventory;
 use backend\modules\warehouse\models\search\InventorySearch;
+use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Response;
+use backend\models\export\InventorySearch as InventoryExport;
+use yii\web\UploadedFile;
 
 /**
  * InventoryController implements the CRUD actions for Inventory model.
@@ -52,6 +57,7 @@ class InventoryController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'queryParams'=>Yii::$app->request->queryParams
         ]);
     }
 
@@ -231,5 +237,43 @@ class InventoryController extends Controller
         }
         return $this->renderAjax('batch-inventory', ['model' => $model]);
     }
+
+/*
+ * 导出模板
+ */
+
+    public function actionExportTemplate()
+    {
+        $query_params = Yii::$app->request->get('query_params');
+        $searchModel = new InventoryExport();
+        $export_model = $searchModel->search($query_params);
+        return $this->renderPartial('export_template', [
+            'model' => $export_model,
+        ]);
+    }
+
+    public function actionImportInventory($tag=0)
+    {
+        $model = new ImportInventoryForm();
+
+        if ($tag) {
+            $import_file = UploadedFile::getInstance($model, 'import_file');
+            if($import_file){
+                $res_data = InventoryLib::processImportInventory($import_file);
+                if(!$res_data['status']){
+                    echo Json::encode($res_data);
+                }else{
+                    return $this->redirect(Yii::$app->request->getReferrer());
+                }
+            }
+            return '';
+        }else{
+            return $this->renderAjax('import_inventory', [
+                'model' => $model,
+            ]);
+        }
+    }
+
+
 
 }

@@ -106,7 +106,7 @@ class GoodsApiController extends BaseController
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(Yii::$app->request->getReferrer());
         } else {
             return $this->render('update', [
                 'model' => $model,

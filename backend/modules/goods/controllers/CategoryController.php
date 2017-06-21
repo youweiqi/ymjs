@@ -77,7 +77,7 @@ class CategoryController extends Controller
             }
             $model->deep = 2;
             if($model->save(false)){
-                return $this->redirect(['index']);
+                return $this->redirect(Yii::$app->request->getReferrer());
             }
         }
         return $this->renderAjax('create', [
@@ -105,7 +105,7 @@ class CategoryController extends Controller
             }
                 $model->deep = 2;
             if($model->save(false)){
-                return $this->redirect(['index']);
+                return $this->redirect(Yii::$app->request->getReferrer());
             }
         }
         return $this->renderAjax('update', [
@@ -157,7 +157,7 @@ class CategoryController extends Controller
             $model->deep = 3;
             $model->status = 1;
             if($model->save(false)){
-                return $this->redirect(['index']);
+                return $this->redirect(Yii::$app->request->getReferrer());
             }
         }
         return $this->renderAjax('create_child_category', [

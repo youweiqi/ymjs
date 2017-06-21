@@ -143,7 +143,7 @@ class GoodsController extends BaseController
         $post = Yii::$app->request->post();
         if ($tag) {
             GoodsLib::updateGoods($id,$post);
-            return $this->redirect(['index']);
+            return $this->redirect(Yii::$app->request->getReferrer());
         }
         $model = GoodsLib::initGoodsForm($id,$model);
         return $this->render('update', [
@@ -254,10 +254,10 @@ class GoodsController extends BaseController
             } catch (\Exception $e) {
                 $transaction->rollBack();
                 Yii::$app->session->setFlash('error', '新建商品失败');
-                return $this->redirect(['index']);
+                return $this->redirect(Yii::$app->request->getReferrer());
             }
             Yii::$app->session->setFlash('success', '新建商品成功');
-            return $this->redirect(['index']);
+            return $this->redirect(Yii::$app->request->getReferrer());
         }
         return $this->render('new_create', [
             'model' => $goodsModel
@@ -379,10 +379,10 @@ class GoodsController extends BaseController
             } catch (\Exception $e) {
                 $transaction->rollBack();
                 Yii::$app->session->setFlash('error', $e->getMessage());
-                return $this->redirect(['index']);
+                return $this->redirect(Yii::$app->request->getReferrer());
             }
             Yii::$app->session->setFlash('success', '编辑商品成功');
-            return $this->redirect(['index']);
+            return $this->redirect(Yii::$app->request->getReferrer());
         }else{
             $data = $this->getGoodsData($goodsModel);
         }

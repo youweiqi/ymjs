@@ -84,7 +84,7 @@ class BrandController extends Controller
                 //保存品牌关联分类
                 CategoryBrandLib::saveCategoryBrand($parent_ids, $model->id);
             }
-            return $this->redirect(['index']);
+            return $this->redirect(Yii::$app->request->getReferrer());
         }
 
         return $this->renderAjax('create', [
@@ -122,7 +122,7 @@ class BrandController extends Controller
             if($model->save(false)){
                 CategoryBrandLib::updateBrandCategory($parent_ids,$model->id);
             }
-            return $this->redirect(['index']);
+            return $this->redirect(Yii::$app->request->getReferrer());
         }
         $model->parent_ids = $category_brand_ids;
         return $this->renderAjax('update', [
@@ -141,7 +141,7 @@ class BrandController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(Yii::$app->request->getReferrer());
     }
 
     /**

@@ -77,7 +77,7 @@ class BrandHotController extends Controller
 
             unset($model->brand_ids);
             BrandHotLib::updateBrand($brand_ids);
-            return $this->redirect(['index']);
+            return $this->redirect(Yii::$app->request->getReferrer());
         }
         $model->brand_ids = $brand_hot_ids;
         return $this->renderAjax('create', [
@@ -107,7 +107,7 @@ class BrandHotController extends Controller
                 unset($model->logo_path);
             }
             if($model->save(false)){
-                return $this->redirect(['index']);
+                return $this->redirect(Yii::$app->request->getReferrer());
             }
         }
         return $this->renderAjax('update', [

@@ -34,6 +34,16 @@ $this->params['breadcrumbs'][] = $this->title;
             'class' => 'btn btn-success  gridview',
             'id' => 'data-batch-update',
         ]); ?>
+        <?= Html::a('导出库存模板', [
+            'export-template','query_params'=>$queryParams],
+            ['class' => 'btn btn-success']) ?>
+
+        <?= Html::a('批量导入库存', '#', [
+            'data-toggle' => 'modal',
+            'data-target' => '#batch-import-modal',
+            'class' => 'btn btn-success',
+            'id' => 'data-batch-import',
+        ]); ?>
 
     </p>
 
@@ -134,8 +144,20 @@ Modal::begin([
     ],
 ]);
 Modal::end();
+Modal::begin([
+    'id'=>'batch-import-modal',
+    'header'=>'<button type="button" class="close" data-dismiss="modal"></button><h4 class="modal-title">批量导入库存</h4>',
+    'options' => [
+        'tabindex' => false,
+        'data-backdrop' => 'static',
+        'data-keyboard' => false
+    ],
+]);
+Modal::end();
+
 $request_batch_update_url = Url::to(['/warehouse/inventory/batch-add']);
 $request_batch_inventory_url = Url::to(['/warehouse/inventory/batch-inventory']);
+$request_batch_import_url = Url::to(['/warehouse/inventory/import-inventory']);
 
 $batch_update_modal_js = <<<JS
     $('#data-batch-update').bind('click', function () {
@@ -167,6 +189,16 @@ $('#data-batch-inventory').bind('click', function () {
             alert('请先选择需要操作的数据');
         }
       });
+ $('#data-batch-import').on('click', function () {
+        $('.modal-body').html('');
+        $('#data-batch-import').find('.modal-body').css('height','550px');
+        $('#data-batch-import').find('.modal-body').css('overflow-y','auto');
+        $.post('{$request_batch_import_url}',
+            function (data) {
+                $('#batch-import-modal').find('.modal-body').html(data);
+            }
+        );
+    });
 JS;
 $this->registerJs($batch_update_modal_js,3);
 ?>

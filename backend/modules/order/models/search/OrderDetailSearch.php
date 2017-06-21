@@ -243,6 +243,7 @@ class OrderDetailSearch extends OrderDetail
         try{
             $filename = StoreFileLib::saveToCsvFile($prefix,$count,500,$title,$callback);
         }catch (\Exception $e){
+            echo 'Error'.$e->getMessage()."\n";
             return [false, "saveToCsvFile:".$e->getMessage()];
         }
         return [true, $filename];

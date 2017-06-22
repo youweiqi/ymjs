@@ -76,7 +76,8 @@ class BusinessCircleController extends Controller
             }
 
             if($model->save(false)){
-                return $this->redirect(['index', 'id' => $model->id] );
+                return $this->redirect(Yii::$app->request->getReferrer());
+
             }
         }
         return $this->renderAjax('create', [
@@ -105,7 +106,8 @@ class BusinessCircleController extends Controller
             }
 
             if($model->save()){
-                return $this->redirect(['index', 'id' => $model->id]);
+                return $this->redirect(Yii::$app->request->getReferrer());
+
             }
         }
         return $this->renderAjax('update', [

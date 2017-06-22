@@ -66,7 +66,8 @@ class BrandHotController extends Controller
             }
             $model->brand_name = BrandLib::getBrandName($model->brand_id);
             $model->save(false);
-            return $this->redirect(['index']);
+            return $this->redirect(Yii::$app->request->getReferrer());
+
         } else {
             return $this->renderAjax('create', [
                 'model' => $model,

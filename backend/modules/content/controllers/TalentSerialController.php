@@ -66,7 +66,8 @@ class TalentSerialController extends Controller
         $model = new TalentSerial();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(Yii::$app->request->getReferrer());
+
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -85,7 +86,8 @@ class TalentSerialController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(Yii::$app->request->getReferrer());
+
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -103,7 +105,8 @@ class TalentSerialController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(Yii::$app->request->getReferrer());
+
     }
 
     /**

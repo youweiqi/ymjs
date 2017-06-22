@@ -60,7 +60,8 @@ class CirculationPictureController extends Controller
             $img_path = Yii::$app->qiniu->UploadImg($model,'image','advertisement');
             $model->image = $img_path;
             if($model->save(false)){
-                return $this->redirect(['index']);
+                return $this->redirect(Yii::$app->request->getReferrer());
+
             }
         }
         return $this->renderAjax('create', [
@@ -86,7 +87,8 @@ class CirculationPictureController extends Controller
                 unset($model->image);
             }
             $model->save(false);
-            return $this->redirect(['index']);
+            return $this->redirect(Yii::$app->request->getReferrer());
+
         } else {
             return $this->renderAjax('update', [
                 'model' => $model,

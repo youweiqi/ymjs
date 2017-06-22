@@ -75,7 +75,8 @@ class GoodsServiceController extends Controller
             }
 
             if($model->save(false)){
-                return $this->redirect(['index', 'id' => $model->id] );
+                return $this->redirect(Yii::$app->request->getReferrer());
+
             }
         }
         return $this->renderAjax('create', [
@@ -103,7 +104,8 @@ class GoodsServiceController extends Controller
             }
 
             if($model->save()){
-                return $this->redirect(['index', 'id' => $model->id]);
+                return $this->redirect(Yii::$app->request->getReferrer());
+
             }
         }
         return $this->renderAjax('update', [
@@ -122,7 +124,8 @@ class GoodsServiceController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(Yii::$app->request->getReferrer());
+
     }
 
     /**

@@ -186,7 +186,8 @@ class SerialController extends Controller
                         $model->save(false);
                     }
                 }
-                return $this->redirect(['index', 'id' => $model->id]);
+                return $this->redirect(Yii::$app->request->getReferrer());
+
             }
 
         }

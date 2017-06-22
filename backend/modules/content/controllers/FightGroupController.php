@@ -96,7 +96,8 @@ class FightGroupController extends Controller
                     $activity_detail_data[$key]['activity_id'] = $model->id;
                 }
                 Yii::$app->db->createCommand()->batchInsert(ActivityDetail::tableName(), ['product_id', 'inventory_num', 'inventory_id', 'activity_id'], $activity_detail_data)->execute();
-                return $this->redirect(['index']);
+                return $this->redirect(Yii::$app->request->getReferrer());
+
             }
         }
         return $this->renderAjax('create', [
@@ -138,7 +139,8 @@ class FightGroupController extends Controller
             if($model->save()){
                 ActivityDetail::deleteAll('activity_id = :aid', [':aid' => $id]);
                 Yii::$app->db->createCommand()->batchInsert(ActivityDetail::tableName(), ['product_id','inventory_num','inventory_id','activity_id'], $activity_detail_data)->execute();
-                return $this->redirect(['index']);
+                return $this->redirect(Yii::$app->request->getReferrer());
+
             }
         }
         $activity_details = ActivityDetail::find()->where(['=','activity_id',$model->id])->all();

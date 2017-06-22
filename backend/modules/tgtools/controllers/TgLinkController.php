@@ -71,7 +71,8 @@ class TgLinkController extends Controller
         $model->setScenario('tg_goods');
         $post = Yii::$app->request->post();
         if ($model->load($post) && $model->save()) {
-            return $this->redirect(['index']);
+            return $this->redirect(Yii::$app->request->getReferrer());
+
         } else {
             return $this->renderAjax('goods-tg', [
                 'model' => $model,
@@ -90,7 +91,8 @@ class TgLinkController extends Controller
         $model->setScenario('tg_goods');
         $post = Yii::$app->request->post();
         if ($model->load($post) && $model->save()) {
-            return $this->redirect(['index']);
+            return $this->redirect(Yii::$app->request->getReferrer());
+
         } else {
             return $this->renderAjax('goods-tg', [
                 'model' => $model,
@@ -111,7 +113,8 @@ class TgLinkController extends Controller
         $post = Yii::$app->request->post();
 
         if ($model->load($post) && $model->save()) {
-            return $this->redirect(['index']);
+            return $this->redirect(Yii::$app->request->getReferrer());
+
         } else {
             return $this->renderAjax('brand-tg', [
                 'model' => $model,
@@ -132,7 +135,8 @@ class TgLinkController extends Controller
         $post = Yii::$app->request->post();
 
         if ($model->load($post) && $model->save()) {
-            return $this->redirect(['index']);
+            return $this->redirect(Yii::$app->request->getReferrer());
+
         } else {
             return $this->renderAjax('brand-tg', [
                 'model' => $model,
@@ -150,7 +154,8 @@ class TgLinkController extends Controller
     {
         $model = new TgLink();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+            return $this->redirect(Yii::$app->request->getReferrer());
+
         } else {
             return $this->renderAjax('create', [
                 'model' => $model,
@@ -170,7 +175,8 @@ class TgLinkController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+            return $this->redirect(Yii::$app->request->getReferrer());
+
         } else {
             return $this->renderAjax('update', [
                 'model' => $model,
@@ -188,7 +194,8 @@ class TgLinkController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(Yii::$app->request->getReferrer());
+
     }
 
     /**

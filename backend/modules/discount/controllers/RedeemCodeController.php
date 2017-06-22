@@ -71,7 +71,8 @@ class RedeemCodeController extends Controller
         $model = new RedeemCode();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+            return $this->redirect(Yii::$app->request->getReferrer());
+
         } else {
             return $this->renderAjax('create', [
                 'model' => $model,
@@ -110,7 +111,8 @@ class RedeemCodeController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(Yii::$app->request->getReferrer());
+
     }
 
     /**
@@ -179,7 +181,8 @@ class RedeemCodeController extends Controller
                     $i = $i-1;
                 }
             }
-            return $this->redirect(['index']);
+            return $this->redirect(Yii::$app->request->getReferrer());
+
         }else{
             return $this->render('batch-create', [
                 'model' => $model,

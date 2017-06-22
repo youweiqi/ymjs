@@ -70,7 +70,8 @@ class StoreRefundAddressController extends Controller
         $model = new StoreRefundAddress();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+            return $this->redirect(Yii::$app->request->getReferrer());
+
         } else {
             return $this->renderAjax('create', [
                 'model' => $model,
@@ -94,7 +95,8 @@ class StoreRefundAddressController extends Controller
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+            return $this->redirect(Yii::$app->request->getReferrer());
+
         } else {
             return $this->renderAjax('update', [
                 'model' => $model,

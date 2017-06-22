@@ -90,7 +90,8 @@ class InventoryController extends Controller
             $model->settlement_price = intval(strval($model->settlement_price * 100));
 
             if($model->save(false)){
-                return $this->redirect(['index']);
+                return $this->redirect(Yii::$app->request->getReferrer());
+
             }
         }
         return $this->renderAjax('create', [

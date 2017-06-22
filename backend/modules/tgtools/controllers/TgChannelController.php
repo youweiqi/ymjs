@@ -70,7 +70,8 @@ class TgChannelController extends Controller
         $model = new ChannelCreateForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+            return $this->redirect(Yii::$app->request->getReferrer());
+
         } else {
             return $this->renderAjax('create', [
                 'model' => $model,
@@ -96,7 +97,8 @@ class TgChannelController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+            return $this->redirect(Yii::$app->request->getReferrer());
+
         } else {
             return $this->render('update', [
                 'model' => $model,

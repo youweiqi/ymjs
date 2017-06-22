@@ -89,7 +89,8 @@ class StoreController extends Controller
                 StoreBrandLib::saveStoreBrand($brand_ids,$model->id);
             }
 
-            return $this->redirect(['index']);
+            return $this->redirect(Yii::$app->request->getReferrer());
+
         }
             return $this->renderAjax('create', [
                 'model' => $model,
@@ -131,7 +132,8 @@ class StoreController extends Controller
                 //更新把品牌和门店id存到store_brand
                 StoreBrandLib::updateStoreBrand($brand_ids,$model->id);
             }
-            return $this->redirect(['index']);
+            return $this->redirect(Yii::$app->request->getReferrer());
+
         }
         if($model->price_no_freight == '999999'){
             $model->price_no_freight ="";

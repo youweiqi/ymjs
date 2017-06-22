@@ -67,7 +67,8 @@ class GoodsCommentController extends Controller
         $model = new GoodsComment();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(Yii::$app->request->getReferrer());
+
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -86,7 +87,8 @@ class GoodsCommentController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(Yii::$app->request->getReferrer());
+
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -133,6 +135,7 @@ class GoodsCommentController extends Controller
             $model->status=1;
             $model->save(false);
         }
-        return $this->redirect(['index']);
+        return $this->redirect(Yii::$app->request->getReferrer());
+
     }
 }

@@ -82,7 +82,8 @@ class CategorySelectController extends Controller
                 $model->name;
             }
             $model->save(false);
-            return $this->redirect(['index']);
+            return $this->redirect(Yii::$app->request->getReferrer());
+
         } else {
             return $this->renderAjax('create', [
                 'model' => $model,
@@ -114,7 +115,8 @@ class CategorySelectController extends Controller
             }
 
             $model->save(false);
-            return $this->redirect(['index']);
+            return $this->redirect(Yii::$app->request->getReferrer());
+
         } else {
             $category_data = CategoryLib::getCategoryData($model->category_id);
             return $this->renderAjax('update', [

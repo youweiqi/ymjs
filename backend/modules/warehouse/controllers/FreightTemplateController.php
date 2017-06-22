@@ -147,7 +147,8 @@ class FreightTemplateController extends Controller
                     FreightTemplateDetail::updateAll(['freight' => $freight], ['and',['=','freight_template_id',$id],['=','area_code',$key]]);
                 }
             }
-            return $this->redirect(['index']);
+            return $this->redirect(Yii::$app->request->getReferrer());
+
         }
         $model->default_freight = $model->default_freight/100;
         return $this->renderAjax('update', [
@@ -167,7 +168,8 @@ class FreightTemplateController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(Yii::$app->request->getReferrer());
+
     }
 
     /**

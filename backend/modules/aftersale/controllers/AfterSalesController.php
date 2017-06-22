@@ -2,6 +2,7 @@
 
 namespace backend\modules\aftersale\controllers;
 
+use backend\controllers\BaseController;
 use backend\libraries\AfterSalesLib;
 use common\components\Common;
 use Yii;
@@ -16,7 +17,7 @@ use yii\widgets\ActiveForm;
 /**
  * AfterSalesController implements the CRUD actions for AfterSales model.
  */
-class AfterSalesController extends Controller
+class AfterSalesController extends BaseController
 {
     /**
      * @inheritdoc
@@ -136,6 +137,8 @@ class AfterSalesController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $model->status = 2;
             $model->save();
+            $description = '同意售后申请';
+            $this->writeLog($id,$model->after_sn,'after_sale',$description);
             return $this->redirect(Yii::$app->request->getReferrer());
         }else{
             return $this->renderAjax('agree', [
@@ -161,6 +164,14 @@ class AfterSalesController extends Controller
             $url = Yii::$app->params['apiBaseUrl'].Yii::$app->params['apiBaStoreRefusedAfterSales'];
             $content= Common::requestServer($url,$params);
             $result = json_decode($content, true);
+            if($result['code' == '10000']){
+                Yii::$app->session->setFlash('success',$result);
+                $description = '拒绝售后申请';
+                $this->writeLog($id,$model->after_sn,'after_sale',$description);
+
+            }else{
+                Yii::$app->session->setFlash('error',$result);
+            }
             return $this->redirect(Yii::$app->request->getReferrer());
         }else{
             return $this->renderAjax('refuse', [
@@ -174,6 +185,8 @@ class AfterSalesController extends Controller
         $model = $this->findModel($id);
         $model->send_back = 2;
         $model->save(false);
+        $description = '同意回寄的货品';
+        $this->writeLog($id,$model->after_sn,'after_sale',$description);
         return $this->redirect(Yii::$app->request->getReferrer());
 
     }
@@ -184,6 +197,8 @@ class AfterSalesController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $model->status = 4;
             if($model->save()){
+                $description = '拒绝回寄的货品';
+                $this->writeLog($id,$model->after_sn,'after_sale',$description);
                 return $this->redirect(Yii::$app->request->getReferrer());
             }
         }

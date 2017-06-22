@@ -46,13 +46,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 'header'=>'操作',
                 'headerOptions' => ['style' => 'min-width:50px'],
                 'class' => 'yii\grid\ActionColumn',
-                'template' => '{view} {agree} {refuse} {agree-send-back} {refuse-send-back}',
+                'template' => '{view-log} {agree} {refuse} {agree-send-back} {refuse-send-back}',
                 'buttons' => [
-                    'view' => function ($url, $model, $key) {
-                        return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', '#', [
+                    'view-log' => function ($url, $model, $key) {
+                        return Html::a('<span class="glyphicon glyphicon-list-alt"></span>', '#', [
+                            'title' => '查看操作日志',
+                            'aria-label' => '查看操作日志',
                             'data-toggle' => 'modal',
-                            'data-target' => '#view-modal',
-                            'class' => 'data-view',
+                            'data-target' => '#view-log-modal',
+                            'class' => 'data-view-log',
                             'data-id' => $key,
                         ]);
                     },
@@ -324,4 +326,6 @@ $this->registerJs($modal_js,3);
 ?>
 <?php
 $this->params['view_modal_title'] = '查看售后申请单';
+$this->params['view_log_modal_title'] = '查看售后单操作日志';
+$this->params['log_type'] = 'after_sale';
 ?>

@@ -71,6 +71,9 @@ return [
         'qiniu' => [
             'class' => 'common\components\QiNiuU'
         ],
+        'logger' => [
+            'class' => 'common\components\Log',
+        ],
         /* 身份认证类 默认yii\web\user */
         'user' => [
             'class' => 'yii\web\User',

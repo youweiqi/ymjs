@@ -2,6 +2,7 @@
 
 namespace backend\modules\finance\controllers;
 
+use backend\controllers\BaseController;
 use backend\libraries\RefundLib;
 use Yii;
 use common\models\OrderObject;
@@ -13,7 +14,7 @@ use yii\filters\VerbFilter;
 /**
  * OrderObjectController implements the CRUD actions for OrderObject model.
  */
-class OrderObjectController extends Controller
+class OrderObjectController extends BaseController
 {
     /**
      * @inheritdoc

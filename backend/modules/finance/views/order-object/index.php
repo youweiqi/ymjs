@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'template' => '{god-agree}',
                 'buttons' => [
                     'god-agree' => function ($url, $model, $key) {
-                        if($model->refund_fee_no==''){
+                        if($model->refund_id==''){
                             return Html::a('<span class="glyphicon glyphicon-send"></span>', $url, [
                                 'title' => '退运费',
                                 'aria-label' => '退运费',

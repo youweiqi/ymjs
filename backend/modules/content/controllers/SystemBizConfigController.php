@@ -1,19 +1,18 @@
 <?php
 
-namespace backend\modules\finance\controllers;
+namespace backend\modules\content\controllers;
 
-use backend\libraries\RefundLib;
 use Yii;
-use common\models\OrderObject;
-use backend\modules\finance\models\search\OrderObjectSearch;
+use common\models\SystemBizConfig;
+use backend\modules\content\models\search\SystemBizConfigSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * OrderObjectController implements the CRUD actions for OrderObject model.
+ * SystemBizConfigController implements the CRUD actions for SystemBizConfig model.
  */
-class OrderObjectController extends Controller
+class SystemBizConfigController extends Controller
 {
     /**
      * @inheritdoc
@@ -31,12 +30,12 @@ class OrderObjectController extends Controller
     }
 
     /**
-     * Lists all OrderObject models.
+     * Lists all SystemBizConfig models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new OrderObjectSearch();
+        $searchModel = new SystemBizConfigSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -46,7 +45,7 @@ class OrderObjectController extends Controller
     }
 
     /**
-     * Displays a single OrderObject model.
+     * Displays a single SystemBizConfig model.
      * @param integer $id
      * @return mixed
      */
@@ -58,13 +57,13 @@ class OrderObjectController extends Controller
     }
 
     /**
-     * Creates a new OrderObject model.
+     * Creates a new SystemBizConfig model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new OrderObject();
+        $model = new SystemBizConfig();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -76,7 +75,7 @@ class OrderObjectController extends Controller
     }
 
     /**
-     * Updates an existing OrderObject model.
+     * Updates an existing SystemBizConfig model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -86,7 +85,7 @@ class OrderObjectController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(Yii::$app->request->getReferrer());
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -95,7 +94,7 @@ class OrderObjectController extends Controller
     }
 
     /**
-     * Deletes an existing OrderObject model.
+     * Deletes an existing SystemBizConfig model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -104,41 +103,22 @@ class OrderObjectController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(Yii::$app->request->getReferrer());
-
+        return $this->redirect(['index']);
     }
 
     /**
-     * Finds the OrderObject model based on its primary key value.
+     * Finds the SystemBizConfig model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return OrderObject the loaded model
+     * @return SystemBizConfig the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = OrderObject::findOne($id)) !== null) {
+        if (($model = SystemBizConfig::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
-    }
-
-    public function actionGodAgree($id)
-    {
-
-        $model = $this->findModel($id);
-        if($model->status=='0'||$model->status=='5'){
-            return $this->redirect(Yii::$app->request->getReferrer());
-        }
-        $result = RefundLib::processFreight($model->order_sn);
-        if($result['code']==10000){
-            Yii::$app->session->setFlash('success',$result['message']);
-
-        }else{
-            Yii::$app->session->setFlash('error',$result['message']);
-        }
-
-        return $this->redirect(Yii::$app->request->getReferrer());
     }
 }

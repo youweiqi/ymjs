@@ -22,9 +22,9 @@ return [
 
     /* 欲购相关配置 */
     //API基础URL
-    'apiBaseUrl' => 'http://api.test.app.glela.cn/',
+    'apiBaseUrl' => 'http://120.92.145.4/yg_stylemelodyapporder/',
     //API退款接口
-    'apiRefundCash' => 'yg_ygapp/refund/refundCash',
+    'apiRefundCash' => 'order/updateOrderInfoStatusByOrderSnAndStatus',
     //API发货接口
     'apiDeliverGoods' => 'yg_ygapp/order/updateOrderInfoStatusByOrderSnAndStatus',
     //API拒绝售后接口

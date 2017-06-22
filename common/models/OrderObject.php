@@ -57,6 +57,7 @@ use yii\helpers\ArrayHelper;
  * @property integer $app_id
  * @property integer $mall_store_id
  * @property string $open_id
+ * @property string $refund_id
  */
 class OrderObject extends \yii\db\ActiveRecord
 {
@@ -90,7 +91,7 @@ class OrderObject extends \yii\db\ActiveRecord
             [['link_man'], 'string', 'max' => 20],
             [['mobile', 'province', 'city', 'area', 'in_verification'], 'string', 'max' => 30],
             [['street', 'pay_id'], 'string', 'max' => 50],
-            [['address'], 'string', 'max' => 255],
+            [['address','refund_id'], 'string', 'max' => 255],
             [['remark', 'open_id'], 'string', 'max' => 200],
             [['order_sn'], 'unique'],
         ];
@@ -151,6 +152,7 @@ class OrderObject extends \yii\db\ActiveRecord
             'app_id' => 'App ID',
             'mall_store_id' => 'Mall Store ID',
             'open_id' => 'Open ID',
+            'refund_id' => '退款标识'
         ];
     }
     public static function dropDown ($column, $value = null)

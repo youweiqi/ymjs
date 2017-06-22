@@ -9,30 +9,14 @@ class RefundLib
     /**
      * 处理售后退款
      * @param  string $afterSaleBn    售后单号
-     * @param  integer $refundMoney    退款金额
      * @return mixed
      */
-    public static function processRefund($afterSaleBn,$refundMoney=0)
+    public static function processFreight($afterSaleBn)
     {
-        $url = Yii::$app->params['apiBaseUrl'].Yii::$app->params['apiRefundCash'];
-        if($refundMoney){
-            $params['refundMoney'] = $refundMoney;
-        }
+        $url = YG_BASE_URL.API_REFUND_CASH;
         $params['afterSn'] = $afterSaleBn;
         $content = Common::requestServer($url, $params);
-        $result = json_decode($content,true);
-        if($result['code']==10000){
-            Yii::$app->session->setFlash('success',$result['message']);
-            return true;
-        }else{
-            Yii::$app->session->setFlash('error',$result['message']);
-            return false;
-        }
-    }
+        return $result = json_decode($content,true);
 
-    public static function processFreight($order_sn)
-    {
-        return false;
     }
-
 }

@@ -150,30 +150,18 @@ class RefundController extends Controller
     {
         $model = $this->findModel($id);
         if($model->status!=2){
-            return $this->redirect('index');
-        }
-        $order_object = OrderObject::findOne($model->order_object_id);
-        if(empty($order_object)){
-            return $this->redirect(Yii::$app->request->getReferrer());
-        }
-        $result = RefundLib::processRefund($model->after_sn);
-        return $this->redirect(Yii::$app->request->getReferrer());
-    }
-
-    public function actionGodAgree($id)
-    {
-        $model = $this->findModel($id);
-        if($model->status!=2){
             return $this->redirect(Yii::$app->request->getReferrer());
         }
         $order_object = OrderObject::findOne($model->order_object_id);
         if(empty($order_object)){
             return $this->redirect(Yii::$app->request->getReferrer());
         }
-
-        $result = RefundLib::processRefund($model->after_sn);
+        $result = RefundLib::processRefund($model->after_sn,$model->refund_money);
+        if($result['code']==10000){
+            Yii::$app->session->setFlash('success',$result);
+        }else{
+            Yii::$app->session->setFlash('error',$result);
+        }
         return $this->redirect(Yii::$app->request->getReferrer());
-
     }
-
 }

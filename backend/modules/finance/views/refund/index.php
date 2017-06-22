@@ -51,19 +51,6 @@ $this->params['breadcrumbs'][] = $this->title;
                             return '';
                         }
                     },
-                    'god-agree' => function ($url, $model, $key) {
-                        if($model->status ==2){
-                            return Html::a('<span class="glyphicon glyphicon-send"></span>', $url, [
-                                'title' => '强制完成',
-                                'aria-label' => '强制完成',
-                                'data-confirm' => '您是否强制退款退款？',
-                                'data-method' => 'post',
-                                'data-pjax' => '0',
-                            ]);
-                        }else{
-                            return '';
-                        }
-                    }
                 ],
                 ],
             [

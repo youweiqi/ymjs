@@ -231,9 +231,9 @@ class InventoryLib
             'store_name'=>'string',
             'inventory_num' => 'int',
             'sale_price' => 'money',
-            'goods_sale' => 'money',
+            //'goods_sale' => 'money',
             'spec_name' => 'string',
-            //'goods_name' => 'string'
+            'goods_name' => 'string'
         ];
         $required = [
             'id',

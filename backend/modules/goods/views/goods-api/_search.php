@@ -30,7 +30,7 @@ use yii\widgets\ActiveForm;
 
 <?= $form->field($model, 'goods_code') ?>
 
-<?= $form->field($model, 'brand_id')->label('品牌') ?>
+<?= $form->field($model, 'brand_name')->label('品牌') ?>
 
 <?= $form->field($model, 'name') ?>
 

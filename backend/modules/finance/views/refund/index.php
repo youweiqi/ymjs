@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'header'=>'操作',
                 'headerOptions' => ['width' => '75'],
                 'class' => 'yii\grid\ActionColumn',
-                'template' => '{view} {agree} {god-agree}',
+                'template' => '{view} {agree}',
                 'buttons' => [
                     'view' => function ($url, $model, $key) {
                         return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', '#', [

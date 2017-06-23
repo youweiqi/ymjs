@@ -28,7 +28,7 @@ class GoodsApiSearch extends Goods
         return [
             [['id', 'brand_id', 'suggested_price', 'lowest_price', 'category_parent_id', 'category_id', 'talent_limit', 'threshold', 'ascription', 'talent_display', 'discount', 'operate_costing', 'score_rate', 'self_support', 'channel', 'api_goods_id'], 'integer'],
             [['goods_code', 'name', 'spec_desc', 'service_desc', 'label_name', 'unit', 'remark', 'online_time', 'offline_time', 'create_time', 'wx_small_imgpath'], 'safe'],
-            [['id','brand_id','goods_code','name','category_parent_name','category_name'],'trim']
+            [['id','brand_name','goods_code','name','category_parent_name','category_name'],'trim']
         ];
     }
 
@@ -74,11 +74,16 @@ class GoodsApiSearch extends Goods
         // grid filtering conditions
         $query->andFilterWhere([
             'goods.id' => $this->id,
-            'goods.brand_id'=>$this->brand_id
+
         ]);
 
         $query->andFilterWhere(['like', 'goods_code', $this->goods_code])
-            ->andFilterWhere(['like', 'name', $this->name]);
+            ->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere([
+                'or',
+                ['like', 'brand.name_cn', $this->brand_name],
+                ['like', 'brand.name_en', $this->brand_name],
+            ]);
 
 
         return $dataProvider;

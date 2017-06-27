@@ -55,75 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         return Html::a('<span data-id="'.$model->id. '" data-order_sn="'.$model->order_sn.'" class="open-row glyphicon glyphicon-collapse-up"></span>', 'javascript:;'); },
                 ],
             ],
-            [
-                'header'=>'操作',
-                'class' => 'yii\grid\ActionColumn',
-                'headerOptions' => ['style' => 'min-width:70px'],
-                'template' => '{view} {add} {delivery}{delivery-direct}{delivery-after}',
-                'buttons' =>[
-                    'add' => function ($url, $model, $key) {
-                        return Html::a('<span class="glyphicon glyphicon-flag"></span>','#',[
-                            'data-toggle' => 'modal',
-                            'data-target' => '#add-modal',
-                            'class' => 'data-add',
-                            'data-id' => $key,
-                        ]);
-                    },
-                    'delivery' => function ($url, $model, $key) {
-                        if($model->status=='2'&&$model->delivery_way=='3'&&$model->api_order_sn==''&&$model->refund=='0'){
-                            return Html::a('<span class="glyphicon glyphicon-plane"></span>', '#', [
-                                'data-toggle' => 'modal',
-                                'data-target' => '#delivery-modal',
-                                'class' => 'data-delivery',
-                                'data-order_id' => $model->id,
-                                'data-order_sn' => $model->order_sn,
 
-                            ]);
-                        }else {
-                            if ($model->status == '3,4,6' && $model->delivery_way == '3' && $model->api_order_sn == '' && $model->refund == '0') {
-                                return Html::a('<span class="glyphicon glyphicon-retweet"></span>', '#', [
-                                    'data-toggle' => 'modal',
-                                    'title' => '更换物流信息',
-                                    'aria-label' => '更换物流信息',
-                                    'data-target' => '#delivery-modal',
-                                    'class' => 'data-delivery',
-                                    'data-order_id' => $model->id,
-                                    'data-order_sn' => $model->order_sn,
-                                ]);
-                            }
-                        }
-                    },
-                    'delivery-direct' => function ($url, $model, $key) {
-                        if($model->status=='2'&&$model->delivery_way!='3'&&$model->api_order_sn==''&&$model->refund=='0'){
-                            return Html::a('<span class="glyphicon glyphicon-plane"></span>', $url, [
-                                'title'=>'无须物流发货',
-                                'aria-label' => '无须物流发货',
-                                'data-confirm' => '你确认要改变该订单的状态么?',
-                                'data-method' => 'post',
-                                'data-pjax' => '0',
-                                'data-order_id' => $model->id,
-
-                            ]);
-                        }else {
-                            return '';
-                        }
-                    },
-
-                    'view' => function ($url, $model, $key) {
-                        return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', '#', [
-                            'data-toggle' => 'modal',
-                            'data-target' => '#view-modal',
-                            'class' => 'data-view',
-                            'data-id' => $key,
-                        ]);
-                    },
-                ]
-            ],
-
-            [
-                'attribute' => 'id',
-                'headerOptions' => ['style' => 'min-width:50px'],
-            ],
             [
                 'headerOptions' => ['style' => 'min-width:100px'],
                 'attribute'=>'order_sn'

@@ -31,7 +31,7 @@ $this->beginPage();
     <!-- BEGIN HEAD -->
     <head>
         <meta charset="utf-8" />
-        <title><?= Html::encode($this->title) ?> | 安艺宁购物平台后台管理系统</title>
+        <title><?= Html::encode($this->title) ?> | OMS购物平台后台管理系统</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1" name="viewport" />
         <meta content="" name="description" />
@@ -86,7 +86,6 @@ $this->beginPage();
                             </a>
                             <ul class="dropdown-menu dropdown-menu-default">
                                 <li><a href="<?=Url::to(['/admin/admin/edit','uid'=>Yii::$app->user->identity->uid])?>"><i class="icon-user"></i> 修改密码 </a></li>
-                                <li><a href="#"><i class="icon-lock"></i> 锁屏 </a></li>
                                 <li><a href="<?=Url::toRoute('login/logout')?>"><i class="icon-key"></i> 注销 </a></li>
                             </ul>
                         </li>

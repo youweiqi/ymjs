@@ -71,6 +71,7 @@ use Yii;
  * @property integer $type
  * @property integer $app_id
  * @property integer $mall_store_id
+ * @property integer $active_status
  * @property integer $send_goods_bauser_id
  */
 class OrderInfo extends \yii\db\ActiveRecord
@@ -85,6 +86,14 @@ class OrderInfo extends \yii\db\ActiveRecord
         '6'=>'交易成功',
         '7'=>'交易失败',
         '8'=>'待拼团'
+    ];
+    const ACTIVE_STATUS = [
+        '0'=>'未分派',
+        '1'=>'未审核',
+        '2'=>'未打印',
+        '3'=>'未校验',
+        '4'=>'未发货',
+
     ];
     const PAY_TYPE = [
         '1'=>'微信支付',
@@ -131,7 +140,7 @@ class OrderInfo extends \yii\db\ActiveRecord
     {
         return [
             [['order_sn', 'user_id', 'settlement_man', 'settlement_account', 'settlement_bank'], 'required'],
-            [['user_id', 'order_object_id', 'store_id', 'total_price', 'total_settlement_price', 'total_cooperate_price', 'cash_coin', 'promotion_id', 'promotion_discount', 'total_fee', 'commision_fee', 'pay_type', 'member_delivery_address_id', 'delivery_way', 'is_bill', 'bill_type', 'freight', 'payment_fee', 'refund_fee', 'refund_cash_coin', 'in_state', 'procedure_fee', 'bank_in', 'status', 'refund', 'comment_status', 'type', 'app_id', 'mall_store_id', 'send_goods_bauser_id'], 'integer'],
+            [['user_id', 'order_object_id', 'store_id', 'total_price', 'total_settlement_price', 'total_cooperate_price', 'cash_coin', 'promotion_id', 'promotion_discount', 'total_fee', 'commision_fee', 'pay_type', 'member_delivery_address_id', 'delivery_way', 'is_bill', 'bill_type', 'freight', 'payment_fee', 'refund_fee', 'refund_cash_coin', 'in_state', 'procedure_fee', 'bank_in', 'status', 'refund', 'comment_status', 'type', 'app_id', 'mall_store_id', 'send_goods_bauser_id','active_status'], 'integer'],
             [['store_lon', 'store_lat', 'lon', 'lat'], 'number'],
             [['api_order_sn','pay_time', 'complete_time', 'refund_date', 'in_date', 'create_time', 'update_time'], 'safe'],
             [['order_sn', 'store_name', 'store_address', 'settlement_account', 'express_name', 'express_no', 'bill_header'], 'string', 'max' => 100],
@@ -215,13 +224,15 @@ class OrderInfo extends \yii\db\ActiveRecord
             'app_id' => 'App ID',
             'mall_store_id' => 'Mall Store ID',
             'send_goods_bauser_id' => '发货人id',
-            'api_order_sn'=>'Api订单号'
+            'api_order_sn'=>'Api订单号',
+            'active_status' => '操作状态'
         ];
     }
 
     public static function dropDown($column, $value = null){
         $dropDownList = [
             'status'=> self::STATUS,
+            'active_status'=> self::ACTIVE_STATUS,
             'pay_type'=> self::PAY_TYPE,
             'store_type'=> self::STORE_TYPE,
             'delivery_way'=> self::DELIVERY_WAY,

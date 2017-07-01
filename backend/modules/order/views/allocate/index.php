@@ -72,22 +72,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ],
             [
-                'header'=>'操作',
-                'class' => 'yii\grid\ActionColumn',
-                'headerOptions' => ['style' => 'min-width:70px'],
-                'template' => '{add}',
-                'buttons' =>[
-                    'add' => function ($url, $model, $key) {
-                        return Html::a('<span class="glyphicon glyphicon-flag"></span>','#',[
-                            'data-toggle' => 'modal',
-                            'data-target' => '#add-modal',
-                            'class' => 'data-add',
-                            'data-id' => $key,
-                        ]);
-                    },
-                ]
-            ],
-            [
                 'headerOptions' => ['style' => 'min-width:100px'],
                 'attribute'=>'order_sn'
             ],
@@ -208,27 +192,8 @@ $this->registerJs($open_row_js,3);
 
 <?php
 Modal::begin([
-    'id' => 'view-modal',
-    'header' => '<h4 class="modal-title">订单明细</h4>',
-    'footer' => '',
-    'options' => [
-        'tabindex' => false
-    ]
-]);
-Modal::end();
-Modal::begin([
-    'id' => 'add-modal',
-    'header' => '<h4 class="modal-title">订单备注</h4>',
-    'footer' => '',
-    'options' => [
-        'tabindex' => false
-    ]
-]);
-Modal::end();
-
-Modal::begin([
-    'id' => 'delivery-modal',
-    'header' => '<h4 class="modal-title">订单发货</h4>',
+    'id' => 'batch-update-modal',
+    'header' => '<h4 class="modal-title">批量分派</h4>',
     'footer' => '',
     'options' => [
         'tabindex' => false
@@ -237,41 +202,22 @@ Modal::begin([
 Modal::end();
 ?>
 <?php
-$request_delivery_url = Url::to(['/order/order-info/delivery']);
-$request_view_url = Url::to(['/order/order-info/view']);
-$request_add_url = Url::to(['/order/order-info/update']);
+$request_batch_update_url = Url::to(['batch-allocate']);
 $modal_js = <<<JS
-    $('.data-delivery').on('click', function () {
-        $('#delivery-modal').find('.modal-header').html('<h4 class="modal-title">订单发货</h4>');
-        $('#delivery-modal').find('.modal-body').html('');
-        $.get('{$request_delivery_url}', { id: $(this).closest('tr').data('key') },
-            function (data) {
-                $('#delivery-modal').find('.modal-body').html(data);
-            }
-        );
-    });
-$('.data-view').on('click', function () {
-        $('#view-modal').find('.modal-header').html('<h4 class="modal-title">订单明细</h4>');
-        $('#view-modal').find('.modal-body').html('');
-        $('#view-modal').find('.modal-body').css('height','600px');
-        $('#view-modal').find('.modal-body').css('overflow-y','auto');
-        $.get('{$request_view_url}', { id: $(this).closest('tr').data('key') },
-            function (data) {
-                $('#view-modal').find('.modal-body').html(data);
-            }
-        );
-    });
-$('.data-add').on('click', function () {
-        $('#add-modal').find('.modal-header').html('<h4 class="modal-title">订单备注</h4>');
-        $('#add-modal').find('.modal-body').html('');
-        $('#add-modal').find('.modal-body').css('height','300px');
-        $('#add-modal').find('.modal-body').css('overflow-y','auto');
-        $.get('{$request_add_url}', { id: $(this).closest('tr').data('key') },
-            function (data) {
-                $('#add-modal').find('.modal-body').html(data);
-            }
-        );
-    });
+ $('#data-batch-update').bind('click', function () {
+       var keys = $("#grid").yiiGridView("getSelectedRows");
+       if(keys.length>0){
+           $('#batch-update-modal').modal('toggle')
+            $('#batch-update-modal').find('.modal-header').html('<h4 class="modal-title">批量分派</h4>');
+              $.post('{$request_batch_update_url}', { ids: keys },
+                    function (data) {
+                        $('#batch-update-modal').find('.modal-body').html(data);
+                    }
+                );
+            }else{
+            alert('请先选择需要操作的订单');
+        }
+      });
 JS;
 $this->registerJs($modal_js,3);
 ?>

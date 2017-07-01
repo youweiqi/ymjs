@@ -54,6 +54,7 @@ use yii\widgets\ActiveForm;
                 'dataType' => 'json',
                 'data' => new JsExpression('function(params) {
                      var store_id = $("#activity-store_id option:selected").val();
+                     console.log(store_id);
                      if(!store_id){
                         alert("请先选择店铺");
                      }else{

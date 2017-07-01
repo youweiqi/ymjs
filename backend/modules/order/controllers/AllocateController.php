@@ -2,12 +2,19 @@
 
 namespace backend\modules\order\controllers;
 
+use backend\modules\order\models\form\AllocateForm;
+use common\helpers\ArrayHelper;
+use common\models\Team;
+use common\models\TeamUserRelation;
+use common\models\User;
+use kartik\widgets\ActiveForm;
 use Yii;
 use common\models\OrderInfo;
 use backend\modules\order\models\search\AllocateSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * AllocateController implements the CRUD actions for OrderInfo model.
@@ -121,4 +128,82 @@ class AllocateController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+    /*
+     * 批量分派
+     */
+    public function actionBatchAllocate()
+    {
+        $model = new AllocateForm();
+        $post = Yii::$app->request->post();
+        if (isset($post['ids'])) {
+            $model->ids = serialize($post['ids']);
+        } elseif ($model->load($post)) {
+            $ids = unserialize($model->ids);
+            $transaction = Yii::$app->db->beginTransaction();
+            try {
+                $res = OrderInfo::updateAll(['team_id' => $model->team_name, 'active_user_id' => $model->user_name,'active_status' => '1'], ['id' => $ids]);
+                if ($res===false) {
+                    throw new \Exception('操作批量分派步骤失败！');
+                }
+                $transaction->commit();
+            } catch (\Exception $e) {
+                $transaction->rollBack();
+            }
+            return $this->redirect(Yii::$app->request->getReferrer());
+        }
+        return $this->renderAjax('batch-allocate', ['model' => $model]);
+    }
+
+/*
+ * 查找小组和确认人关系表
+ * 这个地方暂时想不到联表查询出数据 返回
+ */
+    public function actionSearchTeam($name=null)
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $out = ['results' => ['id' => '', 'text' => '']];
+        $team_names = TeamUserRelation::find()->select('team_id')->distinct()->asArray()->all();
+        $team_arr = ArrayHelper::getColumn($team_names,'team_id');
+        $data = Team::find()
+            ->where(['in','id',$team_arr])
+            ->select('id as id, team_name as text')
+            ->andFilterWhere(['like', 'team_name', $name])
+            ->limit(10)
+            ->asArray()
+            ->all();
+        $out['results'] = array_values($data);
+        return $out;
+    }
+
+/*
+ * 去查询小组和成员的关系表数据
+ * $team_id
+ */
+    public function actionSearchUser($user_name=null,$team_id)
+    {
+        $team_user_ids = TeamUserRelation::find()->select('user_id')->where(['=','team_id',$team_id])->asArray()->all();
+        $user_ids = ArrayHelper::getColumn($team_user_ids,'user_id');
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $out = ['results' => ['id' => '', 'text' => '']];
+        $data = User::find()
+            ->where(['in','uid',$user_ids])
+            ->select('uid as id, username as text')
+            ->andFilterWhere(['like', 'username', $user_name])
+            ->limit(10)
+            ->asArray()
+            ->all();
+        $out['results'] = array_values($data);
+        return $out;
+    }
+
+    public function actionBatchAllocateValidateForm () {
+
+        $model = new AllocateForm();
+        $model->load(Yii::$app->request->post());
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        return ActiveForm::validate($model);
+    }
+
+
 }

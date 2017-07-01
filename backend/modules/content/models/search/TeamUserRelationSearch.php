@@ -12,6 +12,8 @@ use common\models\TeamUserRelation;
  */
 class TeamUserRelationSearch extends TeamUserRelation
 {
+    public $team_name;
+    public $user_name;
     /**
      * @inheritdoc
      */
@@ -19,6 +21,7 @@ class TeamUserRelationSearch extends TeamUserRelation
     {
         return [
             [['id', 'team_id', 'user_id'], 'integer'],
+            [['team_name','user_name'],'trim']
         ];
     }
 
@@ -40,7 +43,10 @@ class TeamUserRelationSearch extends TeamUserRelation
      */
     public function search($params)
     {
-        $query = TeamUserRelation::find();
+        $query = TeamUserRelation::find()
+            ->joinWith(['user','team'])
+            ->select('team_user_relation.*,user.username,team.team_name')
+            ->orderBy(['team_user_relation.id' => SORT_DESC]);
 
         // add conditions that should always apply here
 
@@ -57,12 +63,8 @@ class TeamUserRelationSearch extends TeamUserRelation
         }
 
         // grid filtering conditions
-        $query->andFilterWhere([
-            'id' => $this->id,
-            'team_id' => $this->team_id,
-            'user_id' => $this->user_id,
-        ]);
-
+        $query->andFilterWhere(['like', 'user.username', $this->user_name])
+              ->andFilterWhere(['like', 'team.team_name', $this->team_name]);
         return $dataProvider;
     }
 }

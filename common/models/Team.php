@@ -19,6 +19,13 @@ class Team extends \yii\db\ActiveRecord
     {
         return '{{yg_system.team}}';
     }
+    /**
+     * @return \yii\db\Connection the database connection used by this AR class.
+     */
+    public static function getDb()
+    {
+        return Yii::$app->get('db');
+    }
 
     /**
      * @inheritdoc
@@ -43,4 +50,5 @@ class Team extends \yii\db\ActiveRecord
             'team_name' => '小组名称',
         ];
     }
+
 }

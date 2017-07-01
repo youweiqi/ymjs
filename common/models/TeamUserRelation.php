@@ -18,7 +18,14 @@ class TeamUserRelation extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return '{{%team_user_relation}}';
+        return '{{yg_system.team_user_relation}}';
+    }
+    /**
+     * @return \yii\db\Connection the database connection used by this AR class.
+     */
+    public static function getDb()
+    {
+        return Yii::$app->get('db');
     }
 
     /**

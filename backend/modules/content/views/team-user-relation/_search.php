@@ -24,9 +24,9 @@ use yii\widgets\ActiveForm;
 
     ]); ?>
 
-    <?= $form->field($model, 'team_id') ?>
+    <?= $form->field($model, 'team_name')->label('小组名称') ?>
 
-    <?= $form->field($model, 'user_id') ?>
+    <?= $form->field($model, 'user_name')->label('小组成员') ?>
 
     <div class="" style="margin-top:20px;margin-left:18px">
         <?= Html::submitButton('搜索', ['class' => 'btn btn-primary btn-sm','']) ?>

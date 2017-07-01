@@ -72,6 +72,8 @@ use Yii;
  * @property integer $app_id
  * @property integer $mall_store_id
  * @property integer $active_status
+ * @property integer $active_user_id
+ * @property integer $team_id
  * @property integer $send_goods_bauser_id
  */
 class OrderInfo extends \yii\db\ActiveRecord
@@ -140,7 +142,7 @@ class OrderInfo extends \yii\db\ActiveRecord
     {
         return [
             [['order_sn', 'user_id', 'settlement_man', 'settlement_account', 'settlement_bank'], 'required'],
-            [['user_id', 'order_object_id', 'store_id', 'total_price', 'total_settlement_price', 'total_cooperate_price', 'cash_coin', 'promotion_id', 'promotion_discount', 'total_fee', 'commision_fee', 'pay_type', 'member_delivery_address_id', 'delivery_way', 'is_bill', 'bill_type', 'freight', 'payment_fee', 'refund_fee', 'refund_cash_coin', 'in_state', 'procedure_fee', 'bank_in', 'status', 'refund', 'comment_status', 'type', 'app_id', 'mall_store_id', 'send_goods_bauser_id','active_status'], 'integer'],
+            [['team_id','active_user_id','user_id', 'order_object_id', 'store_id', 'total_price', 'total_settlement_price', 'total_cooperate_price', 'cash_coin', 'promotion_id', 'promotion_discount', 'total_fee', 'commision_fee', 'pay_type', 'member_delivery_address_id', 'delivery_way', 'is_bill', 'bill_type', 'freight', 'payment_fee', 'refund_fee', 'refund_cash_coin', 'in_state', 'procedure_fee', 'bank_in', 'status', 'refund', 'comment_status', 'type', 'app_id', 'mall_store_id', 'send_goods_bauser_id','active_status'], 'integer'],
             [['store_lon', 'store_lat', 'lon', 'lat'], 'number'],
             [['api_order_sn','pay_time', 'complete_time', 'refund_date', 'in_date', 'create_time', 'update_time'], 'safe'],
             [['order_sn', 'store_name', 'store_address', 'settlement_account', 'express_name', 'express_no', 'bill_header'], 'string', 'max' => 100],
@@ -225,7 +227,9 @@ class OrderInfo extends \yii\db\ActiveRecord
             'mall_store_id' => 'Mall Store ID',
             'send_goods_bauser_id' => '发货人id',
             'api_order_sn'=>'Api订单号',
-            'active_status' => '操作状态'
+            'active_status' => '操作状态',
+            'team_id' => '确认小组',
+            'active_user_id' => '确认人'
         ];
     }
 

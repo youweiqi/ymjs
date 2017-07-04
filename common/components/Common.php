@@ -5,6 +5,7 @@ namespace common\components;
 use common\models\BrandUser;
 use common\models\Store;
 use common\models\Supplier;
+use common\models\TeamUserRelation;
 use Yii;
 
 
@@ -161,5 +162,26 @@ class Common
             $key .= $pool[mt_rand(0, count($pool) - 1)];
         }
         return $key;
+    }
+
+
+    /*
+     * 通过登录的用户确认对应的小组订单
+     * 先通过简单的排除admin 执行(未判断)
+     */
+
+    public static function getPower()
+    {
+        $user_id = Yii::$app->user->id;
+        $team_user_relation = TeamUserRelation::findOne(['user_id' => $user_id]);
+        if(is_object($team_user_relation)){
+            return $team_id = $team_user_relation->team_id;
+        }
+            return $user_id;
+    }
+
+    public static function getUser()
+    {
+       return $user_id = Yii::$app->user->id;
     }
 }

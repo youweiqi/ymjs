@@ -40,8 +40,6 @@ use yii\widgets\ActiveForm;
 
             <?php  echo $form->field($model, 'refund')->dropDownList([''=>'全部','0'=>'否','1'=>'是']) ?>
 
-            <?php  echo $form->field($model, 'status')->dropDownList([''=>'全部','0'=>'禁用','1'=>'待支付','2'=>'待发货','3'=>'待收货','4'=>'已完成','5'=>'取消','6'=>'交易成功','7'=>'交易失败','8'=>'待拼团']) ?>
-
             <?php // echo $form->field($model, 'store_province') ?>
 
             <?php // echo $form->field($model, 'store_city') ?>

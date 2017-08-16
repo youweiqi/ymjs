@@ -9,9 +9,7 @@ return [
     'language' => 'zh-CN',
 
     'components' => [
-        'cache' => [
-            'class' => 'yii\caching\FileCache',
-        ],
+
 
         /**
          * 多语言管理，

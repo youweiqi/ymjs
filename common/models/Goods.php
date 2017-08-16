@@ -2,7 +2,10 @@
 
 namespace common\models;
 
+
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "goods".
@@ -56,6 +59,8 @@ class Goods extends \yii\db\ActiveRecord
     {
         return 'yg_goods.goods';
     }
+
+
 
     /**
      * @return \yii\db\Connection the database connection used by this AR class.

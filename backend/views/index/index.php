@@ -1,6 +1,10 @@
 <?php
 /* ===========================以下为本页配置信息================================= */
 /* 页面基本属性 */
+use yii\bootstrap\ActiveForm;
+use yii\helpers\Html;
+use yii\helpers\Url;
+
 $this->title = '安艺宁';
 $this->params['title_sub'] = '';
 $this->params['breadcrumbs'][] = ['label' => $this->title];
@@ -12,12 +16,32 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 //$this->registerJsFile('@web/static/common/js/app.js');
 
 ?>
+<div class="inventory-form">
 
-<div class="site-index">
-    <div class="center">
-        <p><img alt="" style="width: 100%;height: 100%" src="/statics/images/first.png"></p>
+<?php $form = ActiveForm::begin([
+    'action' => ['search'],
+    'method' => 'get'
+]); ?>
+
+
+
+   <input align="center" name="keyword" placeholder="查询商品"/>
+
+    <hr>
+<div class="" style="margin-top:20px;margin-left:18px">
+        <?= Html::submitButton('搜索', ['class' => 'btn btn-primary btn-sm','']) ?>
+        <?= Html::resetButton('重置', ['class' => 'btn btn-default btn-sm']) ?>
     </div>
+<?php ActiveForm::end(); ?>
+
 </div>
+
+
+
+
+
+
+
 
 
 

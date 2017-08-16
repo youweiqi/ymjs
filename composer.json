@@ -24,7 +24,7 @@
         "yiisoft/yii2": ">=2.0.11",
         "yiisoft/yii2-bootstrap": "~2.0.0",
         "yiisoft/yii2-swiftmailer": "~2.0.0",
-        "yiisoft/yii2-redis": "~2.0.0",
+        "yiisoft/yii2-redis": "^2.0",
         "kartik-v/yii2-widget-fileinput": "@dev",
         "kartik-v/yii2-widgets": "*",
         "trntv/yii2-glide": "*",
@@ -44,7 +44,9 @@
         "qiniu/php-sdk": "~7.0.0",
         "liyunfang/yii2-widget-linkpager": "^1.0",
         "kartik-v/yii2-editable": "@dev",
-        "bailangzhan/yii2-webuploader": "dev-master"
+        "bailangzhan/yii2-webuploader": "dev-master",
+        "yiisoft/yii2-elasticsearch": "^2.0",
+        "izyue/yii2-alipay": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

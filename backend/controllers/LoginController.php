@@ -1,7 +1,9 @@
 <?php
 namespace backend\controllers;
 
+use common\models\Menu;
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\filters\AccessControl;
 use backend\models\LoginForm;

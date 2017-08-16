@@ -36,7 +36,20 @@ class BaseController extends Controller
         /* 解析数据库配置，解析后存放在Yii::$app->params['web']中 */
         Yii::$app->params['web'] = Config::lists();
     }
-    
+
+    /*
+     * 判断是否是超管登录
+     */
+
+    public function isAdmin(){
+        /* 超级管理员允许访问任何数据 */
+        if(Yii::$app->params['admin'] == Yii::$app->user->id){
+            return true;
+        }
+
+    }
+
+
     /**
      * ---------------------------------------
      * 标记当前位置到cookie供后续跳转调用

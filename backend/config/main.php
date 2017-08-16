@@ -49,6 +49,9 @@ return [
         'api' => [
             'class' => 'backend\modules\api\Module',
         ],
+        'v1' => [
+            'class' => 'backend\modules\v1\Module',
+        ],
         'tgtools' => [
             'class' => 'backend\modules\tgtools\Module'
         ],
@@ -67,6 +70,38 @@ return [
      * 组件
      */
     'components' => [
+        'session'=> [
+                'class' => 'yii\redis\Session',
+                'redis' => [
+                 'hostname' => 'localhost',
+                 'port' => 6379,
+                 'database' => 3,
+             ],
+                'keyPrefix'=>'shop_'
+        ],
+
+        'cache' => [
+            'class' => 'yii\redis\Cache',
+            'redis' => [
+                 'hostname' => 'localhost',
+                 'port' => 6379,
+                 'database' => 2,
+              ]
+        ],
+
+        'redis' => [
+            'class' => 'yii\redis\Connection',
+            'hostname' => '127.0.0.1',
+            'port' => 6379,
+            'database' => 0,
+        ],
+        'elasticsearch' => [
+            'class' => 'yii\elasticsearch\Connection',
+            'nodes' => [
+                ['http_address' => '127.0.0.1:9200'],
+                // configure more hosts if you have a cluster
+            ],
+        ],
         /* 七牛上传图片 */
         'qiniu' => [
             'class' => 'common\components\QiNiuU'
@@ -80,6 +115,14 @@ return [
             'identityClass' => 'backend\models\Admin',
             'enableAutoLogin' => true,
             'loginUrl' => ['login/login'], //默认登录url
+        ],
+        /* 身份认证类 默认yii\web\user */
+        'user_api' => [
+            'class' => 'yii\web\User',
+            'identityClass' => 'common\models\ApiUsers',
+            'enableAutoLogin' => true,
+            'enableSession'=>false
+            //'loginUrl' => ['login/login'], //默认登录url
         ],
         /* 修改默认的request组件 */
         'request' => [
@@ -109,8 +152,8 @@ return [
                     'logFile' => '@app/runtime/logs/info/app.log',
                     // 是否开启日志 (@app/runtime/logs/api/20151223_app.log)
                     'enableDatePrefix' => true,
-                    'maxFileSize' => 1024 * 1,
-                    'maxLogFiles' => 100,
+                    'maxFileSize' => 1024 * 10,
+                    'maxLogFiles' => 15,
                 ],
             ],
         ],
@@ -121,11 +164,19 @@ return [
 
         /* 链接管理 */
         'urlManager' => [
-            'class' => 'common\core\UrlManager',
+            //'class' => 'common\core\UrlManager',
             'enablePrettyUrl' => true, //开启url规则
             'showScriptName' => false, //是否显示链接中的index.php
+            'enableStrictParsing' =>false,//是否严格解析
             //'suffix' => '.html', //后缀
             'rules' => [
+                'class' => 'yii\rest\UrlRule',
+               // 'controller' => ['v1/app-users'],
+              //  'extraPatterns' => [
+               //     'POST login' => 'login',
+               //     'GET signup-test' => 'signup-test',
+              //  ]
+                //'controller' => ['goods']
             ],
         ],
     ],
@@ -141,7 +192,7 @@ return [
         'allowActions' => [
             // 不需要权限检测
             'login/login','login/logout','public*','debug/*','gii/*',
-            'api/*'
+            'api/*','v1/*'
         ]
     ],
 

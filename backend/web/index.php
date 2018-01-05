@@ -15,4 +15,14 @@ $config = yii\helpers\ArrayHelper::merge(
     require(__DIR__ . '/../config/main-local.php')
 );
 
-(new yii\web\Application($config))->run();
+//print_r(__DIR__);exit();//   __DIR__=>  /data/webapp/Oms/backend/web  项目根目录
+$app =new yii\web\Application($config);
+
+Yii::$app->on(yii\base\Application::EVENT_BEFORE_REQUEST, function ($event) {
+    Yii::info('This is beforeRequest event.');
+});
+Yii::$app->on(yii\base\Application::EVENT_AFTER_REQUEST, function ($event) {
+    Yii::info('This is afterRequest event.');
+});
+
+$app->run();

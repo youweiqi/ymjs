@@ -45,11 +45,21 @@ class ActivitySearch extends Activity
     public function search($params)
     {
 
-        $query = Activity::find()
+        /*$query = Activity::find()
             ->joinWith(['goods','store'])
             ->select('activity.*,goods.name,store.store_name')
             ->andWhere(['type'=>'2'])
-            ->orderBy(['activity.id' => SORT_DESC]);
+            ->orderBy(['activity.id' => SORT_DESC]);*/
+        $query = Activity::find()
+            //->select('activity_detail.goods_id')
+            ->select('activity.good_id')
+            ->joinWith(['activity_detail'])
+            ->andFilterWhere(['activity.type'=>7])
+            ->andFilterWhere(['>', 'activity.good_id',0])
+            //->andFilterWhere(['>', 'activity.end_time',$time])
+            ->asArray()
+            ->all();
+
 
         // add conditions that should always apply here
 

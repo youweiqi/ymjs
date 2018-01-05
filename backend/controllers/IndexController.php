@@ -2,11 +2,15 @@
 
 namespace backend\controllers;
 
+use backend\components\Foo;
+use backend\components\MailEvent;
+use backend\components\MyBehavior;
 use common\helpers\ArrayHelper;
 use common\models\Category;
 use common\models\Es;
 use Yii;
 use yii\elasticsearch\ActiveDataProvider;
+use yii\filters\VerbFilter;
 
 
 /**
@@ -15,9 +19,38 @@ use yii\elasticsearch\ActiveDataProvider;
  */
 class IndexController extends BaseController
 {
+    const SEND_MAIL='send_mail';
+
+    public function init()
+    {
+        parent::init();
+        $this->on(self::SEND_MAIL,['backend\components\Mailer','sendMail']); //注册事件
+    }
+
+    public function behaviors()
+    {
+        return [
+            //附加行为
+            'myBehavior' => MyBehavior::className(),
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+        ];
+    }
+
     public function actionIndex()
     {
+
         //Yii::$app->kafka->send(['i want pa pa pa']);
+        // $a=$this->isGuest();
+        //var_dump($a);exit();
+
+        $foo= new Foo();
+        $foo->on(Foo::EVENT_HELLO,['backend\components\FooT','hello']);//注册事件
+        $foo->trigger(Foo::EVENT_HELLO);//触发事件
 
         return $this->render('index');
 
@@ -79,4 +112,19 @@ class IndexController extends BaseController
             }
         return $tree;
     }
+
+    /*
+     *$event相关参数
+     */
+    public function actionSend(){
+
+        $event = new MailEvent();
+        $event->content = 'this is my test content';
+        $event->email ='youweiqi826215@foxmail.com';
+        $event->subject ='找回密码';
+        $this->trigger(self::SEND_MAIL,$event);
+    }
+
+
+
 }

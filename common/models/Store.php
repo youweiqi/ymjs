@@ -89,7 +89,8 @@ class Store extends \yii\db\ActiveRecord
             [['channel'], 'string', 'max' => 20],
             [['money'], 'double', 'numberPattern' => '/^-?([1-9]\d*|0)(\.\d{1,2})?$/','message'=>'最多为两位小数'],
             [['price_no_freight'], 'double', 'numberPattern' => '/^([1-9]\d*|0)(\.\d{1,2})?$/','message'=>'最多为两位小数的正数'],
-            [['open_express'],'requiredByOne']
+            [['open_express'],'requiredByOne'],
+            ['logo_path','safe']
         ];
     }
 

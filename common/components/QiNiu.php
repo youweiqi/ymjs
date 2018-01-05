@@ -184,6 +184,13 @@ class QiNiu{
 
     }
 
+    public static function qiNiuUploadByWidgets ($file_path,$model_name)
+    {
+        $key = 'images/'.$model_name. '/'.date("YmdHis").mt_rand(1000,9999).'.'.$_FILES['file']['type'];
+            return self::uploadFile($file_path,$key);
+    }
+
+
     /**
      * 删除七牛图片
      * @param  string $key 图片在七牛上的存储名称

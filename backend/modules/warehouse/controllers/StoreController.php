@@ -4,7 +4,10 @@ namespace backend\modules\warehouse\controllers;
 
 use backend\libraries\StoreBrandLib;
 use common\components\Common;
+use common\components\NewUpLoad;
 use common\components\QiNiu;
+use common\components\Upload;
+use common\models\StorePhotoGallery;
 use Yii;
 use common\models\Store;
 use backend\modules\warehouse\models\search\StoreSearch;
@@ -230,4 +233,55 @@ class StoreController extends Controller
             echo json_encode([]);
         }
     }
+    public function actionUpload()
+    {
+        try {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+
+            $model = new NewUpLoad();
+            $info = $model->upImage();
+
+            if ($info && is_array($info)) {
+                return $info;
+            } else {
+                return ['code' => 1, 'msg' => 'error'];
+            }
+
+        } catch (\Exception $e) {
+            return ['code' => 1, 'msg' => $e->getMessage()];
+        }
+    }
+
+    /*
+     * 七牛回调成功后 需要把图片存到对应的中间表即可
+     */
+    public function actionUploads()
+    {
+        try {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+
+            $model = new NewUpLoad();
+            $info = $model->upImageByQiNiu();
+
+            if ($info && is_array($info)) {
+                //按原来的输出格式处理
+                $array=[];
+                $array['url']=QINIU_URL.$info['key'];
+                $array['code']='0';
+                $array['attachment']=$info['key'];
+                //做图片插入保存 还没实现
+                return $array;
+            } else {
+                return ['code' => 1, 'msg' => 'error'];
+            }
+
+        } catch (\Exception $e) {
+            return ['code' => 1, 'msg' => $e->getMessage()];
+        }
+    }
+
+
+
+
+
 }

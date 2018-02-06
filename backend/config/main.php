@@ -159,7 +159,7 @@ return [
         ],
 
         'errorHandler' => [
-            //'errorAction' => 'public/404',
+            'errorAction' => 'public/404',
         ],
 
         /* 链接管理 */

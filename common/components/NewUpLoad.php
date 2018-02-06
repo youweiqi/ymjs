@@ -72,7 +72,7 @@ class NewUpLoad extends Model
 
     public function upImageByQiNiu()
     {
-        return  QiNiu::qiNiuUploadByWidgets($_FILES['file']['tmp_name'],'shopex');
+        return  QiNiu::qiNiuUploadByWidgets($_FILES['file']['tmp_name'],'xxx');
       //return  QiNiu::qiNiuUpload($_FILES['file'],'shopex');
     }
 

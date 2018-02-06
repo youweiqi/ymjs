@@ -47,6 +47,7 @@
         "bailangzhan/yii2-webuploader": "dev-master",
         "yiisoft/yii2-elasticsearch": "^2.0",
         "izyue/yii2-alipay": "*"
+
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

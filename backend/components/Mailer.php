@@ -26,7 +26,8 @@ class Mailer
       $mail->setTo($event->email);
       $mail->setSubject($event->subject);
       $mail->setTextBody($event->content);
-      return $mail->send();
+      $result =$mail->send();
+      return $result;
   }
 
   /*
@@ -34,18 +35,15 @@ class Mailer
    * 循环待发送的客户 把发送的内容存在一个数组里面
    */
   public static function batchSend(){
-      $users =['360063842@qq.com','youweiqi826215@foxmail.com'];
+      $users =['360063842@qq.com','271461697@qq.com'];
       $message = [];
       foreach ($users as $user)
       {
           $message[] =Yii::$app->mailer->compose()
               ->setTo($user)
-              ->setSubject('测试主题')
-              ->setHtmlBody('测试内容');
+              ->setSubject('这是发给燕子和我自己的')
+              ->setHtmlBody('你看看你收到没有');
       }
       Yii::$app->mailer->sendMultiple($message);
   }
-
-
-
 }

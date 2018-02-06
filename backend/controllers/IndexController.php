@@ -19,7 +19,7 @@ use yii\filters\VerbFilter;
  */
 class IndexController extends BaseController
 {
-    const SEND_MAIL='send_mail';
+    const SEND_MAIL='sendMail';
 
     public function init()
     {
@@ -59,8 +59,8 @@ class IndexController extends BaseController
     /*
      * $highlight  高亮Es 的匹配结果
      * $keyword  关键字
-     *
-     *
+     *根据type 实例化对应的类 这边写个ES 接口 下面的去实现这个接口 去根据索引去ES 查询
+     *传keyword 和 type
      */
 
     public function actionSearch()
@@ -120,7 +120,7 @@ class IndexController extends BaseController
 
         $event = new MailEvent();
         $event->content = 'this is my test content';
-        $event->email ='youweiqi826215@foxmail.com';
+        $event->email ='360063842@qq.com';
         $event->subject ='找回密码';
         $this->trigger(self::SEND_MAIL,$event);
     }

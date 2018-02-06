@@ -5,6 +5,7 @@ use common\models\Store;
 use common\widgets\link_pager\LinkPager;
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\modules\warehouse\models\search\StoreSearch */
@@ -19,9 +20,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('新增店铺', '#', [
             'data-toggle' => 'modal',
-            'data-target' => '#create-modal',
+            'data-target' => '#operate-modal',
             'class' => 'btn btn-success',
-            'id' => 'data-create',
+            'id' => 'data-operate',
         ]); ?>
 
     </p>
@@ -42,8 +43,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     'update' => function ($url, $model, $key) {
                         return Html::a('<span class="glyphicon glyphicon-pencil"></span>', '#', [
                             'data-toggle' => 'modal',
-                            'data-target' => '#update-modal',
-                            'class' => 'data-update',
+                            'data-target' => '#operate-modal',
+                            'class' => 'data-operate',
                             'data-id' => $key,
                         ]);
                     },
@@ -86,8 +87,8 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); ?>
 </div>
-<?php
-$this->params['create_modal_title'] = '新增店铺';
-$this->params['update_modal_title'] = '更新店铺';
-?>
+
+
+
+
 

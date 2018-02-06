@@ -21,9 +21,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('新增库存', '#', [
             'data-toggle' => 'modal',
-            'data-target' => '#create-modal',
+            'data-target' => '#operate-modal',
             'class' => 'btn btn-success',
-            'id' => 'data-create',
+            'id' => 'data-operate',
         ]); ?>
         <?= Html::a('批量添加库存', '#', [
             'class' => 'btn btn-success  gridview',
@@ -74,8 +74,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     'update' => function ($url, $model, $key) {
                         return Html::a('<span class="glyphicon glyphicon-pencil"></span>', '#', [
                             'data-toggle' => 'modal',
-                            'data-target' => '#update-modal',
-                            'class' => 'data-update',
+                            'data-target' => '#operate-modal',
+                            'class' => 'data-operate',
                             'data-id' => $key,
                         ]);
                     },

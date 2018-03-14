@@ -66,7 +66,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'header'=>'查看',
                 'class' => 'yii\grid\ActionColumn',
-                'headerOptions' => ['style' => 'min-width:50px'],
+                'headerOptions' => ['style' => 'white-space: nowrap'],
                 'template' => '{open}',
                 'buttons' => [
                     'open' => function ($url, $model, $key) {
@@ -76,7 +76,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'header'=>'操作',
                 'class' => 'yii\grid\ActionColumn',
-                'headerOptions' => ['style' => 'min-width:60px'],
+                'headerOptions' => ['style' => 'white-space: nowrap'],
                 'template' => '{update}{commission}{view-log}',
                 'buttons' => [
                     'update' => function ($url, $model, $key) {
@@ -106,21 +106,21 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ],
             [
-                'headerOptions' => ['style' => 'min-width:60px'],
+                'headerOptions' => ['style' => 'white-space: nowrap'],
                 'attribute' => 'id',
             ],
             [
                 'attribute' => 'goods_code',
-                'headerOptions' => ['style' => 'min-width:10px'],
+                'headerOptions' => ['style' => 'white-space: nowrap'],
             ],
             [
-                'headerOptions' => ['style' => 'min-width:102px'],
+                'headerOptions' => ['style' => 'white-space: nowrap'],
                 'label' => '商品分佣(%)',
                 'value' =>'goods_commission.commission',
             ],
 
             [
-                'headerOptions' => ['style' => 'min-width:107px'],
+                'headerOptions' => ['style' => 'white-space: nowrap'],
                 'attribute' => 'category_parent_id',
                 'label' => '2级分类',
                 'value' => function ($model) {
@@ -128,7 +128,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             [
-                'headerOptions' => ['style' => 'min-width:107px'],
+                'headerOptions' => ['style' => 'white-space: nowrap'],
                 'attribute' => 'category_id',
                 'label' => '3级分类',
                 'value' => function ($model) {
@@ -136,7 +136,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             [
-                'headerOptions' => ['style' => 'min-width:107px'],
+                'headerOptions' => ['style' => 'white-space: nowrap'],
                 'attribute' => 'goods_img',
                 'label' => '商品图片',
                 'format' => 'html',
@@ -146,24 +146,24 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'name',
-                'headerOptions' => ['style' => 'min-width:50px'],
+                'headerOptions' => ['style' => 'white-space: nowrap'],
             ]
             ,
             [
-                'headerOptions' => ['style' => 'min-width:107px'],
+                'headerOptions' => ['style' => 'white-space: nowrap'],
                 'label'=>'品牌中文名',
                 'attribute' => 'brand_id',
                 'value' => 'brand.name_cn',
             ],
             [
-                'headerOptions' => ['style' => 'min-width:100px'],
+                'headerOptions' => ['style' => 'white-space: nowrap'],
                 'label'=>'品牌英文名',
                 'attribute' => 'brand_id',
                 'value' => 'brand.name_en',
             ],
 
             [
-                'headerOptions' => ['style' => 'min-width:80px'],
+                'headerOptions' => ['style' => 'white-space: nowrap'],
                 'attribute' => 'channel',
                 'label' => '来源渠道',
                 'value' => function ($model) {
@@ -172,11 +172,11 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'online_time',
-                'headerOptions' => ['style' => 'min-width:100px']
+                'headerOptions' => ['style' => 'white-space: nowrap'],
             ],
             [
                 'attribute' => 'offline_time',
-                'headerOptions' => ['style' => 'min-width:100px']
+                'headerOptions' => ['style' => 'white-space: nowrap'],
             ],
         ],
     ]); ?>

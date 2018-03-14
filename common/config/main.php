@@ -8,6 +8,8 @@ return [
     /* 目标语言 */
     'language' => 'zh-CN',
 
+    'timeZone'=>'Asia/Hong_Kong',
+
     'components' => [
 
 

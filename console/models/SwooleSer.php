@@ -1,5 +1,5 @@
 <?php
-
+use console\models\TaskRun;
 
 /**
  * Created by PhpStorm.
@@ -8,9 +8,9 @@
  * Time: AM8:54
  */
 
-namespace common\models;
 
-class SwooleServer
+
+class Swoole
 {
     private $_ser;
     private $_run;
@@ -96,7 +96,7 @@ class SwooleServer
     }
 }
 
-$Reload = new SwooleServer();
+$Reload = new Swoole();
 $Reload->start();
 
 

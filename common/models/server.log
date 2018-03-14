@@ -1,0 +1,5 @@
+[2018-03-06 17:01:29 #79901.0]	WARNING	swSignal_callback: signal[1] callback is null.
+[2018-03-06 17:01:29 $79902.0]	WARNING	swSignal_callback: signal[1] callback is null.
+[2018-03-06 17:01:29 *79906.1]	WARNING	swSignal_callback: signal[1] callback is null.
+[2018-03-06 17:01:29 *79905.0]	WARNING	swSignal_callback: signal[1] callback is null.
+[2018-03-06 18:32:56 #79901.0]	NOTICE	Server is shutdown now.

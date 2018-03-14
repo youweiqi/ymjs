@@ -46,7 +46,10 @@
         "kartik-v/yii2-editable": "@dev",
         "bailangzhan/yii2-webuploader": "dev-master",
         "yiisoft/yii2-elasticsearch": "^2.0",
-        "izyue/yii2-alipay": "*"
+        "izyue/yii2-alipay": "*",
+        "hisune/echarts-php": "^1.0",
+        "yiisoft/yii2-queue": "^2.0",
+        "imagine/imagine": "~0.5.0"
 
     },
     "require-dev": {

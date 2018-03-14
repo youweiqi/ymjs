@@ -7,7 +7,7 @@
  *业务实现的时候都通过实例这个swoole客户端 进行数据加工去把数据传给服务端
  */
 
-namespace common\models;
+namespace console\models;
 class TaskClient
 {
     private $_client;

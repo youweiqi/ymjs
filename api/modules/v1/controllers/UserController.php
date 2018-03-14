@@ -13,7 +13,7 @@ use yii\web\IdentityInterface;
 
 class UserController extends ActiveController
 {
-    public $modelClass = 'common\models\ApiUsers';
+    /*public $modelClass = 'common\models\ApiUsers';
     public function behaviors() {
         return ArrayHelper::merge (parent::behaviors(), [
             'authenticator' => [
@@ -88,5 +88,7 @@ public function actionUserProfile ($token,$type)
               return $model->errors;
           }
       }
+
+
 
 }

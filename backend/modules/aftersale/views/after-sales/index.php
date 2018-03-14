@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'header'=>'查看',
                 'class' => 'yii\grid\ActionColumn',
-                'headerOptions' => ['style' => 'min-width:50px'],
+                'headerOptions' => ['style' => 'white-space: nowrap'],
                 'template' => '{open}',
                 'buttons' => [
                     'open' => function ($url, $model, $key) {
@@ -124,70 +124,70 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
 
             [
-                'headerOptions' => ['style' => 'min-width:20px'],
+                'headerOptions' => ['style' => 'white-space: nowrap'],
                 'attribute' => 'id',
             ],
             [
                 'attribute' => 'create_time',
-                'headerOptions' => ['style' => 'min-width:100px']
+                'headerOptions' => ['style' => 'white-space: nowrap'],
             ],
             [
                 'attribute' => 'update_time',
-                'headerOptions' => ['style' => 'min-width:100px']
+                'headerOptions' => ['style' => 'white-space: nowrap'],
             ],
             [
                 'attribute'=>'store.store_name',
                 'label'=>'店铺',
-                'headerOptions' => ['style' => 'min-width:100px']
+                'headerOptions' => ['style' => 'white-space: nowrap'],
             ],
             [
-                'headerOptions' => ['style' => 'min-width:100px'],
+                'headerOptions' => ['style' => 'white-space: nowrap'],
                 'attribute'=>'order_object.order_sn',
                 'label'=>'父订单号'
             ],
             [
-                'headerOptions' => ['style' => 'min-width:100px'],
+                'headerOptions' => ['style' => 'white-space: nowrap'],
                 'attribute'=>'after_sn'
             ],
             [
-                'headerOptions' => ['style' => 'min-width:100px'],
+                'headerOptions' => ['style' => 'white-space: nowrap'],
                 'attribute'=>'order_info_sn'
             ],
             [
-                'headerOptions' => ['style' => 'min-width:100px'],
+                'headerOptions' => ['style' => 'white-space: nowrap'],
                 'attribute'=>'c_user.user_name'
             ],
             [
-                'headerOptions' => ['style' => 'min-width:100px'],
+                'headerOptions' => ['style' => 'white-space: nowrap'],
                 'attribute'=>'pay_type',
                 'value'=>function($model){
                     return AfterSales::dropDown('pay_type',$model->pay_type);
                 },
             ],
             [
-                'headerOptions' => ['style' => 'min-width:100px'],
+                'headerOptions' => ['style' => 'white-space: nowrap'],
                 'attribute'=>'is_refund',
                 'value'=>function($model){
                     return AfterSales::dropDown('is_refund',$model->is_refund);
                 },
             ],
             [
-                'headerOptions' => ['style' => 'min-width:100px'],
+                'headerOptions' => ['style' => 'white-space: nowrap'],
                 'attribute'=>'product_bn',
             ],
             [
-                'headerOptions' => ['style' => 'min-width:100px'],
+                'headerOptions' => ['style' => 'white-space: nowrap'],
                 'attribute'=>'quantity',
             ],
             [
-                'headerOptions' => ['style' => 'min-width:100px'],
+                'headerOptions' => ['style' => 'white-space: nowrap'],
                 'attribute'=>'refund_money',
                 'value'=>function($model){
                     return $model->refund_money/100;
                 },
             ],
             [
-                'headerOptions' => ['style' => 'min-width:120px'],
+                'headerOptions' => ['style' => 'white-space: nowrap'],
                 'attribute'=>'user_refund_reason',
                 'format' => 'raw',
                 'value' => function ($model) {
@@ -197,7 +197,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             [
-                'headerOptions' => ['style' => 'min-width:150px'],
+                'headerOptions' => ['style' => 'white-space: nowrap'],
                 'attribute'=>'user_first_reason',
                 'format' => 'raw',
                 'value' => function ($model) {
@@ -207,7 +207,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             [
-                'headerOptions' => ['style' => 'min-width:50px'],
+                'headerOptions' => ['style' => 'white-space: nowrap'],
                 'attribute'=>'status',
                 'value'=>function($model){
                     return AfterSales::dropDown('status',$model->status);

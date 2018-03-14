@@ -5,6 +5,9 @@ namespace backend\modules\discount\controllers;
 use backend\modules\discount\models\form\RedeemCodeForm;
 use common\components\Common;
 use common\models\Promotion;
+
+
+use console\models\TaskClient;
 use Yii;
 use common\models\RedeemCode;
 use backend\modules\discount\models\search\RedeemCodeSearch;
@@ -156,7 +159,6 @@ class RedeemCodeController extends Controller
     }
     public function actionBatchCreate()
     {
-        $a = 1;
         $model = new RedeemCodeForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $creater = Yii::$app->user->identity->username;
@@ -166,7 +168,23 @@ class RedeemCodeController extends Controller
             $end_date = $model->end_date;
             $remark=$model->remark;
 
-            for($i=0;$i<$model->create_quantity;$i++){
+            $data = [
+                'event' => TaskClient::EVENT_TYPE_SEND_REDEEM,
+                'promotion_id'=>$promotion_id,
+                'usable_times'=>$usable_times,
+                'creater'=>$creater,
+                'status'=>'1',
+                'used_times'=>0,
+                'remark'=>$remark,
+                'start_date'=>$start_date,
+                'end_date'=>$end_date,
+                'i'=>$model->create_quantity
+            ];
+                $client = new TaskClient();
+                $client->sendData($data);
+
+
+            /*for($i=0;$i<$model->create_quantity;$i++){
                 $redeem_code_model= new RedeemCode();
                 $redeem_code_model->redeem_code = 'L'.Common::getUid();
                 $redeem_code_model->promotion_id = $promotion_id;
@@ -180,7 +198,7 @@ class RedeemCodeController extends Controller
                 if(!$redeem_code_model->save(false)){
                     $i = $i-1;
                 }
-            }
+            }*/
             return $this->redirect(Yii::$app->request->getReferrer());
 
         }else{

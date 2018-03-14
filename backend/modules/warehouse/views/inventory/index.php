@@ -19,31 +19,18 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
     <p>
-        <?= Html::a('新增库存', '#', [
-            'data-toggle' => 'modal',
-            'data-target' => '#operate-modal',
-            'class' => 'btn btn-success',
-            'id' => 'data-operate',
-        ]); ?>
-        <?= Html::a('批量添加库存', '#', [
-            'class' => 'btn btn-success  gridview',
-            'id' => 'data-batch-inventory',
-        ]); ?>
 
-        <?= Html::a('批量选择运费模板', '#', [
-            'class' => 'btn btn-success  gridview',
-            'id' => 'data-batch-update',
-        ]); ?>
-        <?= Html::a('导出库存模板', [
-            'export-template','query_params'=>$queryParams],
-            ['class' => 'btn btn-success']) ?>
 
-        <?= Html::a('批量导入库存', '#', [
-            'data-toggle' => 'modal',
-            'data-target' => '#batch-import-modal',
-            'class' => 'btn btn-success',
-            'id' => 'data-batch-import',
-        ]); ?>
+
+        <?php if(Yii::$app->user->id=='1'){
+            echo  Html::a('新增库存', '#', [
+                'data-toggle' => 'modal',
+                'data-target' => '#operate-modal',
+                'class' => 'btn btn-success',
+                'id' => 'data-operate',
+            ]);
+        }
+        ?>
 
     </p>
 

@@ -8,6 +8,7 @@ use backend\components\MyBehavior;
 use common\helpers\ArrayHelper;
 use common\models\Category;
 use common\models\Es;
+use Hisune\EchartsPHP\ECharts;
 use Yii;
 use yii\elasticsearch\ActiveDataProvider;
 use yii\filters\VerbFilter;
@@ -44,6 +45,29 @@ class IndexController extends BaseController
     public function actionIndex()
     {
 
+        Yii::$app->callA();
+
+        $chart = new ECharts();
+        $chart->tooltip->show = true;//提示信息等是否展示
+        $chart->legend->data[] = '销量';
+        $chart->xAxis[] = array(
+            'type' => 'category',
+            'data' => array([
+                'value'=>'金丝鸟',
+                'textStyle'=>[
+                    'color'=>'red',
+                    'fontSize'=>'20',
+                ]
+            ],"羊毛衫","雪纺衫","裤子","高跟鞋","袜子")
+        );
+        $chart->yAxis[] = array(
+            'type' => 'value'
+        );
+        $chart->series[] = array(
+            'name' => '销量',
+            'type' => 'bar',
+            'data' => array(55, 20, 40, 10, 10, 20)
+        );
         //Yii::$app->kafka->send(['i want pa pa pa']);
         // $a=$this->isGuest();
         //var_dump($a);exit();
@@ -52,7 +76,11 @@ class IndexController extends BaseController
         $foo->on(Foo::EVENT_HELLO,['backend\components\FooT','hello']);//注册事件
         $foo->trigger(Foo::EVENT_HELLO);//触发事件
 
-        return $this->render('index');
+         Yii::$app->callA();
+        var_dump( Yii::$app->aname);
+        return $this->render('index',[
+                'chart'=>$chart
+        ]);
 
     }
 

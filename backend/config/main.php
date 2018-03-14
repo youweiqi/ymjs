@@ -11,11 +11,18 @@ return [
     'basePath' => dirname(__DIR__),
     /* 控制器默认命名空间 */
     'controllerNamespace' => 'backend\controllers',
-    'bootstrap' => ['log'],
+    'bootstrap' => ['log','queue'],
     /**
      * 模块
      */
     'modules' => [
+        'debug' => [
+            'class' => \yii\debug\Module::class,
+            'panels' => [
+                'queue' => \yii\queue\debug\Panel::class,
+            ],
+        ],
+
         'admin' => [
             'class' => 'backend\modules\admin\Module',
         ],
@@ -69,7 +76,32 @@ return [
     /**
      * 组件
      */
+
+    'as A'=>backend\components\A::className(),
+
     'components' => [
+        'view' => [
+            'theme' => [
+                // 'basePath' => '@app/themes/spring',
+                // 'baseUrl' => '@web/themes/spring',
+                'pathMap' => [
+                    '@app/views' => [
+                        '@app/themes/spring',
+                    ]
+                ],
+            ],
+        ],
+        'queue' => [
+            'class' => \yii\queue\amqp\Queue::class,
+            'host' => 'localhost',
+            'port' => 5672,
+            'user' => 'guest',
+            'password' => 'guest',
+            'queueName' => 'queue',
+            'strictJobType'=>false,
+            'ttr' => 5 * 60, // Max time for anything job handling
+            'attempts' => 3,
+        ],
         'session'=> [
                 'class' => 'yii\redis\Session',
                 'redis' => [
@@ -79,7 +111,6 @@ return [
              ],
                 'keyPrefix'=>'shop_'
         ],
-
         'cache' => [
             'class' => 'yii\redis\Cache',
             'redis' => [

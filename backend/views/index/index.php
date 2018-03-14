@@ -4,21 +4,22 @@
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use Hisune\EchartsPHP\ECharts;
 
+backend\assets\TestAsset::register($this);
 $this->title = '安艺宁';
 $this->params['title_sub'] = '';
 $this->params['breadcrumbs'][] = ['label' => $this->title];
-
 /* 渲染其他文件 */
 //echo $this->renderFile('@app/views/public/login.php');
-
-/* 加载页面级别JS */
-//$this->registerJsFile('@web/static/common/js/app.js');
-
 ?>
 <div class="inventory-form">
 
-<?php $form = ActiveForm::begin([
+<?php  echo $chart->render('index');
+
+?>
+
+    <?php $form = ActiveForm::begin([
     'action' => ['search'],
     'method' => 'get'
 ]); ?>

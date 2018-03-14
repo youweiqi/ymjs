@@ -16,7 +16,7 @@ class MyBehavior extends ActionFilter
 {
     public function beforeAction ($action)
     {
-        var_dump(111);
+        //var_dump(111);
         return true;
     }
 

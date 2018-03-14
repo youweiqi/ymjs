@@ -38,8 +38,7 @@ class RedeemCodeForm extends Model
     public function rules()
     {
         return [
-            [['create_quantity','usable_times','start_date','end_date','promotion_id'], 'required'],
-            ['create_quantity', 'compare', 'compareValue' => 5000, 'operator' => '<='],
+            [['create_quantity','usable_times','start_date','end_date','promotion_id'], 'required'],                //['create_quantity', 'compare', 'compareValue' => 5000, 'operator' => '<='],
             [['create_quantity','usable_times','promotion_id'], 'integer'],
             ['remark','string', 'max' => 255]
         ];

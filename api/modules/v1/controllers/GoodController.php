@@ -6,14 +6,14 @@ use yii\filters\Cors;
 use yii\helpers\ArrayHelper;
 use yii\rest\ActiveController;
 
-class GoodsController extends ActiveController
+class GoodController extends ActiveController
 {
     public $modelClass = 'common\models\ApiGoods';
-    public function behaviors() {
+    /*public function behaviors() {
         return ArrayHelper::merge (parent::behaviors(), [
             'authenticator' => [
                 'class' => HttpBearerAuth::className(),
-                //'tokenParam' => 'token',
+
             ],
              'corsFilter'  => [
             'class' => Cors::className(),
@@ -23,6 +23,6 @@ class GoodsController extends ActiveController
             ],
         ]
     ]);
-    }
+    }*/
 
 }

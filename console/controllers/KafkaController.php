@@ -7,6 +7,7 @@
  */
 namespace console\controllers;
 
+use common\models\SwooleServer;
 use yii\console\Controller;
 
 class KafkaController extends Controller{
@@ -19,6 +20,13 @@ class KafkaController extends Controller{
     public function callback($message){
         \Yii::info($message,'test_kafka');
         \Yii::$app->log->setFlushInterval(1);
+    }
+
+
+    public function actionTe()
+    {
+        $server = new SwooleServer();
+        $server->start();
     }
 
 }

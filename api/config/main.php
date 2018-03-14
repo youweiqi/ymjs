@@ -17,36 +17,10 @@ return [
             'class' => 'api\modules\v1\Module',
         ],
     ],
-   /* 'defaultRoute' => 'goods/index',
-    'as beforeRequest' => [
-        'class' => 'yii\filters\AccessControl',
-        'rules' => [
-            [
-                'allow' => true,
-                'actions' => ['login'],
-                'roles' => ['?'],
-            ],
-            [
-                'allow' => true,
-                'roles' => ['@'],
-            ],
-        ],
-        'denyCallback' => function () {
-            return Yii::$app->response->redirect(['site/login']);
-        },
-    ],*/
-   /*
-    *
-    */
     'components' => [
-        /*'request' => [
-            // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => 'true',     //  就是这里了
-        ],*/
-
-        'response' => [
+        /*'response' => [
             'class' => 'yii\web\Response',
-            //'cookieValidationKey' => 'true',
+            'cookieValidationKey' => 'true',
             'on beforeSend' => function ($event) {
                 $response = $event->sender;
                 $code = $response->getStatusCode();
@@ -62,21 +36,12 @@ return [
                 $response->data = $data;
                 $response->format = yii\web\Response::FORMAT_JSON;
             },
-        ],
+        ],*/
         'user' => [
             'identityClass' => 'common\models\ApiUsers',
             'enableAutoLogin' => true,
             'enableSession'=>false,
             'loginUrl' => null,
-        ],
-        'log' => [
-            'traceLevel' => YII_DEBUG ? 3 : 0,
-            'targets' => [
-                [
-                    'class' => 'yii\log\FileTarget',
-                    'levels' => ['error', 'warning'],
-                ],
-            ],
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -88,12 +53,10 @@ return [
             'rules' => [
                 [
                     'class' => 'yii\rest\UrlRule',
-                    'controller' => ['v1/goods','v1/user'],
-                     'extraPatterns' => [
-                             'POST login' => 'login',
-                             'GET signup-test' => 'signup-test',
-                             'GET user-profile' => 'user-profile',
-                     ]
+                    'controller' => ['v1/image'],
+                    'extraPatterns' => [
+                        'GET test/<image_id:\w+>' => 'test',
+                    ]
                 ],
             ],
         ],

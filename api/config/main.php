@@ -18,9 +18,9 @@ return [
         ],
     ],
     'components' => [
-        /*'response' => [
+        'response' => [
             'class' => 'yii\web\Response',
-            'cookieValidationKey' => 'true',
+            //'cookieValidationKey' => 'true',
             'on beforeSend' => function ($event) {
                 $response = $event->sender;
                 $code = $response->getStatusCode();
@@ -36,7 +36,7 @@ return [
                 $response->data = $data;
                 $response->format = yii\web\Response::FORMAT_JSON;
             },
-        ],*/
+        ],
         'user' => [
             'identityClass' => 'common\models\ApiUsers',
             'enableAutoLogin' => true,

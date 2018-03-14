@@ -31,9 +31,6 @@ class ImageController extends ActiveController
                 $img = $image->m_url;//假设这个值是webp格式的图片
             }
             $array = [
-                'status' => 'success',
-                'code' => '200',
-                'message' => '成功',
                 'url'=>$img
             ];
             return $array;

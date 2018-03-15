@@ -46,6 +46,14 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
+        'cache' => [
+            'class' => 'yii\redis\Cache',
+            'redis' => [
+                'hostname' => 'localhost',
+                'port' => 6379,
+                'database' => 2,
+            ]
+        ],
         'urlManager' => [
             'enablePrettyUrl' => true,
             'enableStrictParsing' =>true,
@@ -55,7 +63,7 @@ return [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => ['v1/image'],
                     'extraPatterns' => [
-                        'GET test/<image_id:\w+>' => 'test',
+                        'GET test/<image_id:.+(\.)?\w+>' => 'test',
                     ]
                 ],
             ],

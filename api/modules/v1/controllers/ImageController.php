@@ -17,6 +17,8 @@ class ImageController extends ActiveController
     }
 
 
+
+
     public function actionTest($image_id)
     {
         //把得到的参数切分
@@ -31,23 +33,25 @@ class ImageController extends ActiveController
             $array[substr($v,0,1)] = substr($v,1);
         }
         $cache =Yii::$app->cache;
-        if($cache->redis->get($id)){
-            return Html::img($cache->get($id));
+        $key ='dddff33';
+        $path ='path/xx';
+        if($cache->redis->hexists($id,$key)){
+            return Html::img($cache->redis->Hget($id,$key));
         }else{
             //是否存满十级
-             if($cache->redis->llen($id)<10){
+             if($cache->redis->hlen($id)<10){
                  $images = Images::findOne($id);
                  //做图片的转化
                  $imagine = new Imagine\Imagick\Imagine();
+
                  $options = array(
                      'resolution-units' => ImageInterface::RESOLUTION_PIXELSPERINCH,
                      'resolution-x' => isset($array['w'])?$array['w']:null,
                      'resolution-y' => isset($array['h'])?$array['h']:null,
                      'resampling-filter' => ImageInterface::FILTER_LANCZOS,
                  );
-                 $value=$imagine->open($images->url)->save($id.'.'.$type, $options);
-                 Yii::$app->cache->set($id,$value);
-                 return Html::img($value);
+                 $imagine->open($path.'.'.$type)->show($type,$options);
+                 Yii::$app->cache->redis->Hset($id,$key,$path.'.'.$type);
              }else{
                  $left_array = [];
                  $right_array = [];

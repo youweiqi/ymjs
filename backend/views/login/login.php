@@ -1,4 +1,6 @@
 <?php
+use yii\captcha\Captcha;
+
 \backend\assets\AppAsset::register($this);
 \backend\assets\LoginAsset::register($this);
 $this->beginPage();
@@ -48,8 +50,14 @@ $this->beginPage();
                 </div>
                 <div class="form-group">
                     <label class="control-label visible-ie8 visible-ie9">密码</label>
-                    <input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="密码" name="info[password]" /> 
+                    <input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="密码" name="info[password]" />
+
+                    <?= $form->field($model, 'verifyCode')->widget(Captcha::className(), [
+                        'template' => '<div class="row"><div class="col-lg-3">{image}</div><div class="col-lg-6">{input}</div></div>',
+                    ]) ?>
                 </div>
+
+
                 <div class="form-actions">
                     <label class="rememberme check mt-checkbox mt-checkbox-outline" style="padding-left:25px;">
                         <input type="checkbox" name="info[rememberMe]" value="1" checked/>记住我
